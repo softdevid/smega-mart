@@ -118,31 +118,32 @@
         <div class="mt-2 grid gap-6 md:grid-cols-2">
             <div>
                 <label for="image_main" class="mb-3 block text-sm font-medium">Gambar utama</label>
-                @if ($barang->cloud_img == null)
+                @if ($barang->cloud_img == '')
                     <input type="file" id="image_main"
                         class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         placeholder="Image" name="cloud_img">
                 @else
+                    <input type="file" id="image_main"
+                        class="hidden w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Image" name="cloud_img">
                     Gambar utama sudah ada, hapus terlebih dahulu jika ingin menggantinya!
                 @endif
             </div>
             {{-- <img src="{{ $barang->img_urls }}" alt="" class="h-auto w-[100px]"> --}}
 
 
-            <div class="max-w-screen-xxs rounded-lg">
-                <img src="{{ $barang->img_urls }}" class="mb-2 h-auto w-[100px]">
-                {{-- <a href=""
-                    class="flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">
-                    Hapus
-                </a> --}}
-                <form action="/deletecover/{{ $barang->barcode }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('delete')
-                    <button type="submit"
+            @if ($barang->cloud_img == '')
+                <div class="max-w-screen-xxs rounded-lg">
+                    <button type="button" data-modal-toggle="popup-modal"
+                        class="hidden items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
+                        Gambar</button>
+                @else
+                    <img src="{{ $barang->img_urls }}" class="mb-2 h-auto w-[100px]">
+                    <button type="button" data-modal-toggle="popup-modal"
                         class="flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
                         Gambar</button>
-                </form>
-            </div>
+            @endif
+        </div>
 
         </div>
 
@@ -188,6 +189,46 @@
                 class="w-full rounded-lg bg-gray-700 p-3 text-center text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 sm:w-auto">Batal</a>
         </div>
     </form>
+
+    <div id="popup-modal" tabindex="-1"
+        class="h-modal fixed top-0 right-0 left-0 z-50 hidden overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+        <div class="relative h-full w-full max-w-xs p-4 md:h-auto">
+            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                <button type="button"
+                    class="absolute top-3 right-2.5 ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-white"
+                    data-modal-toggle="popup-modal">
+                    <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-3 text-center">
+                    <form action="/deletecover/{{ $barang->barcode }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('delete')
+                        <svg aria-hidden="true" class="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Yakin ingin menghapus gambar
+                            utama?</h3>
+                        <button data-modal-toggle="popup-modal" type="submit"
+                            class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800">
+                            Ok
+                        </button>
+                        <button data-modal-toggle="popup-modal" type="button"
+                            class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600">No,
+                            cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- jQuery Script --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

@@ -43,6 +43,7 @@ class BarangController extends Controller
       'title' => 'Tambah Produk',
       'satuan' => Satuan::all(),
       'kategori' => Kategori::all(),
+      'supplier' => Suplier::all(),
     ]);
   }
 
@@ -54,21 +55,6 @@ class BarangController extends Controller
    */
   public function store(Request $request)
   {
-    // Barang::create([
-    //   'barcode' => $request->barcode,
-    //   'namaBarang' => $request->namaBarang,
-    //   'slug' => Str::slug($request->namaBarang),
-    //   'kdKategori' => $request->kdKategori ?? '-',
-    //   'kdSatuan' => $request->kdSatuan ?? '-',
-    //   'kdSupplier' => $request->kdSupplier ?? '-',
-    //   'hrgBeli' => $request->hrgBeli,
-    //   'hrgJual' => $request->hrgJual,
-    //   'stok' => $request->stok,
-    //   'stok_gudang' => $request->stok_gudang,
-    //   'deskripsi' => $request->deskripsi ?? '-',
-    //   'img_urls' => $request->img_urls ?? '-',
-    //   'cloud_img' => $request->cloud_img ?? '-',
-    // ]);
     // Validator::make($request->all(), [
     //   'nama' => 'required|unique:databarang|max:255',
     //   'cloud_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -100,7 +86,7 @@ class BarangController extends Controller
         'img_urls' => $url,
       ]);
     }
-    if ($request->hasFile('images')) {
+    if ($request->hasFile("images")) {
       $file = $request->file('images');
       foreach ($file as $key => $file) {
         $images = Cloudinary::upload($file->getRealPath(), ['folder' => 'products']);
@@ -109,7 +95,7 @@ class BarangController extends Controller
         Gambar::create([
           'cloud_img' => $public_id,
           'img_urls' => $url,
-          'barcode' => $barang->barcode,
+          'barcode' => $request->barcode,
         ]);
       }
     }
@@ -137,12 +123,13 @@ class BarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit($barcode)
   {
     $supplier = Suplier::all();
     $kategori = Kategori::all();
     $satuan = Satuan::all();
-    $barang = Barang::findOrFail($id);
+    $barang = Barang::findOrFail($barcode);
+    // dd($barang);
     return view('admin.pages.product.edit', [
       'title' => 'Edit Produk',
       'barang' => $barang,
@@ -170,38 +157,41 @@ class BarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy($barcode)
   {
-    $barang = Barang::findOrFail($id);
+    $barang = Barang::findOrFail($barcode);
 
-    $images = Gambar::where("barcode", $barang->id)->get();
+    $images = Gambar::where("barcode", $barang->barcode)->get();
     // dd($images);
     foreach ($images as $image) {
       Cloudinary::destroy($image->cloud_img);
     }
-    Gambar::where("barcode", $barang->id)->delete();
+    Gambar::where("barcode", $barang->barcode)->delete();
 
     $cloud_img = $barang->cloud_img;
     Cloudinary::destroy($cloud_img);
 
-    Barang::destroy($id);
+    Barang::destroy($barcode);
     return back()->with('success', 'Berhasil dihapus!!');
   }
 
   public function deletecover($barcode)
   {
-    $barang = Barang::findOrFail($barcode);
+    $product = Barang::findOrFail($barcode);
+    // dd($product);
 
-    Cloudinary::destroy($barang->cloud_img);
+    Cloudinary::destroy($product->cloud_img);
 
     $a = [
       'cloud_img' => "",
       'img_urls' => "",
     ];
 
-    $barang->where('barcode', $barang->barcode)
+    $product->where('barcode', $product->barcode)
       ->update($a);
+    // $product->where('id', $product->id)
+    //         ->update($url);
 
-    return back()->with('success', 'Gambar Berhasil dihapus!!');
+    return back()->with('success', 'Gambar Utama Berhasil dihapus!!');
   }
 }

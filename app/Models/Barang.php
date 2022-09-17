@@ -32,6 +32,6 @@ class Barang extends Model
 
   public function gambar()
   {
-    return $this->hasMany(Gambar::class, 'barcode');
+    return $this->hasMany(Gambar::class, 'kdGambar');
   }
 }

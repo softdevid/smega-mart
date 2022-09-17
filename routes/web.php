@@ -61,8 +61,8 @@ Route::middleware(['auth'])->group(function () {
 
 
   //hapus cover gambar utama dan gambar lain
-  Route::post('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
-
+  // Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
+  Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
   //slug
   Route::get('check_slug', function () {
     $slug = SlugService::createSlug(App\Models\Suplier::class, 'slug', request('namaSupplier'));
