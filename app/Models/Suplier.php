@@ -16,9 +16,9 @@ class Suplier extends Model
   protected $guarded = [];
   public $timestamps = false;
 
-  public function product()
+  public function barang()
   {
-    return $this->hasMany(Barang::class);
+    return $this->hasOne(Barang::class, 'barcode');
   }
 
   public function sluggable(): array

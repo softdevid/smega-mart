@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Unit;
 use Illuminate\Http\Request;
+use App\Models\Satuan;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Validator;
 
-class UnitController extends Controller
+
+class SatuanController extends Controller
 {
   /**
    * Display a listing of the resource.
@@ -18,7 +18,7 @@ class UnitController extends Controller
   {
     return view('admin.pages.unit.index', [
       'title' => 'Satuan',
-      'units' => Unit::all(),
+      'satuans' => Satuan::all(),
     ]);
   }
 
@@ -47,7 +47,7 @@ class UnitController extends Controller
       'slug' => 'required|units:unique',
     ];
 
-    Unit::create([
+    Satuan::create([
       'name' => $request->name,
       '$rules[slug]' => Str::slug($request->name),
     ]);
@@ -57,10 +57,10 @@ class UnitController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\Unit  $unit
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show(Unit $unit)
+  public function show($id)
   {
     //
   }
@@ -68,10 +68,10 @@ class UnitController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  \App\Models\Unit  $unit
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit(Unit $unit)
+  public function edit($id)
   {
     //
   }
@@ -80,12 +80,12 @@ class UnitController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Unit  $unit
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Unit $unit)
+  public function update(Request $request, $id)
   {
-    $suplier = Unit::findOrFail($unit->id);
+    $suplier = Satuan::findOrFail($id);
     if ($request->slug != $suplier->slug) {
       $rules['slug'] = 'required|supliers:unique';
     }
@@ -100,13 +100,13 @@ class UnitController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\Unit  $unit
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Unit $unit)
+  public function destroy($id)
   {
-    $unit = Unit::findOrFail($unit->id);
-    $unit->delete($unit->id);
+    $satuan = Satuan::findOrFail($id);
+    $satuan->delete($satuan->id);
     return back()->with('success', 'Satuan berhasil dihapus!');
   }
 }

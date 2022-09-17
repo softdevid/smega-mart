@@ -1,13 +1,13 @@
 @extends('admin.layouts.template')
 @section('content')
     <form action="{{ route('suplier.store') }}" method="POST" class="mb-6">
-    @csrf
+        @csrf
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
                 <label for="name" class="block mb-2 text-sm font-medium">Nama Suplier</label>
                 <input type="text" id="name"
                     class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Nama Suplier" required="" name="name">
+                    placeholder="Nama Suplier" required="" name="namaSupplier">
                 <input type="hidden" id="slug"
                     class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Slug Suplier" required="" name="slug">
@@ -25,9 +25,9 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     {{-- Check Slug --}}
     <script>
-        $('#name').change(function(e) {
+        $('#namaSupplier').change(function(e) {
             $.get('{{ url('check_slug') }}', {
-                    'name': $(this).val()
+                    'namaSupplier': $(this).val()
                 },
                 function(data) {
                     $('#slug').val(data.slug);

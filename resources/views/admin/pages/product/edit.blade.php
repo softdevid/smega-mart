@@ -1,79 +1,208 @@
 @extends('admin.layouts.template')
 @section('content')
-    <form action="" method="POST" class="mb-6">
-        <div class="grid gap-6 mb-6 md:grid-cols-2">
+    @if (session()->has('success'))
+        <div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">
+            <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"
+                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
+                {{ session('success') }}
+            </div>
+            <button type="button"
+                class="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-green-100 p-1.5 text-green-500 hover:bg-green-200 focus:ring-2 focus:ring-green-400 dark:bg-green-200 dark:text-green-600 dark:hover:bg-green-300"
+                data-dismiss-target="#alert-3" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+    @endif
+    <form action="{{ route('products.update', [$barang->barcode]) }}" method="POST" class="mb-6"
+        enctype="multipart/form-data">
+        @csrf
+        @method('put')
+        <div class="mb-6 grid gap-6 md:grid-cols-2">
             <div>
-                <label for="barcode" class="block mb-2 text-sm font-medium">Barcode</label>
+                <label for="barcode" class="mb-2 block text-sm font-medium">Barcode</label>
                 <input type="text" id="barcode"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="No. Barcode" required="" name="barcode">
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="No. Barcode" name="barcode" value="{{ $barang->barcode }}">
             </div>
             <div>
-                <label for="name" class="block mb-2 text-sm font-medium">Nama Produk</label>
+                <label for="name" class="mb-2 block text-sm font-medium">Nama Barang</label>
                 <input type="text" id="name"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Nama Produk" required="" name="name" value="{{ $product->name }}">
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Nama Produk" name="namaBarang" value="{{ $barang->namaBarang }}">
             </div>
             <div>
-                <label for="purchase_price" class="block mb-2 text-sm font-medium">Harga Beli</label>
+                <label for="purchase_price" class="mb-2 block text-sm font-medium">Harga Beli</label>
                 <input type="number" id="purchase_price"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Harga Beli" required="" name="purchase_price">
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Harga Beli" name="hrgBeli" value="{{ $barang->hrgBeli }}">
             </div>
             <div>
-                <label for="price" class="block mb-2 text-sm font-medium">Harga Jual</label>
+                <label for="price" class="mb-2 block text-sm font-medium">Harga Jual</label>
                 <input type="number" id="price"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Harga Jual" required="" name="price">
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Harga Jual" name="hrgJual" value="{{ $barang->hrgJual }}">
             </div>
             <div>
-                <label for="stock_store" class="block mb-2 text-sm font-medium">Kategori</label>
-                <select name="" id=""
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="stock_store" class="mb-2 block text-sm font-medium">Satuan</label>
+                <select name="kdSatuan" id=""
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                     <option value="" class="hover:bg-blue-600 hover:text-white">Pilih Satuan</option>
-                    <option value="">PCS</option>
+                    @foreach ($satuan as $s)
+                        <option value="{{ $s->kdSatuan }}" @if ($s->kdSatuan == $barang->kdSatuan) {{ 'selected' }} @endif>
+                            {{ $s->namaSatuan }}</option>
+                    @endforeach
                 </select>
             </div>
             <div>
-                <label for="stock_store" class="block mb-2 text-sm font-medium">Kategori</label>
-                <select name="" id=""
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="stock_store" class="mb-2 block text-sm font-medium">Kategori</label>
+                <select name="kdKategori" id=""
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                     <option value="">Pilih Kategori</option>
-                    <option value="">Sepatu</option>
+                    @foreach ($kategori as $k)
+                        <option value="{{ $k->kdKategori }}" @if ($k->kdKategori == $barang->kdKategori) {{ 'selected' }} @endif>
+                            {{ $k->namaKategori }}</option>
+                    @endforeach
                 </select>
             </div>
             <div>
-                <label for="stock_storage" class="block mb-2 text-sm font-medium">Stok Gudang</label>
+                <label for="stock_storage" class="mb-2 block text-sm font-medium">Stok Gudang</label>
                 <input type="number" id="stock_storage"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Stok Gudang" required="" name="stock_storage">
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Stok Gudang" name="stok_gudang" value="{{ $barang->stok_gudang }}">
             </div>
             <div>
-                <label for="stock_store" class="block mb-2 text-sm font-medium">Stok Toko</label>
+                <label for="stock_store" class="mb-2 block text-sm font-medium">Stok Toko</label>
                 <input type="number" id="stock_store"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Stok Toko" required="" name="stock_store">
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="Stok Toko" name="stok" value="{{ $barang->stok }}">
             </div>
             <div>
-                <label for="image_main" class="block mb-2 text-sm font-medium">Gambar utama</label>
-                <input type="file" id="image_main"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Image" required="" name="image_main">
+                <label for="weight" class="mb-2 block text-sm font-medium">Berat (gram)</label>
+                <input type="number" id="weight"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                    placeholder="1 KG = 100 gram" name="berat" value="{{ $barang->berat }}">
             </div>
             <div>
-                <label for="images" class="block mb-2 text-sm font-medium">Gambar lain</label>
-                <input type="file" id="images"
-                    class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Images" required="" name="images[]">
+                <label for="stock_store" class="mb-2 block text-sm font-medium">Suplier</label>
+                <select name="" id=""
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
+                    <option value="">Pilih Suplier</option>
+                    @foreach ($supplier as $s)
+                        <option value="{{ $s->kdSupplier }}"
+                            @if ($s->kdSupplier == $barang->kdSupplier) {{ 'selected' }} @endif>
+                            {{ $s->namaSupplier }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label for="image_main" class="mb-2 block text-sm font-medium">Deskripsi</label>
+            <textarea name="deskripsi" id=""
+                class="block h-28 w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                placeholder="Deskripsi Produk">{{ $barang->deskripsi }}</textarea>
+        </div>
+
+        <div class="mt-2 grid gap-6 md:grid-cols-2">
+            <div>
+                <label for="image_main" class="mb-3 block text-sm font-medium">Gambar utama</label>
+                @if ($barang->cloud_img == null)
+                    <input type="file" id="image_main"
+                        class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Image" name="cloud_img">
+                @else
+                    Gambar utama sudah ada, hapus terlebih dahulu jika ingin menggantinya!
+                @endif
+            </div>
+            {{-- <img src="{{ $barang->img_urls }}" alt="" class="h-auto w-[100px]"> --}}
+
+
+            <div class="max-w-screen-xxs rounded-lg">
+                <img src="{{ $barang->img_urls }}" class="mb-2 h-auto w-[100px]">
+                {{-- <a href=""
+                    class="flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">
+                    Hapus
+                </a> --}}
+                <form action="/deletecover/{{ $barang->barcode }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    @method('delete')
+                    <button type="submit"
+                        class="flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
+                        Gambar</button>
+                </form>
             </div>
 
         </div>
-        <div class="mb-6">
+
+        <div class="mt-5">
+            <label for="images" class="mb-3 block text-left text-sm font-medium md:text-center">Gambar lain (tidak
+                wajib)</label>
+            <div class="grid gap-6 md:grid-cols-3">
+                <div>
+                    <input type="file" id="images"
+                        class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Images" name="images">
+                </div>
+                <div>
+                    <input type="file" id="images"
+                        class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Images" name="images">
+                </div>
+                <div>
+                    <input type="file" id="images"
+                        class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Images" name="images">
+                </div>
+            </div>
+        </div>
+
+        <b class="mt-3 text-center">Gambar lain(tidak wajib)</b>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-3">
+            <div>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, vero?
+            </div>
+            <div>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, vero?
+            </div>
+            <div>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam, vero?
+            </div>
+        </div>
+
+        <div class="mt-8 mb-8">
             <button type="submit"
-                class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i
-                    class="fa fa-edit"></i> Edit</button>
+                class="w-full rounded-lg bg-blue-700 p-3 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>
             <a href="/dashboard/products" type="button"
-                class="mt-3 text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Batal</a>
+                class="w-full rounded-lg bg-gray-700 p-3 text-center text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 sm:w-auto">Batal</a>
         </div>
     </form>
+    {{-- jQuery Script --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {{-- Check Slug --}}
+    <script>
+        $('#namaBarang').change(function(e) {
+            $.get('{{ url('check_slug_barang') }}', {
+                    'namaBarang': $(this).val()
+                    console.log(namaBarang.value)
+                },
+                function(data) {
+                    $('#slug').val(data.slug);
+                    console.log(data.slug);
+                }
+            );
+        });
+    </script>
 @endsection

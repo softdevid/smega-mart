@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kategori extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = 'tabelkategori';
-    protected $primaryKey = 'kdKategori';
-    protected $guarded = ['kdKategori'];
+  protected $table = 'tabelkategori';
+  protected $primaryKey = 'kdKategori';
+  protected $guarded = ['kdKategori'];
 
-    public function product()
-    {
-      return $this->hasMany(Barang::class);
-    }
+  public function barang()
+  {
+    return $this->hasOne(Barang::class, 'barcode');
+  }
 }

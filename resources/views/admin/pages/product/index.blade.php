@@ -64,15 +64,20 @@
                             </td>
                             <td class="text-center">
                                 {{ $product->kategori->namaKategori }}
+                                {{-- {{ $product->kdKategori }} --}}
                             </td>
                             <td class="flex py-2 px-1 items-center md:px-auto text-center">
                                 <a href="{{ route('products.show', [$product->barcode]) }}"
                                     class="bg-blue-700 text-white font-bold p-2 rounded-lg hover:bg-blue-800 text-sm w-full mx-3">Detail</a>
                                 <a href="{{ route('products.edit', [$product->barcode]) }}"
                                     class="bg-yellow-300 text-black font-bold hover:bg-yellow-400 p-2 rounded-lg text-sm w-full mx-3">Edit</a>
-                                <a href="#" onclick="return confirm('Yakin dihapus?')"
-                                    class="bg-red-600 text-white hover:bg-red-700 p-2 rounded-lg text-sm w-full mx-3">
-                                    Hapus</a>
+                                <form action="{{ route('products.destroy', [$product->barcode]) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button onclick="return confirm('Yakin dihapus?')"
+                                        class="bg-red-600 text-white hover:bg-red-700 p-2 rounded-lg text-sm w-full mx-3">
+                                        Hapus</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

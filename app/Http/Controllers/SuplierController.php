@@ -43,16 +43,16 @@ class SuplierController extends Controller
    */
   public function store(Request $request)
   {
-    $rules['kdSupplier'] = 'unique:datasupplier';
-    if ($rules['kdSupplier']) {
-      return back();
-    } elseif (!$rules['kdSupplier']) {
+    $suplier = Suplier::find($request->kdSupplier);
+    if ($suplier == NULL) {
       Suplier::create([
         'kdSupplier' => $request->kdSupplier,
         'namaSupplier' => $request->namaSupplier,
         'slug' => Str::slug($request->namaSupplier),
       ]);
       return back()->with('success', 'Suplier berhasil ditambah!!');
+    } elseif ($request->kdSupplier == $suplier->kdSupplier) {
+      return back()->with('error', 'Kode supplier sudah ada, ganti dengan yang lain');
     }
   }
   /**
@@ -78,11 +78,24 @@ class SuplierController extends Controller
    */
   public function edit(Suplier $suplier)
   {
-    $suplier = Suplier::findOrFail($suplier->id);
-    return view('admin.pages.suplier.edit', [
-      'title' => 'Edit',
-      'suplier' => $suplier,
-    ]);
+    // $suplier = Suplier::findOrFail($suplier->id);
+    // return view('admin.pages.suplier.edit', [
+    //   'title' => 'Edit',
+    //   'suplier' => $suplier,
+    // ]);
+
+    $suplier = Suplier::find($suplier->kdSupplier);
+    dd($suplier);
+    if (!$suplier->kdSupplier == $suplier->kdSupplier) {
+      $suplier->update([
+        'kdSupplier' => $suplier->kdSupplier,
+        'namaSupplier' => $suplier->namaSupplier,
+        'slug' => Str::slug($suplier->namaSupplier),
+      ]);
+      return back()->with('success', 'Suplier berhasil diedit!!');
+    } elseif ($suplier->kdSupplier == $suplier->kdSupplier) {
+      return back()->with('error', 'Kode supplier sudah ada, ganti dengan yang lain');
+    }
   }
 
   /**
@@ -94,18 +107,40 @@ class SuplierController extends Controller
    */
   public function update(Request $request, Suplier $suplier)
   {
-    $suplier = Suplier::findOrFail($suplier->kdSupplier);
-    if ($request->kdSupplier = $suplier->kdSupplier) {
-      $rules['kdSupplier'] = 'required|datasupplier:unique';
-      return back()->with('error', 'Kode Suplier sudah digunakan, buat kode lain');
+    // $suplier = Suplier::findOrFail($suplier->kdSupplier);
+    // if ($request->kdSupplier = $suplier->kdSupplier) {
+    //   $rules['kdSupplier'] = 'required|datasupplier:unique';
+    //   return back()->with('error', 'Kode Suplier sudah digunakan, buat kode lain');
+    // }
+
+    // $suplier->update([
+    //   'kdSupplier' => $request->kdSupplier,
+    //   'namaSupplier' => $request->namaSupplier,
+    //   'slug' => $request->slug,
+    // ]);
+    // return redirect()->to('suplier')->with('success', 'Suplier berhasil di edit!!');
+
+    $supplier = Suplier::find($suplier->kdSupplier);
+
+    $rules = [
+      'namaSupplier' => 'required|max:255',
+      'slug' => 'required|max:18|unique:datasupplier'
+    ];
+
+    if ($request->kdSupplier != $supplier->kdSupplier) {
+      $rules['kdSupplier'] = 'required|unique:datasupplier';
     }
 
-    $suplier->update([
-      'kdSupplier' => $request->kdSupplier,
-      'namaSupplier' => $request->namaSupplier,
-      'slug' => $request->slug,
-    ]);
-    return redirect()->to('suplier')->with('success', 'Suplier berhasil di edit!!');
+    $data = [
+      "kdSupplier" => $request->kdSupplier,
+      "namaSupplier" => $request->namaSupplier,
+      "slug" => $request->slug,
+    ];
+
+    $supplier->where('kdSupplier', $supplier->kdSupplier)
+      ->update($data);
+
+    return back()->with('success', 'Berhasil diedit!');
   }
 
   /**

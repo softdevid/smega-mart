@@ -12,11 +12,12 @@ class Barang extends Model
   protected $table = 'databarang';
   protected $primaryKey = 'barcode';
   protected $guarded = [];
-  protected $with = ['kategori'];
+  protected $with = ['kategori', 'supplier'];
 
   public function kategori()
   {
     return $this->belongsTo(Kategori::class, 'kdKategori');
+    // return $this->belongsTo(Kategori::class);
   }
 
   public function satuan()
@@ -24,8 +25,13 @@ class Barang extends Model
     return $this->belongsTo(Satuan::class);
   }
 
-  public function suplier()
+  public function supplier()
   {
-    return $this->belongsToMany(Suplier::class);
+    return $this->belongsTo(Suplier::class, 'kdSupplier');
+  }
+
+  public function gambar()
+  {
+    return $this->hasMany(Gambar::class, 'barcode');
   }
 }

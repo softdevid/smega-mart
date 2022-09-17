@@ -25,7 +25,7 @@
             </button>
         </div>
     @endif
-    <form action="{{ route('products.store') }}" method="POST" class="mb-6">
+    <form action="{{ route('products.store') }}" method="POST" class="mb-6" enctype="multipart/form-data">
         @csrf
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
@@ -124,17 +124,17 @@
                 <div>
                     <input type="file" id="images"
                         class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Images" name="images[]">
+                        placeholder="Images" name="images">
                 </div>
                 <div>
                     <input type="file" id="images"
                         class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Images" name="images[]">
+                        placeholder="Images" name="images">
                 </div>
                 <div>
                     <input type="file" id="images"
                         class="shadow-md border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Images" name="images[]">
+                        placeholder="Images" name="images">
                 </div>
             </div>
 
