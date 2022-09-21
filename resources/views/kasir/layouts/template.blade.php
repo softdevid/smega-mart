@@ -25,21 +25,21 @@
 
 
     <nav
-        class="sm:px-4 py-2.5 bg-[#bb1724] text-white fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
-        <div class="container flex flex-wrap justify-between items-center mx-auto">
-            <a href="/admin-dashboard" class="flex items-center ml-3 sm:ml-0">
+        class="fixed top-0 left-0 z-20 w-full border-b border-gray-200 bg-[#bb1724] py-2.5 text-white dark:border-gray-600 sm:px-4">
+        <div class="container mx-auto flex flex-wrap items-center justify-between">
+            <a href="/admin-dashboard" class="ml-3 flex items-center sm:ml-0">
                 {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"> --}}
-                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"><b>KASIR</b> | Smega
+                <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"><b>KASIR</b> | Smega
                     Mart</span>
             </a>
             <div class="flex md:order-2">
                 <a href="/logout" type="submit"
-                    class="text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Logout</a>
+                    class="mr-3 rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:mr-0">Logout</a>
                 <button data-collapse-toggle="navbar-sticky" type="button"
-                    class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden bg-gray-100 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    class="inline-flex items-center rounded-lg bg-gray-100 p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
                     aria-controls="navbar-sticky" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                    <svg class="h-6 w-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
@@ -47,27 +47,27 @@
                     </svg>
                 </button>
             </div>
-            <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+            <div class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto" id="navbar-sticky">
                 <ul
-                    class="flex flex-col p-4 mt-4 bg-white text-black rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-[#bb1724]">
+                    class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-white p-4 text-black md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-[#bb1724] md:text-sm md:font-medium">
                     <li>
                         <a href="{{ route('kasir.index') }}"
-                            class="block py-2 pr-4 pl-3 text-black rounded hover:text-black md:hover:bg-transparent md:hover:text-white md:hover:bg-blue-800 md:p-2 {{ request()->is('/dashboard') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }}"
+                            class="{{ request()->is('/dashboard') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Kasir</a>
                     </li>
                     <li>
                         <a href="#"
-                            class="block py-2 pr-4 pl-3 text-black rounded hover:text-black md:hover:bg-transparent md:hover:text-white md:hover:bg-blue-800 md:p-2 {{ request()->is('/dashboard/products') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }}"
+                            class="{{ request()->is('/dashboard/products') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Dashboard</a>
                     </li>
                     <li>
                         <a href="{{ route('laporan.index') }}"
-                            class="block py-2 pr-4 pl-3 text-black rounded hover:text-black md:hover:bg-transparent md:hover:text-white md:hover:bg-blue-800 md:p-2 {{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }}"
+                            class="{{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Laporan</a>
                     </li>
                     <li>
                         <a href="/orders"
-                            class="block py-2 pr-4 pl-3 text-black rounded hover:text-black md:hover:bg-transparent md:hover:text-white md:hover:bg-blue-800 md:p-2 {{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }}"
+                            class="{{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Pesanan</a>
                     </li>
                 </ul>
@@ -85,16 +85,16 @@
             </div>
         </div>
     </div> --}}
-    <header class="bg-white shadow mt-16 sm:mt-20">
+    <header class="mt-16 bg-white shadow sm:mt-20">
         @if ($title == 'Laporan')
             <div
-                class="container flex flex-wrap justify-between items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <h1 class="flex text-3xl tracking-tight font-bold text-gray-900">{{ $title }}</h1>
+                class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
 
                 <!-- drawer init and toggle -->
                 <div class="text-right">
                     <button
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        class="mr-2 mb-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe"
                         data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]"
                         aria-controls="drawer-swipe">
@@ -104,16 +104,16 @@
             </div>
         @else
             <div
-                class="container flex flex-wrap justify-between items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <h1 class="flex text-3xl tracking-tight font-bold text-gray-900">{{ $title }}</h1>
+                class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
             </div>
         @endif
     </header>
     <main>
-        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <!-- Replace with your content -->
             <div class="px-4 py-6 sm:px-0">
-                <div class="rounded-lg h-96">
+                <div class="h-96 rounded-lg">
                     @yield('content')
                 </div>
             </div>
@@ -146,8 +146,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#table-datatables').DataTable({
-                // dom: 'Bfrtip',
-                // buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
             });
         });
     </script>

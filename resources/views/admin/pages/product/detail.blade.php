@@ -1,18 +1,23 @@
 @extends('admin.layouts.template')
 @section('content')
     <div class="container">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white border rounded-lg p-8">
+        <div class="grid grid-cols-1 items-center gap-8 rounded-lg border bg-white p-8 lg:grid-cols-12">
             <div class="lg:col-span-4">
                 <main id="gallery">
                     <div id="main-image">
                         <img src="{{ $product->img_urls }}" alt="Image"
-                            class="object-contain max-w-full h-[314px] mt-2 p-1 bg-gray-50 border border-gray-300 rounded-md">
+                            class="mt-2 h-[314px] max-w-full rounded-md border border-gray-300 bg-gray-50 object-contain p-1">
                     </div>
-                    <div id="images" class="grid grid-cols-4 gap-x-4 mt-3">
-                        <img src="/assets/img/roma-wafello-chocoblast-depan.jpg" alt="Image"
-                            class="max-w-full h-auto mt-2 p-1 bg-gray-50 border border-gray-300 rounded-md">
-                        <img src="/assets/img/roma-wafello-chocoblast-belakang.jpg" alt="Image"
-                            class="max-w-full h-auto mt-2 p-1 bg-white border border-gray-300 rounded-md">
+                    <div id="images" class="mt-3 grid grid-cols-4 gap-x-4">
+                        <img src="{{ $product->img_urls }}" alt="Image"
+                            class="mt-2 h-auto max-w-full rounded-md border border-gray-300 bg-gray-50 p-1">
+                        {{-- <img src="/assets/img/roma-wafello-chocoblast-belakang.jpg" alt="Image"
+                            class="mt-2 h-auto max-w-full rounded-md border border-gray-300 bg-white p-1">
+                        <img src="{{ $product->img_Urls }}" class="img" alt="#"> --}}
+                        @foreach ($images as $images)
+                            <img src="{{ $images->img_urls }}" alt="Image"
+                                class="mt-2 h-auto max-w-full rounded-md border border-gray-300 bg-white p-1">
+                        @endforeach
                     </div>
                     <script>
                         let images = document.querySelectorAll("#gallery > #images > img");
@@ -26,8 +31,8 @@
                 </main>
             </div>
             <div class="lg:col-span-4">
-                <div class="mt-7 lg:mt-0 p-1 lg:p-0 lg:pl-5">
-                    <h2 class="mb-3 text-xl text-gray-600 font-semibold uppercase tracking-wide">
+                <div class="mt-7 p-1 lg:mt-0 lg:p-0 lg:pl-5">
+                    <h2 class="mb-3 text-xl font-semibold uppercase tracking-wide text-gray-600">
                         {{ $product->namaBarang }}
                     </h2>
                     <p class="mb-3 text-sm text-slate-600">
@@ -49,7 +54,7 @@
                 </div>
             </div>
             <div class="lg:col-span-4">
-                <div class="mt-7 lg:mt-0 p-1 lg:p-0 lg:pl-5">
+                <div class="mt-7 p-1 lg:mt-0 lg:p-0 lg:pl-5">
                     <h1 class="text-2xl">Bahan Pembuat:</h1>
                     <p>{{ $product->deskripsi }}</p>
                 </div>

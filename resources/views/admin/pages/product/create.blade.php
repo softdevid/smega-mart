@@ -25,6 +25,15 @@
             </button>
         </div>
     @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form action="{{ route('products.store') }}" method="POST" class="mb-6" enctype="multipart/form-data">
         @csrf
         <div class="mb-6 grid gap-6 md:grid-cols-2">
@@ -33,12 +42,18 @@
                 <input type="text" id="barcode"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="No. Barcode" name="barcode">
+                <span>
+                    @error('barcode')
+                        <b class="text-red">{{ $message }}</b>
+                    @enderror
+                </span>
             </div>
             <div>
                 <label for="name" class="mb-2 block text-sm font-medium">Nama Barang</label>
-                <input type="text" id="name"
+                <input type="text" id="namaBarang"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Nama Produk" name="namaBarang">
+                <input type="hidden" name="slug" id="slug">
             </div>
             <div>
                 <label for="purchase_price" class="mb-2 block text-sm font-medium">Harga Beli</label>
@@ -52,53 +67,51 @@
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Harga Jual" name="hrgJual">
             </div>
-            <div>
-                <label for="stock_store" class="mb-2 block text-sm font-medium">Satuan</label>
-                <select name="kdSatuan" id=""
-                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-                    <option value="" class="hover:bg-blue-600 hover:text-white">Pilih Satuan</option>
-                    @foreach ($satuan as $s)
-                        <option value="{{ $s->kdSatuan }}" class="uppercase">{{ $s->namaSatuan }}</option>
-                    @endforeach
-                </select>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div>
+                    <label for="stock_store" class="mb-2 block text-sm font-medium">Satuan</label>
+                    <select name="kdSatuan" id=""
+                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
+                        <option value="" class="hover:bg-blue-600 hover:text-white">Pilih Satuan</option>
+                        @foreach ($satuan as $s)
+                            <option value="{{ $s->kdSatuan }}" class="uppercase">{{ $s->namaSatuan }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="stock_store" class="mb-2 block text-sm font-medium">Kategori</label>
+                    <select name="kdKategori" id=""
+                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
+                        <option value="">Pilih Kategori</option>
+                        @foreach ($kategori as $k)
+                            <option value="{{ $k->kdKategori }}">{{ $k->namaKategori }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="stock_store" class="mb-2 block text-sm font-medium">Suplier</label>
+                    <select name="kdSupplier" id=""
+                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
+                        <option value="">Pilih Suplier</option>
+                        @foreach ($supplier as $s)
+                            <option value="{{ $s->kdSupplier }}">{{ $s->namaSupplier }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div>
-                <label for="stock_store" class="mb-2 block text-sm font-medium">Kategori</label>
-                <select name="kdKategori" id=""
-                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-                    <option value="">Pilih Kategori</option>
-                    @foreach ($kategori as $k)
-                        <option value="{{ $k->kdKategori }}">{{ $k->namaKategori }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
-                <label for="stock_storage" class="mb-2 block text-sm font-medium">Stok Gudang</label>
-                <input type="number" id="stock_storage"
-                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Stok Gudang" name="stok_gudang">
-            </div>
-            <div>
-                <label for="stock_store" class="mb-2 block text-sm font-medium">Stok Toko</label>
-                <input type="number" id="stock_store"
-                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Stok Toko" name="stok">
-            </div>
-            <div>
-                <label for="weight" class="mb-2 block text-sm font-medium">Berat (gram)</label>
-                <input type="number" id="weight"
-                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="1 KG = 100 gram" name="berat">
-            </div>
-            <div>
-                <label for="stock_store" class="mb-2 block text-sm font-medium">Suplier</label>
-                <select name="" id=""
-                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-                    <option value="">Pilih Suplier</option>
-                    @foreach ($supplier as $s)
-                        <option value="{{ $s->kdSupplier }}">{{ $s->namaSupplier }}</option>
-                    @endforeach
-                </select>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                    <label for="stock_storage" class="mb-2 block text-sm font-medium">Stok Gudang</label>
+                    <input type="number" id="stock_storage"
+                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Stok Gudang" name="stok_gudang">
+                </div>
+                <div>
+                    <label for="stock_store" class="mb-2 block text-sm font-medium">Stok Toko</label>
+                    <input type="number" id="stock_store"
+                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        placeholder="Stok Toko" name="stok">
+                </div>
             </div>
         </div>
 
@@ -109,13 +122,11 @@
                 placeholder="Deskripsi Produk"></textarea>
         </div>
 
-        <div class="mt-2 grid gap-6 md:grid-cols-2">
-            <div>
-                <label for="image_main" class="mb-3 block text-sm font-medium">Gambar utama</label>
-                <input type="file" id="image_main"
-                    class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Image" name="cloud_img">
-            </div>
+        <div class="w-full">
+            <label for="image_main" class="mb-3 block text-sm font-medium">Gambar utama</label>
+            <input type="file" id="image_main"
+                class="block w-full rounded-lg border border-gray-300 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                placeholder="Image" name="cloud_img">
         </div>
 
         <div class="mt-5">
@@ -147,15 +158,14 @@
                 class="mt-3 w-full rounded-lg bg-gray-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 sm:w-auto">Batal</a>
         </div>
     </form>
-    {{-- jQuery Script --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
     {{-- Check Slug --}}
     <script>
-        $('#name').change(function(e) {
-            $.get('{{ url('check_slug') }}', {
-                    'name': $(this).val()
-                    console.log(name.value)
+        $('#namaBarang').change(function(e) {
+            $.get('{{ url('check_slug_barang') }}', {
+                    'namaBarang': $(this).val()
+                    // console.log(name.value)
                 },
                 function(data) {
                     $('#slug').val(data.slug);
@@ -163,5 +173,20 @@
                 }
             );
         });
+
+        // function store() {
+        //     var namaBarang = $("namaBarang").val();
+        //     $.ajax {
+        //         {
+        //             type: "get",
+        //             url: "{{ url('/store') }}",
+        //             data: "namaBarang=" + namaBarang,
+        //             console.log(namaBarang.value);
+        //             success: function(data) {
+        //                 "berhasil"
+        //             }
+        //         }
+        //     };
+        // }
     </script>
 @endsection

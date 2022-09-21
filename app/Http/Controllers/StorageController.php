@@ -85,18 +85,19 @@ class StorageController extends Controller
     $product = Barang::findOrFail($id);
     if ($request->stock_toko) {
       $product->update([
-        'store_stock' => $product->store_stock + $request->stock_toko,
+        'stok' => $request->stock_toko + $product->stok,
+        'stok_gudang' => $product->stok_gudang - $request->stock_toko,
       ]);
     }
 
-    $product = Barang::findOrFail($id);
     if ($request->stock_gudang) {
       $product->update([
-        'storage_stock' => $product->storage_stock + $request->stock_gudang,
+        'stok_gudang' => $product->stok_gudang + $request->stock_gudang,
       ]);
     }
 
-    return redirect()->to('storage')->with('success', 'Stok berhasil diupdate');
+    return back();
+    // return redirect()->to('storage')->with('success', 'Stok berhasil diupdate');
   }
 
   /**

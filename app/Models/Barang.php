@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Barang extends Model
 {
   use HasFactory;
+  use Sluggable;
 
   protected $table = 'databarang';
   protected $primaryKey = 'barcode';
@@ -22,7 +24,7 @@ class Barang extends Model
 
   public function satuan()
   {
-    return $this->belongsTo(Satuan::class);
+    return $this->belongsTo(Satuan::class, 'kdSatuan');
   }
 
   public function supplier()
@@ -33,5 +35,15 @@ class Barang extends Model
   public function gambar()
   {
     return $this->hasMany(Gambar::class, 'kdGambar');
+  }
+
+
+  public function sluggable(): array
+  {
+    return [
+      'slug' => [
+        'source' => 'namaBarang'
+      ]
+    ];
   }
 }
