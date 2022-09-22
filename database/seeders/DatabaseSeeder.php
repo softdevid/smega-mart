@@ -15,22 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-          "namaUser" => "Admin",
-          "password" => Hash::make("SMart@2022"),
-          "email" => "smegamart@smega.sch.id",
-          "level" => "admin",
-        ]);
+      User::create([
+        "namaUser" => "Admin",
+        "password" => Hash::make("SMart@2022"),
+        "email" => "smegamart@smega.sch.id",
+        "level" => "admin",
+      ]);
 
-        User::create([
-          "namaUser" => "Kasir",
-          "password" => Hash::make("KSM@2022"),
-          "email" => "ksm@smega.sch.id",
-          "level" => "kasir",
-        ]);
+      User::create([
+        "namaUser" => "Kasir",
+        "password" => Hash::make("KSM@2022"),
+        "email" => "ksm@smega.sch.id",
+        "level" => "kasir",
+      ]);
 
-        $this->call([
-          BarangSeeder::class
-        ]);
+      $this->call([
+        BarangSeeder::class
+      ]);
     }
 }

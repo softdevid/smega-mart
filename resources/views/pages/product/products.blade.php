@@ -18,17 +18,17 @@
     </div>
     <div class="col-span-9">
       <div class="bg-white px-5 py-4 border border-gray-200 rounded sm:flex sm:items-center sm:justify-center">
-          <label for="sorting-product" class="inline-block text-sm font-light">Berdasarkan</label>
-          <select name="sortBy" id="sorting-product" class="inline-block bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg mx-2 focus:ring-[#c51826] focus:border-[#c51826]">
-            <option value="latest" selected>Terbaru</option>
-            <option value="expensive">Mahal - Murah</option>
-            <option value="cheap">Murah - Mahal</option>
-          </select>
-          <div class="mt-3 sm:mt-0 inline-block">
-            <div class="text-sm font-light">
-              Menampilkan {{ $products->firstItem() }} - {{ $products->lastItem() }} produk dari total {{ $products->total() }}
-            </div>
+        <label for="sorting-product" class="inline-block text-sm font-light">Berdasarkan</label>
+        <select name="sortBy" id="sorting-product" class="inline-block bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg mx-2 focus:ring-[#c51826] focus:border-[#c51826]">
+          <option value="latest" selected>Terbaru</option>
+          <option value="expensive">Mahal - Murah</option>
+          <option value="cheap">Murah - Mahal</option>
+        </select>
+        <div class="mt-3 sm:mt-0 inline-block">
+          <div class="text-sm font-light">
+            Menampilkan {{ $products->firstItem() }} - {{ $products->lastItem() }} produk dari total {{ $products->total() }}
           </div>
+        </div>
       </div>
 
       <div id="products-grid" class="py-3">
@@ -36,5 +36,29 @@
       </div>
     </div>
   </div>
+  <script>
+   let pagination = document.querySelectorAll('#pagination a');
+    pagination.forEach((link) => {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        let page = link.getAttribute('href').split("page=")[1];
+        history.pushState(null, null, `?page=${page}`);
+        fetch(`/products?page=${page}`, {
+          method: 'GET',
+        })
+        .then(response => response.text())
+        .then(html => {
+          let parser = new DOMParser();
+
+          let doc = parser.parseFromString(html, "text/html");
+          doc.querySelector('#products-grid').innerHTML;
+        })
+        .catch(function(err) {
+          console.log('Failed to fetch page: ', err);
+        });
+      });
+    });
+  </script>
 </div>
 @endsection

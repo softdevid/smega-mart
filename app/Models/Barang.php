@@ -19,7 +19,6 @@ class Barang extends Model
   public function kategori()
   {
     return $this->belongsTo(Kategori::class, 'kdKategori');
-    // return $this->belongsTo(Kategori::class);
   }
 
   public function satuan()
