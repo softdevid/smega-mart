@@ -67,7 +67,7 @@
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Harga Jual" name="hrgJual">
             </div>
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                     <label for="stock_store" class="mb-2 block text-sm font-medium">Satuan</label>
                     <select name="kdSatuan" id=""
@@ -85,16 +85,6 @@
                         <option value="">Pilih Kategori</option>
                         @foreach ($kategori as $k)
                             <option value="{{ $k->kdKategori }}">{{ $k->namaKategori }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label for="stock_store" class="mb-2 block text-sm font-medium">Suplier</label>
-                    <select name="kdSupplier" id=""
-                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-                        <option value="">Pilih Suplier</option>
-                        @foreach ($supplier as $s)
-                            <option value="{{ $s->kdSupplier }}">{{ $s->namaSupplier }}</option>
                         @endforeach
                     </select>
                 </div>

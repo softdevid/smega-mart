@@ -43,7 +43,6 @@ class BarangController extends Controller
       'title' => 'Tambah Produk',
       'satuan' => Satuan::all(),
       'kategori' => Kategori::all(),
-      'supplier' => Suplier::all(),
     ]);
   }
 
@@ -62,7 +61,6 @@ class BarangController extends Controller
       'hrgJual' => 'required',
       'kdSatuan' => 'required',
       'kdKategori' => 'required',
-      'kdSupplier' => 'required',
       'stok' => 'required',
       'stok_gudang' => 'required',
       'deskripsi' => 'required',
@@ -134,7 +132,6 @@ class BarangController extends Controller
    */
   public function edit($barcode)
   {
-    $supplier = Suplier::all();
     $kategori = Kategori::all();
     $satuan = Satuan::all();
     $barang = Barang::findOrFail($barcode);
@@ -167,7 +164,6 @@ class BarangController extends Controller
       'hrgJual' => 'required',
       'kdSatuan' => 'required',
       'kdKategori' => 'required',
-      'kdSupplier' => 'required',
       'stok' => 'required',
       'stok_gudang' => 'required',
       'deskripsi' => 'required',
