@@ -6,14 +6,26 @@
             <div class="md:col-span-5 lg:col-span-5">
                 <main id="gallery">
                     <div id="main-image">
-                        <img src="{{ $product->img_urls }}" alt="Image"
-                            class="object-contain w-full sm:w-10/12 md:w-full sm:mx-auto md:m-0 mt-2 p-1 bg-gray-50 border border-gray-300 rounded-md">
+                      @if($product->cloud_Img == null or $product->cloud_img == '-')
+                        <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg" alt="Image"
+                            class="mt-2 h-[314px] max-w-full rounded-md border border-gray-300 bg-gray-50 object-contain p-1">
+                      @else
+                      	<img src="{{ $product->img_urls }}" alt="Image"
+                            class="mt-2 h-[314px] max-w-full rounded-md border border-gray-300 bg-gray-50 object-contain p-1">
+                      @endif
                     </div>
-                    <div id="images" class="grid grid-cols-4 gap-x-4 mt-3">
-                        <img src="{{ $product->img_urls }}" alt="Image"
-                            class="max-w-full h-auto mt-2 p-1 bg-gray-50 border border-gray-300 rounded-md">
-                        <img src="{{ $product->img_urls }}" alt="Image"
-                            class="max-w-full h-auto mt-2 p-1 bg-white border border-gray-300 rounded-md">
+                    <div id="images" class="mt-3 grid grid-cols-4 gap-x-4">
+                      @if($product->cloud_Img == null or $product->cloud_img == '-')
+                        <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg" alt="Image"
+                            class="mt-2 h-auto max-w-full rounded-md border border-gray-300 bg-gray-50 p-1">
+                      @else
+                      	<img src="{{ $product->img_urls }}" alt="Image"
+                            class="mt-2 h-auto max-w-full rounded-md border border-gray-300 bg-gray-50 p-1">
+                      @endif
+                        @foreach ($images as $images)
+                            <img src="{{ $images->img_urls }}" alt="Image"
+                                class="mt-2 h-auto max-w-full rounded-md border border-gray-300 bg-white p-1">
+                        @endforeach
                     </div>
                     <script>
                         let images = document.querySelectorAll("#gallery > #images > img");
@@ -48,28 +60,6 @@
                 <div class="my-4">
                   {{-- <h1 class="text-2xl text-center">Bahan pembuat</h1> --}}
                   <p>{{ $product->deskripsi }}</p>
-                </div>
-                <div class="overflow-x-auto relative">
-                    <table class="table-auto w-full text-sm text-left text-gray-700">
-                        <tbody>
-                            {{-- <tr>
-                                <td class="text-gray-900 whitespace-nowrap">Merek</td>
-                                <td>Roma</td>
-                            </tr> --}}
-                            <tr>
-                                <td class="text-gray-900 whitespace-nowrap">Varian</td>
-                                {{-- <td>{{ $product->variant }}</td> --}}
-                            </tr>
-                            <tr>
-                                <td class="text-gray-900 whitespace-nowrap">Berat</td>
-                                {{-- <td>{{ $product->weight }} gram</td> --}}
-                            </tr>
-                            {{-- <tr>
-                                <td class="text-gray-900 whitespace-nowrap">Manufaktur</td>
-                                <td>PT Mayora Indah TBK</td>
-                            </tr> --}}
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>

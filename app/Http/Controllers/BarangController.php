@@ -105,7 +105,8 @@ class BarangController extends Controller
     //   'namaBarang' => $request->namaBarang,
     //   'slug' => Str::slug($request->namaBarang),
     // ]);
-    return back()->with('success', 'Berhasil ditambah');
+    // return back()->with('success', 'Berhasil ditambah');
+    return back();
   }
 
   /**
@@ -133,11 +134,11 @@ class BarangController extends Controller
    */
   public function edit($barcode)
   {
-    $gambar = Gambar::where('barcode', $barcode)->get();
     $supplier = Suplier::all();
     $kategori = Kategori::all();
     $satuan = Satuan::all();
     $barang = Barang::findOrFail($barcode);
+    $gambar = Gambar::where('barcode', $barcode)->get();
     // dd($barang);
     return view('admin.pages.product.edit', [
       'title' => 'Edit Produk',
@@ -156,9 +157,9 @@ class BarangController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $barcode)
+  public function update(Request $request, $id)
   {
-    $product = Barang::findOrFail($barcode);
+    $product = Barang::findOrFail($id);
     $rules = [
       'namaBarang' => 'required|max:255',
       'slug' => 'required|max:255',
@@ -222,17 +223,27 @@ class BarangController extends Controller
   {
     $barang = Barang::findOrFail($barcode);
 
-    $images = Gambar::where("barcode", $barang->barcode)->get();
-    // dd($images);
-    foreach ($images as $image) {
-      Cloudinary::destroy($image->cloud_img);
+    if ($barang->cloud_img == null) {
+
+      $images = Gambar::where("barcode", $barang->barcode)->get();
+      // dd($images);
+      foreach ($images as $image) {
+        Cloudinary::destroy($image->cloud_img);
+      }
+      Gambar::where("barcode", $barang->barcode)->delete();
+      $cloud_img = $barang->cloud_img;
+      Cloudinary::destroy($cloud_img);
+      Barang::destroy($barcode);
     }
-    Gambar::where("barcode", $barang->barcode)->delete();
+    if ($barang->cloud_img != null) {
 
-    $cloud_img = $barang->cloud_img;
-    Cloudinary::destroy($cloud_img);
-
-    Barang::destroy($barcode);
+      $images = Gambar::where("barcode", $barang->barcode)->get();
+      foreach ($images as $image) {
+        Cloudinary::destroy($image->cloud_img);
+      }
+      Gambar::where("barcode", $barang->barcode)->delete();
+      Barang::destroy($barcode);
+    }
     return back()->with('success', 'Berhasil dihapus!!');
   }
 

@@ -44,14 +44,12 @@ class SatuanController extends Controller
   {
     // dd($request->all());
     $rules = [
-      'slug' => 'required|units:unique',
+      'namaSatuan' => 'required|unique:tabelsatuan',
     ];
+    $validatedData = $request->validate($rules);
+    Satuan::create($validatedData);
 
-    Satuan::create([
-      'name' => $request->name,
-      '$rules[slug]' => Str::slug($request->name),
-    ]);
-    return redirect()->to('unit')->with('success', 'Satuan berhasil ditambahkan!');
+    return back()->with('success', 'Satuan berhasil ditambahkan!');
   }
 
   /**
@@ -83,17 +81,14 @@ class SatuanController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, $kdSatuan)
   {
-    $suplier = Satuan::findOrFail($id);
-    if ($request->slug != $suplier->slug) {
-      $rules['slug'] = 'required|supliers:unique';
+    $suplier = Satuan::findOrFail($kdSatuan);
+    if ($request->namaSatuan != $suplier->namaSatuan) {
+      $rules['namaSatuan'] = 'required|unique:tabelsatuan';
     }
-
-    $suplier->update([
-      'name' => $request->name,
-      'slug' => Str::slug($request->name),
-    ]);
+    $validatedData = $request->validate($rules);
+    $suplier->update($validatedData);
     return back()->with('success', 'Satuan berhasil di edit!!');
   }
 

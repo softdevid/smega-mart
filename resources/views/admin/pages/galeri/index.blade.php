@@ -71,14 +71,14 @@
                                 <img class="h-20 w-20" src="{{ $galeri->img_urls }}" alt="Jese image">
                             </td>
                             <td class="md:px-auto flex items-center py-2 px-1 text-center">
-                                {{-- <a href="{{ route('gallery.show', [$galeri->kdGaleri]) }}"
+                                {{-- <a href="{{ route('galleries.show', [$galeri->kdGaleri]) }}"
                                     class="mx-3 w-full rounded-lg bg-blue-700 p-2 text-sm font-bold text-white hover:bg-blue-800">Detail</a> --}}
                                 <button
                                     class="mx-auto rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400"
                                     type="button" data-modal-toggle="edit{{ $galeri->kdGaleri }}">
                                     Edit
                                 </button>
-                                <form action="{{ route('gallery.destroy', [$galeri->kdGaleri]) }}"
+                                <form action="{{ route('galleries.destroy', [$galeri->kdGaleri]) }}"
                                     enctype="multipart/form-data" method="post" class="mx-auto justify-center">
                                     @csrf
                                     @method('delete')
@@ -97,7 +97,7 @@
 
     {{-- modal untuk tambah --}}
     <div id="tambah" tabindex="-1" aria-hidden="true"
-        class="h-modal fixed top-0 right-0 left-0 z-50 hidden w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+        class="fixed top-0 right-0 left-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
         <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
             <!-- Modal content -->
             <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
@@ -121,7 +121,7 @@
                 <!-- Modal body -->
                 <div class="space-y-6 p-6">
                     <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    <form action="{{ route('gallery.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('galleries.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div>
                             <label for="cloud_img">Gambar</label>

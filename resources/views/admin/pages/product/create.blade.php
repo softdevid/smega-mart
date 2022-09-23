@@ -160,12 +160,13 @@
     </form>
 
 
-    {{-- Check Slug --}}
+    {{-- jQuery Script --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
         $('#namaBarang').change(function(e) {
             $.get('{{ url('check_slug_barang') }}', {
                     'namaBarang': $(this).val()
-                    // console.log(name.value)
                 },
                 function(data) {
                     $('#slug').val(data.slug);
@@ -173,20 +174,5 @@
                 }
             );
         });
-
-        // function store() {
-        //     var namaBarang = $("namaBarang").val();
-        //     $.ajax {
-        //         {
-        //             type: "get",
-        //             url: "{{ url('/store') }}",
-        //             data: "namaBarang=" + namaBarang,
-        //             console.log(namaBarang.value);
-        //             success: function(data) {
-        //                 "berhasil"
-        //             }
-        //         }
-        //     };
-        // }
     </script>
 @endsection

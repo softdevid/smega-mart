@@ -38,7 +38,7 @@ Route::get('/dashboard', [AdminController::class, 'index']);
 //Route product
 Route::resource('/dashboard/products', BarangController::class);
 Route::get('/store', [BarangController::class, 'store']);
-Route::get('/dashboard/products/list', [BarangController::class, 'list']);
+Route::get('/dashboard/products/list', [BarangController::class, 'list'])->name('product.data');
 
 
 Route::resource('storage', StorageController::class);
@@ -51,7 +51,7 @@ Route::resource('storage', StorageController::class);
 //Route suplier, satuan, galleri
 Route::resource('suplier', SuplierController::class);
 Route::resource('unit', SatuanController::class);
-Route::resource('gallery', GaleriController::class);
+Route::resource('galleries', GaleriController::class);
 
 //Route User
 Route::resource('user', UserController::class);
@@ -70,10 +70,6 @@ Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']
 Route::delete('/deletegambar/{barcode}', [BarangController::class, 'deletegambar']);
 
 //slug
-Route::get('check_slug_unit', function () {
-  $slug = SlugService::createSlug(App\Models\Satuan::class, 'slug', request('namaSatuan'));
-  return response()->json(['slug' => $slug]);
-});
 Route::get('check_slug_supplier', function () {
   $slug = SlugService::createSlug(App\Models\Satuan::class, 'slug', request('namaSupplier'));
   return response()->json(['slug' => $slug]);
