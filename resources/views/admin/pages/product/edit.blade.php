@@ -85,7 +85,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-1">
                     <div>
                         <label for="stock_store" class="mb-2 block text-sm font-medium">Kategori</label>
                         <select name="kdKategori" id=""
@@ -95,18 +95,6 @@
                                 <option value="{{ $k->kdKategori }}"
                                     @if ($k->kdKategori == $barang->kdKategori) {{ 'selected' }} @endif>
                                     {{ $k->namaKategori }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="stock_store" class="mb-2 block text-sm font-medium">Suplier</label>
-                        <select name="kdSupplier" id=""
-                            class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-                            <option value="">Pilih Suplier</option>
-                            @foreach ($supplier as $s)
-                                <option value="{{ $s->kdSupplier }}"
-                                    @if ($s->kdSupplier == $barang->kdSupplier) {{ 'selected' }} @endif>
-                                    {{ $s->namaSupplier }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -196,7 +184,7 @@
         <div class="md:col-span-4">
             <div class="grid grid-cols-2">
                 @if ($barang->cloud_img != '')
-                    <div class="max-w-screen-xxs mx-auto justify-center rounded-lg">
+                    <div class="mx-auto max-w-screen-xxs justify-center rounded-lg">
                         Gambar utama
                         <img src="{{ $barang->img_urls }}" class="mx-auto mb-2 h-auto w-[200px]">
                         <button type="button" data-modal-toggle="popup-modal"
@@ -225,7 +213,7 @@
 
 
     <div id="popup-modal" tabindex="-1"
-        class="h-modal fixed top-0 right-0 left-0 z-50 hidden overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+        class="fixed top-0 right-0 left-0 z-50 hidden h-modal overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
         <div class="relative h-full w-full max-w-xs p-4 md:h-auto">
             <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
                 <button type="button"
@@ -265,7 +253,7 @@
 
     @foreach ($gambar as $g)
         <div id="gambar-modal{{ $g->barcode }}" tabindex="-1"
-            class="h-modal fixed top-0 right-0 left-0 z-50 hidden overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+            class="fixed top-0 right-0 left-0 z-50 hidden h-modal overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
             <div class="relative h-full w-full max-w-xs p-4 md:h-auto">
                 <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
                     <button type="button"

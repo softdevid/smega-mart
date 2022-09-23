@@ -142,7 +142,6 @@ class BarangController extends Controller
       'barang' => $barang,
       'satuan' => $satuan,
       'kategori' => $kategori,
-      'supplier' => $supplier,
       'gambar' => $gambar,
     ]);
   }
