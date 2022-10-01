@@ -267,6 +267,7 @@
 
             $(document).on("click", '#btnTambah', function(e) {
                 e.preventDefault();
+                $('#barcode').attr('autofocus' , 'true');
 
                 var data = {
                     'noFakturBeli': $('#noFakturBeli').val(),
@@ -299,6 +300,9 @@
                         detail();
                         // total();
                         formPembelian();
+                    },
+                    complete: function(response){
+                      $('#barcodeHidden').attr('autofocus' , 'true');
                     }
                 })
             });
