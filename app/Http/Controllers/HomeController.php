@@ -20,6 +20,13 @@ class HomeController extends Controller
   {
     $title = "Produk";
 
+    if(request()->ajax())
+    {
+      return view('pages.product.products-grid', [
+        "products" => Barang::latest()->paginate(8)->withQueryString(),
+      ])->render();
+    }
+
     return view('pages.product.products', [
       "title" => $title,
       "products" => Barang::latest()->paginate(8)->withQueryString(),
@@ -52,8 +59,12 @@ class HomeController extends Controller
 
   public function gallery()
   {
+
+    $galleryImg = \File::allFiles(public_path('assets/img/gallery'));
+
     return view('pages.gallery', [
-      "title" => "Galeri"
+      "title" => "Galeri",
+      "images" => $galleryImg,
     ]);
   }
 }

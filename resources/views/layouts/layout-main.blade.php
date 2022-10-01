@@ -22,7 +22,7 @@
         @include('layouts.partials.breadcrumb')
     </header>
 
-    <div class="py-3 lg:py-8 px-2">
+    <div class="py-3 lg:py-8">
         @yield('content')
     </div>
 
@@ -31,7 +31,7 @@
         @include('layouts.partials.footer.partner')
     @endif
 
-    <footer class="bg-white">
+    <footer class="bg-slate-200">
         @include('layouts.partials.footer.footer-mid')
         @include('layouts.partials.footer.footer-bottom')
     </footer>
@@ -39,6 +39,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/flowbite.js') }}"></script>
     <script defer src="{{ asset('assets/fontawesome/js/all.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>

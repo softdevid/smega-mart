@@ -36,29 +36,5 @@
       </div>
     </div>
   </div>
-  <script>
-   let pagination = document.querySelectorAll('#pagination a');
-    pagination.forEach((link) => {
-      link.addEventListener('click', function(event) {
-        event.preventDefault();
-
-        let page = link.getAttribute('href').split("page=")[1];
-        history.pushState(null, null, `?page=${page}`);
-        fetch(`/products?page=${page}`, {
-          method: 'GET',
-        })
-        .then(response => response.text())
-        .then(html => {
-          let parser = new DOMParser();
-
-          let doc = parser.parseFromString(html, "text/html");
-          doc.querySelector('#products-grid').innerHTML;
-        })
-        .catch(function(err) {
-          console.log('Failed to fetch page: ', err);
-        });
-      });
-    });
-  </script>
 </div>
 @endsection

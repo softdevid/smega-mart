@@ -30,7 +30,7 @@
                 </dd>
             </dl>
             <p
-                class="col-start-1 mt-4 pl-2 md:pl-4 lg:pl-6 text-sm leading-6 dark:text-slate-400 sm:col-span-2 md:col-span-1 md:row-start-4 md:mt-2">
+                class="col-start-1 mt-4 pl-2 md:pl-4 lg:pl-6 text-sm leading-6 dark:text-slate-400 sm:col-span-2 md:col-span-1 md:row-start-4 lg:row-start-3 md:mt-2">
                 <i class="fa fa-quote-left"></i> <b><i>Smega Mart</i></b> adalah toko retail yang ada di SMK N 1
                 PURBALINGGA. Toko
                 retail yang menyediakan berbagai layanan yang sangat lengkap seperti jual makanan ringan, sepatu dan
@@ -43,13 +43,13 @@
         </div>
     </main>
 
-    <div class="mt-4 bg-white md:mt-6">
+    <div class="my-4 bg-white md:my-6">
       <main class="container">
         <div class="mx-auto grid h-auto w-full px-2 md:px-4 lg:px-6 grid-cols-1 items-center gap-4 md:grid-cols-2">
             <div>
-                <div id="controls-carousel" class="relative" data-carousel="static">
+                <div id="controls-carousel" class="relative py-2" data-carousel="static">
                     <!-- Carousel wrapper -->
-                    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                    <div class="relative h-44 overflow-hidden rounded-lg md:h-96">
                         <!-- Item 1 -->
                         <div class="absolute inset-0 z-10 -translate-x-full transform transition-all duration-100 ease-in-out"
                             data-carousel-item="">
@@ -116,36 +116,7 @@
       </main>
     </div>
 
-    <div
-        class="mt-5 h-40 w-full bg-[url('https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380857/layer%20utama/tampak-depan-bak_tyoox4.jpg')] bg-cover bg-bottom bg-blend-multiply md:h-[500px] md:w-full md:bg-bottom">
-        <div class="mx-auto flex items-center justify-center">
-            <p
-                class="mt-7 bg-black/[0.2] p-3 text-center text-sm text-white md:mt-[250px] md:rounded-lg md:bg-black/[0.5] md:text-2xl md:text-white">
-                Belanja di
-                toko dengan
-                segala
-                kelengkapannya
-            </p>
-        </div>
-    </div>
-
-    {{-- <div class="bg-white text-black shadow-lg rounded-lg w-full">
-        <h1 class="text-center m-5 mt-10 text-4xl text-[#bb1724]">Mengapa memilih kami?</h1>
-        <p class="text-sm text-center -mt-3">Alasan memilih kami?</p>
-        <div class="mx-auto h-[2px] w-[100px] bg-black mt-1"></div>
-        <div class="m-5">
-            <p>1. Kami hadir untuk memenuhi kebutuhan kalian dengan berbagai layanan yang kami sediakan bukan hanya makanan
-                ringan saja ada juga produk lain seperti sepatu dan fashion.</p>
-            <p>2. Produk yang terjual memiliki kualitas terbaik dengan pemilihan suplier yang terpercaya serta bertanggung
-                jawab atas produk tersebut.</p>
-            <p>3. Mensejahterahkan siswa dan siswi SMK N 1 PURBALINGGA dan masyarakat sekitar, kami ada bukan hanya untuk
-                siswa dan siswi SMK N 1 PURBALINGGA tetapi juga untuk umum.</p>
-            <p>4. Memiliki banyak kelengkapan layanan yang tersedia ada pembayaran online, pembelian tiket pesawat dan
-                kereta dan lainnya.</p>
-        </div>
-    </div> --}}
-
-    <div class="container mt-4 md:mt-6">
+    <div class="container my-4 md:my-6">
       <div class="grid grid-cols-1 flex-wrap bg-white md:grid-cols-2">
         <div class="w-full px-4 lg:p-8">
            <div class="mb-12 max-w-[570px]">
