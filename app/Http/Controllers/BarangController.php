@@ -11,6 +11,7 @@ use App\Models\Gambar;
 use App\Models\Suplier;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
 {
@@ -29,7 +30,44 @@ class BarangController extends Controller
 
   public function list()
   {
-    return Barang::all();
+    $produk = Barang::leftJoin('tabelkategori', 'tabelkategori.kdKategori', 'databarang.kdKategori')
+      ->select('databarang.*', 'namaKategori')
+      // ->orderBy('barcode', 'asc')
+      ->get();
+
+    return datatable()
+      ->of($produk)
+      ->addIndexColumn()
+      ->addColumn('select_all', function ($produk) {
+        return '
+                    <input type="checkbox" name="barcode[]" value="' . $produk->barcode . '">
+                ';
+      })
+      ->addColumn('barcode', function ($produk) {
+        return '<span class="label label-success">' . $produk->barcode . '</span>';
+      })
+      ->addColumn('hrgBeli', function ($produk) {
+        return number_format($produk->hrgBeli, 0, ',', '.');
+      })
+      ->addColumn('hrgJual', function ($produk) {
+        return number_format($produk->hrgJual, 0, ',', '.');
+      })
+      ->addColumn('stok', function ($produk) {
+        return number_format($produk->stok, 0, ',', '.');
+      })
+      ->addColumn('stok', function ($produk) {
+        return number_format($produk->stok_gudang, 0, ',', '.');
+      })
+      ->addColumn('aksi', function ($produk) {
+        return '
+                <div class="btn-group">
+                    <button type="button" onclick="editForm(`' . route('produk.update', $produk->barcode) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button type="button" onclick="deleteData(`' . route('produk.destroy', $produk->barcode) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
+                ';
+      })
+      ->rawColumns(['aksi', 'barcode', 'select_all'])
+      ->make(true);
   }
 
   /**
@@ -103,8 +141,8 @@ class BarangController extends Controller
     //   'namaBarang' => $request->namaBarang,
     //   'slug' => Str::slug($request->namaBarang),
     // ]);
-    // return back()->with('success', 'Berhasil ditambah');
-    return back();
+    return back()->with('success', 'Berhasil ditambah');
+    // return response()->json('Berhasil', 200);
   }
 
   /**
@@ -270,5 +308,16 @@ class BarangController extends Controller
 
     $images->delete();
     return back()->with('success', 'Gambar berhasil dihapus!!');
+  }
+
+  public function data()
+  {
+    $brg = DB::table('databarang');
+    $barang = $brg->select('databarang.*', 'tabelkategori.namaKategori as namaKategori', 'tabelsatuan.namaSatuan as namaSatuan')
+      ->leftJoin('tabelkategori', 'tabelkategori.kdKategori', 'databarang.kdKategori')
+      ->leftJoin('tabelsatuan', 'tabelsatuan.kdSatuan', 'databarang.kdSatuan')
+      ->get();
+
+    return response()->json($barang);
   }
 }

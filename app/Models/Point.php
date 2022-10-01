@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Laporan extends Model
+class Point extends Model
 {
   use HasFactory;
-  protected $table = 'tabelrealpenjualan';
-  protected $primaryKey = 'no';
-  protected $guarded = ['no'];
+  protected $table = 'point';
 }

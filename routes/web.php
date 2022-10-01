@@ -31,51 +31,70 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 // Routing Admin
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/dashboard', [AdminController::class, 'index']);
+  Route::get('/dashboard', [AdminController::class, 'index']);
 
-//Route product
-Route::resource('/dashboard/products', BarangController::class);
-Route::get('/store', [BarangController::class, 'store']);
-Route::get('/dashboard/products/list', [BarangController::class, 'list'])->name('product.data');
-
-
-Route::resource('storage', StorageController::class);
-
-// //Route Gudang
-// Route::get('/stock-store/{id}', [StorageController::class, 'store']);
-// Route::post('stock-store/{id}', [StorageController::class, 'updateStore']);
-// Route::get('/stock-storage/{id}', [StorageController::class, 'storage']);
-
-//Route suplier, satuan, galleri
-Route::resource('suplier', SuplierController::class);
-Route::resource('unit', SatuanController::class);
-Route::resource('galleries', GaleriController::class);
-
-//Route User
-Route::resource('user', UserController::class);
-
-//Route Order
-Route::get('/orders', [OrderController::class, 'index']);
-
-//Route kasir
-Route::resource('kasir', KasirController::class);
-Route::resource('laporan', LaporanController::class);
+  //Route product
+  Route::resource('/dashboard/products', BarangController::class);
+  Route::get('/store', [BarangController::class, 'store']);
+  Route::get('/dashboard/products/list', [BarangController::class, 'list'])->name('product.data');
+  Route::get('/kasir-barcode-data', [KasirController::class, 'getBarcodeData'])->name('searchBarang');
 
 
-//hapus cover gambar utama dan gambar lain
-// Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
-Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
-Route::delete('/deletegambar/{barcode}', [BarangController::class, 'deletegambar']);
+  Route::resource('storage', StorageController::class);
 
-//slug
-Route::get('check_slug_supplier', function () {
-  $slug = SlugService::createSlug(App\Models\Satuan::class, 'slug', request('namaSupplier'));
-  return response()->json(['slug' => $slug]);
+  // //Route Gudang
+  // Route::get('/stock-store/{id}', [StorageController::class, 'store']);
+  // Route::post('stock-store/{id}', [StorageController::class, 'updateStore']);
+  // Route::get('/stock-storage/{id}', [StorageController::class, 'storage']);
+
+  //Route suplier, satuan, galleri
+  Route::resource('suplier', SuplierController::class);
+  Route::resource('unit', SatuanController::class);
+  Route::resource('galleries', GaleriController::class);
+
+  //Route User
+  Route::resource('user', UserController::class);
+
+  //Route Order
+  Route::get('/orders', [OrderController::class, 'index']);
+
+  //Route kasir
+  Route::resource('kasir', KasirController::class);
+
+  //route penjualan kasir
+  Route::post('/kasir/store', [KasirController::class, 'store'])->name('transaksi.store');
+  Route::get('/kasir/detail/{noFakturJualan}', [KasirController::class, 'getDetailData'])->name('transaksi.detail');
+  Route::post('/kasir/store/simpan', [KasirController::class, 'simpan'])->name('transaksi.simpan');
+
+  //route pembelian admin
+  Route::post('/admin/store', [StorageController::class, 'store'])->name('pembelian.store');
+  Route::get('/admin/detail/{noFakturBeli}', [StorageController::class, 'getDetailData'])->name('pembelian.detail');
+  Route::get('/admin/store/simpan', [StorageController::class, 'simpan'])->name('pembelian.simpan');
+
+  Route::get('/session/forget', [KasirController::class, 'destroy'])->name('forget');
+
+  Route::resource('laporan', LaporanController::class);
+
+  Route::get('data', [BarangController::class, 'data'])->name('dataBarang');
+
+  //route laporan
+  Route::post('/laporan/date', [LaporanController::class, 'date']);
+
+
+  //hapus cover gambar utama dan gambar lain
+  // Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
+  Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);
+  Route::delete('/deletegambar/{barcode}', [BarangController::class, 'deletegambar']);
+
+  //slug
+  Route::get('check_slug_supplier', function () {
+    $slug = SlugService::createSlug(App\Models\Satuan::class, 'slug', request('namaSupplier'));
+    return response()->json(['slug' => $slug]);
+  });
+  Route::get('check_slug_barang', function () {
+    $slug = SlugService::createSlug(App\Models\Barang::class, 'slug', request('namaBarang'));
+    return response()->json(['slug' => $slug]);
+  });
 });
-Route::get('check_slug_barang', function () {
-  $slug = SlugService::createSlug(App\Models\Barang::class, 'slug', request('namaBarang'));
-  return response()->json(['slug' => $slug]);
-});
-// });

@@ -1,21 +1,23 @@
-@extends('kasir.layouts.template')
+@extends('admin.layouts.template')
 @section('content')
-    {{-- <form action="{{ route('transaksi.store') }}" method="post">
-        @csrf --}}
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-4">
+    <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
         <div>
-            <input type="hidden" id="noFakturJualan" name="noFakturJualan" value="{{ $noFaktur }}">
+            <input type="hidden" id="noFakturBeli" name="noFakturBeli" value="{{ $noFakturBeli }}">
             <input type="text" class="w-full rounded-lg border p-2" placeholder="Barcode" id="barcode" name="barcode"
                 autofocus>
             <input type="hidden" id="barcodeHidden" name="barcodeHidden">
             <input type="hidden" id="namaBarang" name="namaBarang">
         </div>
         <div>
-            <input type="number" class="w-full rounded-lg border p-2" placeholder="QTY" min="1" id="jmlhJual"
-                name="jmlhJual">
+            <input type="number" class="w-full rounded-lg border p-2" placeholder="Jumlah stok Toko" min="1"
+                id="jmlBeli" name="jmlBeli">
             <input type="hidden" id="qtyHidden" name="qtyHidden">
             <input type="hidden" id="hrgJual" name="hrgJual">
             <input type="hidden" id="hrgBeli" name="hrgBeli">
+        </div>
+        <div>
+            <input type="number" class="w-full rounded-lg border p-2" placeholder="Jumlah Stok Gudang" min="0"
+                id="jmlBeli" name="jmlStok">
         </div>
         <div>
             <input type="text" class="w-full rounded-lg border bg-gray-100 p-2" placeholder="Nama Barang" disabled
@@ -29,10 +31,6 @@
     <button type="submit" class="mx-auto mt-3 rounded-lg bg-green-400 p-2 text-sm text-white hover:bg-green-600"
         id="btnTambah"><i class="fa fa-plus"></i>
         Tambah</button>
-    {{-- <button type="button" class="btnTambah mx-auto mt-3 rounded-lg bg-green-400 p-2 text-sm text-white hover:bg-green-600"
-        id="btnTambah"><i class="fa fa-plus"></i>
-        Tambah</button> --}}
-    {{-- </form> --}}
 
     <div class="mx-auto mt-5 grid grid-cols-1 md:grid-cols-2">
         <div>
@@ -40,12 +38,12 @@
                 {{-- <input type="number" name="id_user" value="{{ user()->auth()->id }}"> --}}
                 <thead class="rounded-lg bg-[#bb1724] text-white">
                     <tr>
-                        <th>#</th>
+                        {{-- <th>#</th> --}}
                         <th>Barcode</th>
-                        <th>Nama Barang</th>
                         <th>Jumlah</th>
                         <th>harga jual</th>
                         <th>Sub Total</th>
+                        {{-- <th>Aksi</th> --}}
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -54,10 +52,8 @@
 
         </div>
         <div class="ml-5 items-center justify-center">
-            <div id="formTransaksi"></div>
-        </div>
-    </div>
-    </div>
+            <div id="formPembelian"></div>
+            <input type="hidden" id="kdUser" name="kdUser" value="{{ auth()->user()->kdUser }}">
 
     {{-- <script src="/js/jquery-3.6.0.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -77,9 +73,9 @@
         }
 
         let barcode = document.querySelector("#barcode");
-        let barcodeHidden = document.querySelector("#barcodeHidden");
+        let barcodelHidden = document.querySelector("#barcodeHidden");
         let qtyHidden = document.querySelector("#qtyHidden");
-        let jmlhJual = document.querySelector("#jmlhJual");
+        let jmlBeli = document.querySelector("#jmlBeli");
 
         let namaBarang = document.querySelector("#namaBarang");
         let namaBarangHidden = document.querySelector("#namaBarangHidden");
@@ -102,18 +98,19 @@
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.barang !== null) {
-                        barcodeHidden.value = data.barang.barcode;
+                        barcodelHidden.value = data.barang.barcode;
                         namaBarang.value = data.barang.namaBarang;
                         hrgBeli.value = data.barang.hrgBeli;
                         hrgJual.value = data.barang.hrgJual;
 
-                        barcode.value = data.barang.barcode;
+                        // barcodelHidden.value = data.barang.barcode;
                         namaBarangHidden.value = data.barang.namaBarang;
                         hrgJualHidden.value = data.barang.hrgJual;
                         console.log(barcode.value, namaBarang.value, hrgBeli.value, hrgJual.value,
                             namaBarangHidden.value, hrgJualHidden.value);
                     } else {
-                        barcodeHidden.value = "";
+                        barcode.value = "";
+                        barcodelHidden.value = "";
                         namaBarang.value = "";
                         namaBarangHidden.value = "";
 
@@ -126,32 +123,44 @@
         $(document).ready(function() {
             detail();
             total();
-            formTransaksi();
+            formPembelian();
             // dataSimpan();
             // simpan();
             function detail() {
                 $.ajax({
                     type: "GET",
-                    url: "/kasir/detail/{noFakturJualan}",
+                    url: "/admin/detail/{noFakturBeli}",
                     dataType: "json",
                     success: function(response) {
 
-                        // console.log(response.penjualan);
+                        console.log(response.pembelian);
                         // console.log(response.total);
 
                         $('tbody').html('');
-                        $.each(response.penjualan, function(key, item) {
+                        $.each(response.pembelian, function(key, item) {
                             $('tbody').append(
                                 '<tr class= "border-b bg-white text-black hover:bg-gray-50 text-center w-full">\
-                                              <td class="items-center py-3 px-7 dark:text-white">' + parseInt(key + 1) + '</td>\
-                                              <td class="items-center py-3 px-7 dark:text-white">' + item.barcode + '</td>\
-                                              <td class="items-center py-3 px-7 dark:text-white">' + item.namaBarang + '</td>\
-                                              <td class="items-center py-3 px-7 dark:text-white">' + item.jmlhJual + '</td>\
-                                              <td class="items-center py-3 px-7 dark:text-white">' + item.hrgJual + '</td>\
-                                              <td class="items-center py-3 px-7 dark:text-white">' + item.jmlhJual * item
-                                .hrgJual + '</td>\
-                                              </tr>')
-                        })
+                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
+                                item
+                                .barcode +
+                                '</td>\
+                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
+                                item
+                                .jmlBeli +
+                                '</td>\
+                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
+                                item
+                                .hrgJual +
+                                '</td>\
+                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
+                                item
+                                .jmlBeli *
+                                item
+                                .hrgBeli +
+                                '</td>\
+                                                                                                                                                                                                                                                                                                  </tr>'
+                            )
+                        });
                     }
                 })
             }
@@ -159,11 +168,11 @@
             function total() {
                 $.ajax({
                     type: "GET",
-                    url: "/kasir/detail/{noFakturJualan}",
+                    url: "/admin/detail/{noFakturBeli}",
                     dataType: "json",
                     success: function(response) {
 
-                        // console.log(response.penjualan);
+                        // console.log(response.pembelian);
                         // console.log(response.total);
                         $('#total').html('');
                         $('#total').append(
@@ -175,55 +184,54 @@
             }
 
 
-            function formTransaksi() {
+            function formPembelian() {
                 $.ajax({
                     type: "GET",
-                    url: "/kasir/detail/{noFakturJualan}",
+                    url: "/admin/detail/{noFakturBeli}",
                     dataType: "json",
                     success: function(response) {
-                      console.log(response.poin);
-                        $('#formTransaksi').html('');
-                        $('#formTransaksi').append(
-                            '<div class="m-3">\
-                                        <div class="grid w-full grid-cols-1">\
-                                            <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
-                                                    <b class="text-center">Pelanggan ?</b>\
-                                                    <select name="Kd_Pelanggan" id="Kd_Pelanggan">\
-                                                  <option value="">Pilih Pelanggan ?</option>\
-                                                  @foreach ($pelanggan as $p)\
-                                                      <option value="{{ $p->kdPelanggan }}">{{ $p->namaPelanggan }}</option>\
-                                                  @endforeach\
-                                              </select>\
-                                              <input name="kdPelanggan" id="kdPelanggan">\
-                                                </div>\
-                                            </div>\
-                                            <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
-                                                    <b class="text-center">Bayar:</b>\
-                                                    <input type="number" class="w-full p-2" id="bayar" name="bayar">\
-                                                </div>\
-                                            </div>\
-                                            <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
-                                                    <b class="text-center">Total:</b>\
-                                                    <input type="number" class="w-full p-2" id="total" name="total" value="' +response.total +'">\
-                                                </div>\
-                                            </div>\
-                                            <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
-                                                  <b class="text-center">Kembali:</b>\
-                                                  <div id="kembali"></div>\
-                                                  <input type="hidden" class="w-full p-2" id="Tgl_Jual" min="0" name="Tgl_Jual" value="{{ $Tgl_Jual }}">\
-                                                    <input type="hidden" class="w-full p-2" name="Kd_Pelanggan" id="Kd_Pelanggan" value="1" min="0" disabled>\
-                                                    <input type="hidden" class="w-full p-2" id="poin" name="poin" value="'+response.poin+'" min="0">\
-                                                </div>\
-                                            </div>\
-                                        </div>\
-                                        <input type="hidden" id="Kd_User" value="{{ auth()->user()->kdUser }}">\
-                                        <button type="submit" id="btnSimpan"\
-                                        class="text-semibold rounded-lg bg-blue-600 p-2 text-center text-sm text-white">Simpan Transaksi</button>'
-                        )
+                        $('#formPembelian').html('');
+                        $('#formPembelian').append('<div class="m-3">\
+                            <div class="grid w-full grid-cols-1">\
+                                <div class="my-3">\
+                                <div class="grid grid-cols-2 gap-7">\
+                                    <b class="text-center">Supplier:</b>\
+                                    <select name="kdSupplier" id="kdSupplier" class="w-full rounded-lg border p-2">\
+                                        <option value="">Pilih supplier</option>\
+                                        @foreach ($supplier as $s)\
+                                            <option value="{{ $s->kdSupplier }}">{{ $s->namaSupplier }}</option>\
+                                        @endforeach\
+                                    </select>\
+                                </div>\
+                            </div>\
+                            <div class="my-3">\
+                                <div class="grid grid-cols-2 gap-7">\
+                                    <b class="text-center">Bayar:</b>\
+                                    <input type="number" class="w-full p-2" id="bayar" name="bayar" required>\
+                                </div>\
+                            </div>\
+                            <div class="my-3">\
+                                <div class="grid grid-cols-2 gap-7">\
+                                    <b class="text-center">Total:</b>\
+                                    <input type="number" class="w-full p-2" id="total" name="total" value="' +response.total +'">\
+                                </div>\
+                            </div>\
+                            <div class="grid grid-cols-2 gap-7">\
+                                <b class="text-center">Kembali:</b>\
+                                <div id="kembali"></div>\
+                                </div>\
+                                </div>\
+                                </div>\
+                                <input type="hidden" id="kdUser" name="kdUser" value="{{ auth()->user()->kdUser }}">\
+                                <div class="grid grid-cols-3 max-w-xs mb-4">\
+                                    <input type="hidden" class="w-full p-2" id="tglBeli" min="0" name="tglBeli" value="{{ $tglBeli }}">\
+                                <div></div>\
+                                <button type="submit" id="btnSimpan" class="w-[150px] text-semibold rounded-lg bg-blue-600 p-2 text-center text-sm text-white">Simpan Transaksi</button>\
+                                <div></div>\
+                            </div>\
+                            </div>\
+                        </div>\
+                    </div>')
                     }
                 })
 
@@ -238,17 +246,17 @@
 
                 $.ajax({
                     type: "GET",
-                    url: "/kasir/detail/{noFakturJualan}",
+                    url: "/admin/detail/{noFakturBeli}",
                     data: bayar,
                     dataType: "json",
                     success: function(response) {
-                        // console.log(response.penjualan);
+                        // console.log(response.pembelian);
                         // console.log(response.total);
                         // console.log(response.kembali);
                         $('#kembali').html('');
                         $('#kembali').append(
-                            '<input type="number"  min="0" class="w-full p-0" value="' +
-                            numThousand(response.kembali) + '" disabled>');
+                            '<div>' +
+                            numThousand(response.kembali) + '</div>');
                     }
                 })
             })
@@ -261,12 +269,11 @@
                 e.preventDefault();
 
                 var data = {
-                    'noFakturJualan': $('#noFakturJualan').val(),
+                    'noFakturBeli': $('#noFakturBeli').val(),
                     'barcode': $('#barcode').val(),
-                    'namaBarang': $('#namaBarang').val(),
-                    'jmlhJual': $('#jmlhJual').val(),
+                    'jmlBeli': $('#jmlBeli').val(),
                     'hrgJual': $('#hrgJual').val(),
-                    'hrgBeli': $('#hrgBeli').val()
+                    'hrgBeli': $('#hrgBeli').val(),
                 }
                 console.log(data);
 
@@ -278,7 +285,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('transaksi.store') }}",
+                    url: "{{ route('pembelian.store') }}",
                     data: data,
                     dataType: "json",
                     success: function(response) {
@@ -288,10 +295,10 @@
                         namaBarang.value = "";
                         hrgJual.value = "";
                         hrgJualHidden.value = "";
-                        jmlhJual.value = "";
+                        jmlBeli.value = "";
                         detail();
                         // total();
-                        formTransaksi();
+                        formPembelian();
                     }
                 })
             });
@@ -300,13 +307,10 @@
                 e.preventDefault();
 
                 var data = {
-                    'No_Faktur_Jual': $('#noFakturJualan').val(),
-                    'Tgl_Jual': $('#Tgl_Jual').val(),
-                    'Kd_Pelanggan': $('#Kd_Pelanggan').val(),
-                    'Total': $('#total').val(),
-                    'Bayar': $('#bayar').val(),
-                    'Kd_User': $('#Kd_User').val(),
-                    'poin': $('#poin').val(),
+                    'noFakturBeli': $('#noFakturBeli').val(),
+                    'tglBeli': $('#tglBeli').val(),
+                    'kdSupplier': $('#kdSupplier').val(),
+                    'kdUser	': $('#kdUser').val()
                 }
                 console.log(data);
 
@@ -317,13 +321,13 @@
                 });
 
                 $.ajax({
-                    type: "POST",
-                    url: "{{ route('transaksi.simpan') }}",
+                    type: "GET",
+                    url: "{{ route('pembelian.simpan') }}",
                     data: data,
                     dataType: "json",
                     success: function(response) {
                         detail();
-                        formTransaksi();
+                        formPembelian();
                     }
                 })
             });

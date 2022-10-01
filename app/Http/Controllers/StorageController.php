@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Storage;
+use App\Models\Pembelian;
+use App\Models\Suplier;
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 class StorageController extends Controller
@@ -25,9 +30,93 @@ class StorageController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create($id)
+  public function create()
   {
+    $no = Pembelian::count() + 1;
+    $noFakturBeli = "FB" . date('d-m-Y', strtotime(Carbon::now())) . $no;
+    $pembelian = Storage::where('noFakturBeli', $noFakturBeli)->get();
+
+    $subtotal = $pembelian->sum('hrgBeli') * $pembelian->sum('jmlBeli');
+
+    $tglBeli = date('Y-m-d', strtotime(Carbon::now()));
+
+    $supplier = Suplier::all();
+
+    if (session(['noFakturBeli' => 'noFakturBeli'])) {
+      return view('admin.pages.storage.create', [
+        'title' => 'Tambah Barang',
+        'pembelian' => $pembelian,
+        'noFakturBeli' => $noFakturBeli,
+        'subtotal' => $subtotal,
+        'tglBeli' => $tglBeli,
+        'supplier' => $supplier,
+      ]);
+    } else {
+      return view('admin.pages.storage.create', [
+        'title' => 'Tambah Barang',
+        'pembelian' => $pembelian,
+        'noFakturBeli' => $noFakturBeli,
+        'subtotal' => $subtotal,
+        'tglBeli' => $tglBeli,
+        'supplier' => $supplier,
+      ]);
+    }
   }
+
+  public function getBarcodeData()
+  {
+    if (request()->barcode != null) {
+      $barang = Barang::select('barcode', 'namaBarang', 'hrgJual', 'hrgBeli')->where('barcode', request()->barcode);
+      // dd($barang);
+      if ($barang->exists()) {
+        $data = $barang->first();
+
+        return response()->json([
+          'message' => 'Berhasil mengambil data',
+          'barang' => [
+            "barcode" => $data->barcode,
+            "namaBarang" => $data->namaBarang,
+            "hrgBeli" => $data->hrgBeli,
+            "hrgJual" => $data->hrgJual,
+          ],
+        ]);
+      } else {
+        return response()->json([
+          'message' => 'Data kosong',
+          'barang' => null
+        ]);
+      }
+    } else {
+      return response()->json([
+        'message' => 'Barcode kosong',
+        'barang' => null
+      ]);
+    }
+  }
+
+  public function getDetailData($noFakturBeli)
+  {
+    $now = date('Y-m-d', strtotime(Carbon::now()));
+    $no = Pembelian::count() + 1;
+    $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
+    $pembelian = Storage::where('noFakturBeli', $noFaktur)->get();
+    $total = $pembelian->sum('jmlBeli') * $pembelian->sum('hrgBeli');
+    if (request('bayar') == "") {
+      $kembali = 0;
+    } else {
+      $kembali = request('bayar') - $total;
+    }
+    // dd($pembelian);
+
+    return response()->json([
+      'pembelian' => $pembelian,
+      'total' => $total,
+      // 'bayar' => $bayar,
+      'now' => $now,
+      'kembali' => $kembali,
+    ]);
+  }
+
 
   /**
    * Store a newly created resource in storage.
@@ -37,7 +126,22 @@ class StorageController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $b = Storage::create($request->all());
+    session(['noFakturBeli' => 'noFakturBeli']);
+    return response()->json($b);
+  }
+
+  public function simpan(Request $request)
+  {
+    $b = Pembelian::create([
+      'noFakturBeli' => $request->noFakturBeli,
+      'tglBeli' => $request->tglBeli,
+      'kdSupplier' => $request->kdSupplier,
+      'kdUser' => auth()->user()->kdUser,
+    ]);
+    // $b = Pembelian::create($request->all());
+    $request->session()->forget('noFakturBeli');
+    return response()->json($b);
   }
 
   /**

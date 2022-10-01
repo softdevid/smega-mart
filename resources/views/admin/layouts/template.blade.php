@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title }} | Admin Smega Mart</title>
 
@@ -140,7 +141,9 @@
             <div
                 class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
                 <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
-
+                <a href="{{ route('storage.create') }}" class="rounded-lg bg-red-600 p-3 text-white hover:bg-red-700">
+                    <i class="fa fa-plus"></i> Barang Baru
+                </a>
             </div>
         @elseif ($title == 'Tambah stok ke toko')
             <div
@@ -232,7 +235,7 @@
 
 
     {{-- export pdf dll --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> --}}
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -241,6 +244,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    {{-- <script src="/js/jquery.dataTables.js"></script>
+    <script src="/js/jquery.dataTables.js"></script> --}}
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -250,6 +255,7 @@
             });
         });
     </script>
+
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/flowbite.js') }}"></script>

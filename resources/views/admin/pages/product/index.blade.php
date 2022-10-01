@@ -96,4 +96,78 @@
             </table>
         </div>
     </div>
+    {{-- jQuery Script --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            tampildata();
+            $('#table-datatables').DataTable({
+
+            });
+        });
+
+        function tampildata() {
+            $('tbody').html('');
+            $.ajax({
+                url: "{{ route('dataBarang') }}",
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $.each(data, function(key, item) {
+                        // console.log(data);
+                        $('tbody').append(
+                            '<tr class="border-b bg-white text-black hover:bg-gray-50">\
+                                                                                                  <td class="items-center py-3 px-6 dark:text-white">' +
+                            parseInt(
+                                key +
+                                1) +
+                            '</td>\
+                                                                            <td><img class="h-10 w-10" src="' + item
+                            .img_urls +
+                            '" alt="Produk"></td>\
+                                                                                                <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .namaBarang +
+                            '</td>\
+                                                                                                  <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .hrgBeli +
+                            '</td>\
+                                                                                                <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .hrgJual +
+                            '</td>\
+                                                                                                <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .stok +
+                            '</td>\
+                                                                                                <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .stok_gudang +
+                            '</td>\
+                                                                                                <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .namaKategori +
+                            '</td>\
+                                                                                                <td class="items-center py-3 px-6 dark:text-white">' +
+                            item
+                            .namaSatuan +
+                            '</td>\
+                                                                                                <td class="md:px-auto flex items-center py-2 px-1 text-center">\
+                                                                                                  <a href="/dashboard/products/' +
+                            item
+                            .barcode +
+                            '" class="mx-3 w-full rounded-lg bg-blue-700 p-2 text-sm font-bold text-white hover:bg-blue-800">Detail</a>\
+                                                                                                  <a href="/dashboard/products/' +
+                            item
+                            .barcode +
+                            '/edit" class="mx-3 w-full rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400">Edit</a>\
+                                                                                                </td>\ </tr>')
+                    })
+                }
+            })
+        }
+    </script> --}}
 @endsection

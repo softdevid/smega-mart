@@ -47,7 +47,6 @@ class SuplierController extends Controller
     $rules = [
       'kdSupplier' => 'required|unique:datasupplier',
       'namaSupplier' => 'required|max:255|unique:datasupplier',
-      'slug' => 'required',
     ];
 
     $validatedData = $request->validate($rules);
@@ -108,9 +107,6 @@ class SuplierController extends Controller
   {
     $supplier = Suplier::findOrFail($suplier->kdSupplier);
 
-    $rules = [
-      'slug' => 'required',
-    ];
     if ($request->kdSupplier != $supplier->kdSupplier) {
       $rules['kdSupplier'] = 'required|unique:datasupplier|max:6';
     }
@@ -121,6 +117,7 @@ class SuplierController extends Controller
     $validatedData = $request->validate($rules);
     $supplier->update($validatedData);
     return back()->with("success", "Berhasil diedit!!");
+    // return response()->json(200);
   }
 
   /**

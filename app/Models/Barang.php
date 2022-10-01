@@ -36,6 +36,11 @@ class Barang extends Model
     return $this->hasMany(Gambar::class, 'kdGambar');
   }
 
+  public function kasir()
+  {
+    return $this->belongsTo(Kasir::class, 'barcode');
+  }
+
 
   public function sluggable(): array
   {

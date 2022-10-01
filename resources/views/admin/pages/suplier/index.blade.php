@@ -128,7 +128,7 @@
 
     {{-- modal untuk tambah --}}
     <div id="tambah" tabindex="-1" aria-hidden="true"
-        class="h-modal fixed top-0 right-0 left-0 z-50 hidden w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+        class="fixed top-0 right-0 left-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
         <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
             <!-- Modal content -->
             <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
@@ -155,16 +155,14 @@
                     <form action="{{ route('suplier.store') }}" method="post">
                         @csrf
                         <div>
-                            <label for="namaSupplier">Nama Suplier</label>
-                            <input type="text" name="namaSupplier" class="w-full rounded-lg border" id="namaSupplier"
-                                placeholder="Nama Supplier" required>
-                            <input type="hidden" name="slug" class="w-full rounded-lg border" id="slug"
-                                placeholder="Nama Supplier" required>
-                        </div>
-                        <div>
                             <label for="kdSupplier">Kode Supplier</label>
                             <input type="text" name="kdSupplier" class="w-full rounded-lg border" id="kdSupplier"
                                 placeholder="Kode Supplier" required>
+                        </div>
+                        <div>
+                            <label for="namaSupplier">Nama Suplier</label>
+                            <input type="text" name="namaSupplier" class="w-full rounded-lg border" id="namaSupplier"
+                                placeholder="Nama Supplier" required>
                         </div>
                         </p>
                 </div>
@@ -183,7 +181,7 @@
     {{-- modal untuk edit --}}
     @foreach ($supliers as $suplier)
         <div id="edit{{ $suplier->kdSupplier }}" tabindex="-1" aria-hidden="true"
-            class="h-modal fixed top-0 right-0 left-0 z-50 hidden w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+            class="fixed top-0 right-0 left-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
             <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
                 <!-- Modal content -->
                 <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
@@ -211,17 +209,15 @@
                             @csrf
                             @method('put')
                             <div>
+                                <label for="kdSupplier">Kode Supplier</label>
+                                <input type="text" name="kdSupplier" class="w-full rounded-lg border" id="kdSupplier"
+                                    placeholder="Kode Supplier" required value="{{ $suplier->kdSupplier }}">
+                            </div>
+                            <div>
                                 <label for="namaSupplier">Nama Suplier</label>
                                 <input type="text" name="namaSupplier" class="w-full rounded-lg border"
                                     id="namaSupplier" placeholder="Nama Suplier" value="{{ $suplier->namaSupplier }}"
                                     required>
-                                <input type="hidden" name="slug" class="w-full rounded-lg border" id="slug"
-                                    placeholder="Nama Suplier" value="{{ $suplier->slug }}">
-                            </div>
-                            <div>
-                                <label for="kdSupplier">Kode Supplier</label>
-                                <input type="text" name="kdSupplier" class="w-full rounded-lg border" id="kdSupplier"
-                                    placeholder="Kode Supplier" required value="{{ $suplier->kdSupplier }}">
                             </div>
                             </p>
                     </div>
@@ -237,20 +233,4 @@
             </div>
         </div>
     @endforeach
-
-    {{-- jQuery Script --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script>
-        $('#namaSupplier').change(function(e) {
-            $.get('{{ url('check_slug_supplier') }}', {
-                    'namaSupplier': $(this).val()
-                },
-                function(data) {
-                    $('#slug').val(data.slug);
-                    console.log(data.slug);
-                }
-            );
-        });
-    </script>
 @endsection

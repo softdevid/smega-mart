@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Laporan;
 use Illuminate\Http\Request;
+use App\Models\Laporan;
 
 class LaporanController extends Controller
 {
@@ -43,10 +43,10 @@ class LaporanController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\Laporan  $laporan
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function show(Laporan $laporan)
+  public function show($id)
   {
     //
   }
@@ -54,10 +54,10 @@ class LaporanController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  \App\Models\Laporan  $laporan
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit(Laporan $laporan)
+  public function edit($id)
   {
     //
   }
@@ -66,10 +66,10 @@ class LaporanController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Laporan  $laporan
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Laporan $laporan)
+  public function update(Request $request, $id)
   {
     //
   }
@@ -77,11 +77,22 @@ class LaporanController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\Laporan  $laporan
+   * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Laporan $laporan)
+  public function destroy($id)
   {
     //
+  }
+
+  public function date(Request $request)
+  {
+    $date = Laporan::where('created_at', $request->date)->get();
+    $barang = array($date);;
+    // dd($date);
+    return view('kasir.pages.laporan.laporan-detail', [
+      'laporan' => $date,
+      // 'profit' => $profit,
+    ]);
   }
 }

@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title }} | Kasir Smega Mart</title>
 
@@ -17,8 +18,8 @@
     </style>
 
     <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"> --}}
 </head>
 
 <body class="antialiased">
@@ -133,7 +134,7 @@
 
     {{-- export pdf dll --}}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -150,7 +151,9 @@
                 buttons: ['excel', 'pdf', 'print']
             });
         });
-    </script>
+    </script> --}}
+
+    {{-- <script src="/js/kasir.js"></script> --}}
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/flowbite.js') }}"></script>

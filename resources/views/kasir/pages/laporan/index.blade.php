@@ -82,13 +82,16 @@
         <div class="md:m-5">
             <div class="grid grid-cols-2 gap-6 md:mb-5 md:grid-cols-4">
                 <div class="w-full rounded-lg bg-white shadow-lg">
-                    <div class="m-3">
-                        <label for="today" class="mb-3 font-bold">Tanggal</label>
-                        <input type="date" class="w-full rounded-lg p-2">
-                        <button
-                            class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
-                            Laporan</button>
-                    </div>
+                    <form action="/laporan/date" method="post">
+                        @csrf
+                        <div class="m-3">
+                            <label for="today" class="mb-3 font-bold">Tanggal</label>
+                            <input type="date" class="w-full rounded-lg p-2" name="date">
+                            <button type="submit"
+                                class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
+                                Laporan</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="w-full rounded-lg bg-white shadow-lg">
                     <div class="m-3">
