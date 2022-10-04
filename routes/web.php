@@ -30,6 +30,10 @@ Route::get('/login', [AuthController::class, 'indexLogin'])->middleware('guest')
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
+//route tambah ke keranjang
+Route::resource('order', OrderController::class);
+Route::get('/cartsum', [HomeController::class, 'cartsum']);
+
 // Routing Admin
 Route::middleware(['auth'])->group(function () {
 

@@ -88,36 +88,27 @@ class KasirController extends Controller
     $no = Penjualan::count() + 1;
     $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $penjualan = Kasir::where('noFakturJualan', $noFaktur)->get();
-    $total = $penjualan->sum('jmlhJual') * $penjualan->sum('hrgJual');
-    $poin = Point::sum('kelipatan');
-    // $kelipatan = DB::table('point')->select('kelipatan');
-    // $a = doubleval($total);
-    // $b = $poin;
-    // $c = $a / $b;
-    // dd($a, $b, $c);
-    // $poinJual = $total + $poin;
-    // dd($poin);
+    $total = DB::select("select ifnull(sum(hrgJual*jmlhJual),0) as total from tabelrealpenjualan where noFakturJualan =  '$noFaktur'");
+
+    foreach ($total as $key => $value) {
+      $total2 = $value->total;
+    }
+
+    $poin1 = Point::sum('kelipatan');
+
+    $poin = $total2 / $poin1;
 
     if (request('bayar') == "") {
       $kembali = 0;
     } else {
-      $kembali = request('bayar') - $total;
+      $kembali = request('bayar') - $total2;
     }
-
-    // dd($penjualan);
-
-    // $poin = DB::select("select ifnull(sum(hrgJual*jmlhJual),0) as Total , kelipatan from tabelrealpenjualan,point where noFakturJualan = '$noFaktur'");
-
-    // $poin2 = is_double($total) / is_double($poin);
-    // $poinJual = ($total != 0) ? $poin2 : 0;
-
 
     return response()->json([
       'penjualan' => $penjualan,
-      'total' => $total,
-      // 'bayar' => $bayar,
+      'total' => $total2,
       'now' => $now,
-      'poin' => doubleval($total) / $poin,
+      'poin' => $poin,
       'kembali' => $kembali,
       'pelanggan' => request('Kd_Pelanggan'),
     ]);
@@ -142,7 +133,7 @@ class KasirController extends Controller
   public function store(Request $request)
   {
     $k = Kasir::create($request->all());
-    session(['noFakturJualan' => 'noFakturJualan']);
+    session(['id' => 'noFakturJualan']);
     return response()->json($k);
     // return back();
   }
@@ -161,7 +152,7 @@ class KasirController extends Controller
     ]);
     // dd(request('Kd_Pelanggan'));
     // $p = Penjualan::create($request->all());
-    $request->session()->forget('noFakturJualan');
+    $request->session()->forget('id');
     return response()->json($p);
   }
 

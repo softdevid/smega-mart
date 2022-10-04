@@ -10,6 +10,7 @@ class Kasir extends Model
   use HasFactory;
   protected $table = 'tabelrealpenjualan';
   protected $guarded = ['no'];
+  public $timestamps = false;
 
   public function barang()
   {

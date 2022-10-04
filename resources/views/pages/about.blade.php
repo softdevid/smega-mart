@@ -1,15 +1,15 @@
 @extends('layouts.layout-main')
 @section('content')
     <div
-        class="w-full h-[200px] max-w-screen-xl bg-[url('/assets/img/tampak-depan.jpg')] bg-cover bg-center bg-blend-multiply bg-black/[0.5] mx-auto rounded-lg">
+        class="mx-auto h-[200px] w-full max-w-screen-xl rounded-lg bg-black/[0.5] bg-[url('/assets/img/tampak-depan.jpg')] bg-cover bg-center bg-blend-multiply">
         <div class="flex items-start md:justify-center">
-            <div class="text-sm md:text-4xl text-white font-bold ml-3 my-[50%] md:ml-0 md:my-3">Smega Mart
+            <div class="my-[50%] ml-3 text-sm font-bold text-white md:my-3 md:ml-0 md:text-4xl">Smega Mart
             </div>
         </div>
     </div>
     <div class="container mx-auto mt-5 w-full max-w-screen-xl">
         <article
-            class="hover:bg-white text-center text-black rounded-lg hover:shadow-md hover:border-r-8 hover:border-b-8 hover:border-[#bb1724]">
+            class="rounded-lg text-center text-black hover:border-r-8 hover:border-b-8 hover:border-[#bb1724] hover:bg-white hover:shadow-md">
             <div class="container items-center text-center">
                 <i class="fa fa-quote-left"></i> <b>Smega Mart</b> adalah toko retail yang berada di
                 lingkungan
@@ -26,10 +26,10 @@
         </article>
     </div>
 
-    <div class="container mx-auto w-full max-w-screen-xl mt-5">
+    <div class="container mx-auto mt-5 w-full max-w-screen-xl">
         <div class="m-3">
-            <h1 class="text-center m-5 mt-10 text-2xl text-[#bb1724]">Area Pelayanan</h1>
-            <div class="mx-auto h-[2px] w-[100px] bg-black -mt-4"></div>
+            <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Area Pelayanan</h1>
+            <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
             <article class="mt-3">
                 Kami menyediakan produk sehari-hari seperti makanan ringan, minumah, alat tulis dan lainnya.
                 Kami melayani warga SMK N 1 PURBALINGGA dan masyarakat sekitar dan juga melayani secara online
@@ -38,40 +38,43 @@
         </div>
     </div>
 
-    <h1 class="text-center m-5 mt-10 text-2xl text-[#bb1724]">Beberapa produk kami</h1>
-    <div class="mx-auto h-[2px] w-[100px] bg-black -mt-4"></div>
+    <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Beberapa produk kami</h1>
+    <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
     <div
-        class="mx-auto container w-full max-w-screen-xl grid gap-6 grid-cols-1 md:grid-cols-3 rounded-lg mt-5 items-center">
-        <div class="mx-auto bg-white shadow-lg w-ful h-auto items-center justify-center rounded-lg">
+        class="container mx-auto mt-5 grid w-full max-w-screen-xl grid-cols-1 items-center gap-6 rounded-lg md:grid-cols-3">
+        <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
             <img src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg" alt=""
-                class="rounded-lg border-4 border-[#bb1724] hover:border-gray-400 shadow-lg">
+                class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
-        <div class="mx-auto bg-white shadow-lg w-ful h-auto items-center justify-center rounded-lg">
+        <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
             <img src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg" alt=""
-                class="rounded-lg border-4 border-[#bb1724] hover:border-gray-400 shadow-lg">
+                class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
-        <div class="mx-auto bg-white shadow-lg w-ful h-auto items-center justify-center rounded-lg">
+        <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
             <img src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg" alt=""
-                class="rounded-lg border-4 border-[#bb1724] hover:border-gray-400 shadow-lg">
+                class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
     </div>
 
-    <div class="bg-gray-100">
-        <h1 class="text-center m-5 mt-10 text-2xl text-[#bb1724]">Mitra kami</h1>
-        <div class="mx-auto h-[2px] w-[100px] bg-black -mt-4"></div>
+    <div class="border-b-[#bb1724] bg-gray-100">
+        <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Mitra kami</h1>
+        <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
         <div class="grid grid-cols-3 justify-items-center">
             <div class="mx-auto my-5">
                 <a target="_blank" href="https://alfamart.co.id/">
-                    <img src="/assets/img/alfamart.png" alt="" class="w-20 h-auto md:w-40 md:h-auto"></a>
+                    <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380858/layer%20utama/alfamart_v1bsvp.png"
+                        alt="" class="h-auto w-20 md:h-auto md:w-40"></a>
             </div>
             <div class="mx-auto my-5">
                 <a target="_blank" href="https://smkn1purbalingga.sch.id/">
-                    <img src="/assets/img/smk.png" alt="" class="w-20 h-auto md:w-40 md:h-auto">
+                    <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380856/layer%20utama/smk_wgvroa.png"
+                        alt="" class="h-auto w-20 md:h-auto md:w-40">
                 </a>
             </div>
             <div class="mx-auto my-5">
-                <a target="_blank" href="https://softdev.akriliklasercutting.com"><img src="/assets/img/softdev.png"
-                        alt="" class="w-20 h-auto md:w-40 md:h-auto mt-3"></a>
+                <a target="_blank" href="https://softdev.akriliklasercutting.com"><img
+                        src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1664866996/layer%20utama/softdev_rbrfzu.png"
+                        alt="" class="mt-3 h-auto w-20 md:h-auto md:w-40"></a>
             </div>
         </div>
     </div>

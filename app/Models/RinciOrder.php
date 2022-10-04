@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class RinciOrder extends Model
 {
   use HasFactory;
-  protected $table = 'order';
+  protected $table = 'rinci_order';
   protected $guarded = ['id'];
+  public $timestamps = false;
 }

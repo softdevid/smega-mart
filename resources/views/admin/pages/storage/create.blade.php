@@ -11,13 +11,13 @@
         <div>
             <input type="number" class="w-full rounded-lg border p-2" placeholder="Jumlah stok Toko" min="1"
                 id="jmlBeli" name="jmlBeli">
-            <input type="hidden" id="qtyHidden" name="qtyHidden">
+            <input type="hidden" id="jmlBeli" name="jmlBeli">
             <input type="hidden" id="hrgJual" name="hrgJual">
             <input type="hidden" id="hrgBeli" name="hrgBeli">
         </div>
         <div>
             <input type="number" class="w-full rounded-lg border p-2" placeholder="Jumlah Stok Gudang" min="0"
-                id="jmlBeli" name="jmlStok">
+                id="jmlStokGudang" name="jmlStokGudang">
         </div>
         <div>
             <input type="text" class="w-full rounded-lg border bg-gray-100 p-2" placeholder="Nama Barang" disabled
@@ -74,7 +74,7 @@
 
         let barcode = document.querySelector("#barcode");
         let barcodelHidden = document.querySelector("#barcodeHidden");
-        let qtyHidden = document.querySelector("#qtyHidden");
+        let jmlStokGudang = document.querySelector("#jmlStokGudang");
         let jmlBeli = document.querySelector("#jmlBeli");
 
         let namaBarang = document.querySelector("#namaBarang");
@@ -109,7 +109,7 @@
                         console.log(barcode.value, namaBarang.value, hrgBeli.value, hrgJual.value,
                             namaBarangHidden.value, hrgJualHidden.value);
                     } else {
-                        barcode.value = "";
+                        // barcode.value = "";
                         barcodelHidden.value = "";
                         namaBarang.value = "";
                         namaBarangHidden.value = "";
@@ -267,7 +267,6 @@
 
             $(document).on("click", '#btnTambah', function(e) {
                 e.preventDefault();
-                $('#barcode').attr('autofocus' , 'true');
 
                 var data = {
                     'noFakturBeli': $('#noFakturBeli').val(),
@@ -275,6 +274,7 @@
                     'jmlBeli': $('#jmlBeli').val(),
                     'hrgJual': $('#hrgJual').val(),
                     'hrgBeli': $('#hrgBeli').val(),
+                    'jmlStokGudang': $('#jmlStokGudang').val(),
                 }
                 console.log(data);
 
@@ -297,13 +297,12 @@
                         hrgJual.value = "";
                         hrgJualHidden.value = "";
                         jmlBeli.value = "";
+                        jmlStokGudang.value = "";
                         detail();
                         // total();
                         formPembelian();
+                        $('#barcode').attr('autofocus' , 'true');
                     },
-                    complete: function(response){
-                      $('#barcodeHidden').attr('autofocus' , 'true');
-                    }
                 })
             });
 

@@ -1,6 +1,6 @@
 @extends('layouts.layout-main')
 @section('content')
-    <div class="max-w-screen-xs container">
+    <div class="container max-w-screen-xs">
         <div class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-md sm:p-6 md:p-8">
             <form action="/login" method="post" class="space-y-6">
                 <h5 class="text-center text-2xl font-medium text-gray-900">Login</h5>
@@ -35,6 +35,8 @@
                 </div>
                 <button type="submit"
                     class="w-full rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300">Login</button>
+                <span class="m-3">Belum punya akun? <a href="/register"
+                        class="text-blue-600 hover:text-blue-700">Register</a></span>
             </form>
         </div>
     </div>

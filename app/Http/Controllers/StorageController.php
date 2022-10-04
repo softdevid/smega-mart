@@ -42,7 +42,7 @@ class StorageController extends Controller
 
     $supplier = Suplier::all();
 
-    if (session(['noFakturBeli' => 'noFakturBeli'])) {
+    if (session(['id' => 'noFakturBeli'])) {
       return view('admin.pages.storage.create', [
         'title' => 'Tambah Barang',
         'pembelian' => $pembelian,
@@ -127,7 +127,7 @@ class StorageController extends Controller
   public function store(Request $request)
   {
     $b = Storage::create($request->all());
-    session(['noFakturBeli' => 'noFakturBeli']);
+    session(['id' => 'noFakturBeli']);
     return response()->json($b);
   }
 
@@ -140,7 +140,7 @@ class StorageController extends Controller
       'kdUser' => auth()->user()->kdUser,
     ]);
     // $b = Pembelian::create($request->all());
-    $request->session()->forget('noFakturBeli');
+    $request->session()->forget('id');
     return response()->json($b);
   }
 

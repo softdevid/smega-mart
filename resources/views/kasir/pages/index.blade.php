@@ -34,18 +34,17 @@
         Tambah</button> --}}
     {{-- </form> --}}
 
-    <div class="mx-auto mt-5 grid grid-cols-1 md:grid-cols-2">
-        <div>
-            <table class="w-full shadow-lg" id="tabelKasir">
-                {{-- <input type="number" name="id_user" value="{{ user()->auth()->id }}"> --}}
+    <div class="mx-auto mt-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
+        <div class="relative overflow-x-auto sm:rounded-sm mt-5 w-full">
+            <table class="shadow-md">
                 <thead class="rounded-lg bg-[#bb1724] text-white">
                     <tr>
-                        <th>#</th>
-                        <th>Barcode</th>
-                        <th>Nama Barang</th>
-                        <th>Jumlah</th>
-                        <th>harga jual</th>
-                        <th>Sub Total</th>
+                        <th class="px-5">#</th>
+                        <th class="px-5">Barcode</th>
+                        <th class="px-5">Nama Barang</th>
+                        <th class="px-5">Jumlah</th>
+                        <th class="px-5">harga jual</th>
+                        <th class="px-5">Sub Total</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -53,10 +52,9 @@
             </table>
 
         </div>
-        <div class="ml-5 items-center justify-center">
+        <div class="items-center justify-center w-full">
             <div id="formTransaksi"></div>
         </div>
-    </div>
     </div>
 
     {{-- <script src="/js/jquery-3.6.0.min.js"></script> --}}
@@ -107,7 +105,7 @@
                         hrgBeli.value = data.barang.hrgBeli;
                         hrgJual.value = data.barang.hrgJual;
 
-                        barcode.value = data.barang.barcode;
+                        // barcode.value = data.barang.barcode;
                         namaBarangHidden.value = data.barang.namaBarang;
                         hrgJualHidden.value = data.barang.hrgJual;
                         console.log(barcode.value, namaBarang.value, hrgBeli.value, hrgJual.value,
@@ -135,10 +133,6 @@
                     url: "/kasir/detail/{noFakturJualan}",
                     dataType: "json",
                     success: function(response) {
-
-                        // console.log(response.penjualan);
-                        // console.log(response.total);
-
                         $('tbody').html('');
                         $.each(response.penjualan, function(key, item) {
                             $('tbody').append(
@@ -162,14 +156,10 @@
                     url: "/kasir/detail/{noFakturJualan}",
                     dataType: "json",
                     success: function(response) {
-
                         // console.log(response.penjualan);
-                        // console.log(response.total);
                         $('#total').html('');
                         $('#total').append(
-                            '<input type="number" id="total" class="w-full p-2" min="0" value="' +
-                            response
-                            .total + '" disabled>');
+                            '<div name="total" id="total">'+response.total+'</div>');
                     }
                 })
             }
@@ -182,12 +172,13 @@
                     dataType: "json",
                     success: function(response) {
                       console.log(response.poin);
+
                         $('#formTransaksi').html('');
                         $('#formTransaksi').append(
                             '<div class="m-3">\
                                         <div class="grid w-full grid-cols-1">\
                                             <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
+                                                <div class="grid grid-cols-2 gap-7">\
                                                     <b class="text-center">Pelanggan ?</b>\
                                                     <select name="Kd_Pelanggan" id="Kd_Pelanggan">\
                                                   <option value="">Pilih Pelanggan ?</option>\
@@ -195,35 +186,38 @@
                                                       <option value="{{ $p->kdPelanggan }}">{{ $p->namaPelanggan }}</option>\
                                                   @endforeach\
                                               </select>\
-                                              <input name="kdPelanggan" id="kdPelanggan">\
                                                 </div>\
                                             </div>\
                                             <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
+                                                <div class="grid grid-cols-2 gap-7">\
                                                     <b class="text-center">Bayar:</b>\
                                                     <input type="number" class="w-full p-2" id="bayar" name="bayar">\
                                                 </div>\
                                             </div>\
                                             <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
+                                                <div class="grid grid-cols-2 gap-7">\
                                                     <b class="text-center">Total:</b>\
-                                                    <input type="number" class="w-full p-2" id="total" name="total" value="' +response.total +'">\
+                                                    <input type="hidden" class="w-full p-2" id="total" name="total" value="' + response.total +'" disabled>\
+                                                    <div id="total">'+response.total+'</div>\
+                                                    <input type="hidden" id="poin" name="poin" value="'+response.poin+'">\
                                                 </div>\
                                             </div>\
                                             <div class="my-3">\
-                                                <div class="grid grid-cols-3 gap-7">\
+                                                <div class="grid grid-cols-2 gap-7">\
                                                   <b class="text-center">Kembali:</b>\
                                                   <div id="kembali"></div>\
                                                   <input type="hidden" class="w-full p-2" id="Tgl_Jual" min="0" name="Tgl_Jual" value="{{ $Tgl_Jual }}">\
                                                     <input type="hidden" class="w-full p-2" name="Kd_Pelanggan" id="Kd_Pelanggan" value="1" min="0" disabled>\
-                                                    <input type="hidden" class="w-full p-2" id="poin" name="poin" value="'+response.poin+'" min="0">\
+                                                    <div id="total"></div>\
                                                 </div>\
                                             </div>\
-                                        </div>\
-                                        <input type="hidden" id="Kd_User" value="{{ auth()->user()->kdUser }}">\
-                                        <button type="submit" id="btnSimpan"\
-                                        class="text-semibold rounded-lg bg-blue-600 p-2 text-center text-sm text-white">Simpan Transaksi</button>'
-                        )
+                                            </div>\
+                                            <input type="hidden" id="Kd_User" value="{{ auth()->user()->kdUser }}">\
+                                          <div class="grid grid-cols-2 gap-7">\
+                                            <div></div>\
+                                            <button type="submit" id="btnSimpan"class="text-semibold rounded-lg bg-blue-600 p-2 text-center text-sm text-white">Simpan Transaksi</button>\
+                                            <div></div>\
+                                          </div>')
                     }
                 })
 
@@ -236,19 +230,16 @@
                     'bayar': $('#bayar').val(),
                 }
 
+
                 $.ajax({
                     type: "GET",
                     url: "/kasir/detail/{noFakturJualan}",
                     data: bayar,
                     dataType: "json",
                     success: function(response) {
-                        // console.log(response.penjualan);
-                        // console.log(response.total);
-                        // console.log(response.kembali);
                         $('#kembali').html('');
                         $('#kembali').append(
-                            '<input type="number"  min="0" class="w-full p-0" value="' +
-                            numThousand(response.kembali) + '" disabled>');
+                            '<div>'+ numThousand(response.kembali) +'</div>');
                     }
                 })
             })
@@ -306,7 +297,7 @@
                     'Total': $('#total').val(),
                     'Bayar': $('#bayar').val(),
                     'Kd_User': $('#Kd_User').val(),
-                    'poin': $('#poin').val(),
+                    'poin': $('#poin').val()
                 }
                 console.log(data);
 

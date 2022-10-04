@@ -11,4 +11,5 @@ class Storage extends Model
   protected $table = 'tabelrealpembelian';
   protected $guarded = ['id'];
   protected $primaryKey = 'id';
+  public $timestamps = false;
 }
