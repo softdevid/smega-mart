@@ -86,7 +86,7 @@
                 @endif
             @else
                 <div class="text-white">
-                    <a href="/login" class="text-white">Login</a> | <a href="/register" class="text-white">Register</a>
+                    <a href="/login" class="text-white">Login</a> | <a href="/registration" class="text-white">Register</a>
                 </div>
             @endauth
         </div>

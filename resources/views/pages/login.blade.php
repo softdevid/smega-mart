@@ -35,8 +35,8 @@
                 </div>
                 <button type="submit"
                     class="w-full rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300">Login</button>
-                <span class="m-3">Belum punya akun? <a href="/registration"
-                        class="text-blue-600 hover:text-blue-700">Register</a></span>
+                <div class="m-3">Belum punya akun? <a href="/registration"
+                        class="text-blue-600 hover:text-blue-700">Register</a></div>
             </form>
         </div>
     </div>

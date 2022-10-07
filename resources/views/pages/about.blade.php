@@ -3,7 +3,8 @@
     <div
         class="mx-auto h-[200px] w-full max-w-screen-xl rounded-lg bg-black/[0.5] bg-[url('/assets/img/tampak-depan.jpg')] bg-cover bg-center bg-blend-multiply">
         <div class="flex items-start md:justify-center">
-            <div class="my-[50%] ml-3 text-sm font-bold text-white md:my-3 md:ml-0 md:text-4xl">Smega Mart
+            <div class="my-[45%] xs:my-[30%] sm:my-[25%] ml-3 text-sm font-bold text-white md:my-3 md:ml-0 md:text-4xl">
+              Smega Mart
             </div>
         </div>
     </div>
@@ -38,7 +39,7 @@
         </div>
     </div>
 
-    <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Beberapa produk kami</h1>
+    <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Beberapa foto dari kami</h1>
     <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
     <div
         class="container mx-auto mt-5 grid w-full max-w-screen-xl grid-cols-1 items-center gap-6 rounded-lg md:grid-cols-3">
@@ -56,7 +57,7 @@
         </div>
     </div>
 
-    <div class="border-b-[#bb1724] bg-gray-100">
+    <div class="border-b-[#bb1724] bg-gray-100 p-3">
         <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Mitra kami</h1>
         <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
         <div class="grid grid-cols-3 justify-items-center">
