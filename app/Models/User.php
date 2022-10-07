@@ -33,6 +33,10 @@ class User extends Authenticatable
     'password',
   ];
 
+  protected $attributes = [
+    'level' => "Customer",
+  ];
+
   /**
    * The attributes that should be cast.
    *

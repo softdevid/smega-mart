@@ -46,7 +46,21 @@ class AuthController extends Controller
 
   public function registration(Request $request)
   {
+    $validateData = $request->validate([
+      "namaUser" => 'required|max:255',
+      "email" => 'required|email',
+      "password" => 'required|min:5|max:255',
+      "noHp" => 'required|max:13',
+      "kabupaten" => 'required|max:255',
+      "kecamatan" => 'required',
+      "desa" => 'required',
+      "alamatLengkap" => 'required|max:255'
+    ]);
 
+    $validateData['password'] = Hash::make($validateData['password']);
+    $user = User::create($validateData);
+
+    return redirect('/login')->with('success', 'Registrasi Berhasil');
   }
 
   public function logout(Request $request)
