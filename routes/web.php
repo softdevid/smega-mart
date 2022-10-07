@@ -26,6 +26,8 @@ Route::get('/contact', [HomeController::class, 'contact']);
 Route::get('/gallery', [HomeController::class, 'gallery']);
 
 // Auth Route
+Route::get('/registration', [AuthController::class, 'indexRegistration'])->middleware('guest')->name('registration');
+Route::post('/registration', [AuthController::class, 'registration']);
 Route::get('/login', [AuthController::class, 'indexLogin'])->middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');

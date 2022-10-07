@@ -37,6 +37,18 @@ class AuthController extends Controller
     return back()->with('loginError', 'Gagal login!!');
   }
 
+  public function indexRegistration()
+  {
+    return view('pages.registration', [
+      "title" => "Registrasi"
+    ]);
+  }
+
+  public function registration(Request $request)
+  {
+
+  }
+
   public function logout(Request $request)
   {
     Auth::logout();
