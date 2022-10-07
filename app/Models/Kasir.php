@@ -16,4 +16,9 @@ class Kasir extends Model
   {
     return $this->hasOne(Barang::class, 'barcode');
   }
+
+  public function penjualan()
+  {
+    return $this->hasOne(Penjualan::class, 'No');
+  }
 }

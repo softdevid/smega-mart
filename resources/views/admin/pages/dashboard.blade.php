@@ -1,8 +1,8 @@
 @extends('admin.layouts.template')
-@section('content')
+@section('content')    
+
     <div class="justify-beetwen grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex max-w-sm items-center whitespace-nowrap rounded-md border-b bg-red-600 py-3 px-6 shadow-lg">
-            {{-- <img class="w-10 h-10 sm:w-20 sm:h-20" src="/PRODUK.png" alt="Jese image"> --}}
             <div class="h-10 w-10 rounded-full border-0 sm:h-20 sm:w-20 md:-ml-3 md:border-2">
                 <i class="fa-solid fa-rupiah-sign items-center text-4xl text-white md:m-4 md:text-5xl"></i>
             </div>
@@ -64,4 +64,5 @@
                 <canvas></canvas>
             </div>
         </div>
+    </div>    
     @endsection

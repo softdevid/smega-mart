@@ -11,14 +11,14 @@ class AdminController extends Controller
 {
   public function index()
   {
-    $date = date('Y-m-d', strtotime(Carbon::now()));
-    $month = date('Y-m', strtotime(Carbon::now()));
-    $year = date('Y', strtotime(Carbon::now()));
+    $date = Carbon::now()->isoFormat('D-M-Y');
+    $month = date('m', strtotime($date));
+    $year = date('Y', strtotime($date));
     $totalBarang = Barang::count();
 
-    $today = Penjualan::where('Tgl_Jual', $date)->sum('total');
-    $month = Penjualan::whereMonth('Tgl_Jual', $month)->sum('total');
-    $year = Penjualan::where('Tgl_Jual', $year)->sum('total');
+    $today = Penjualan::whereDay('Tgl_Jual', $date)->sum('total');
+    $month = Penjualan::whereMonth('Tgl_Jual', [$month, $year])->sum('total');
+    $year = Penjualan::whereYear('Tgl_Jual', $year)->sum('total');
     // dd($today);
     return view('admin.pages.dashboard', [
       'title' => 'Dashboard',

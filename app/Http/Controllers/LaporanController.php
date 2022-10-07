@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Laporan;
+use App\Models\Penjualan;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
@@ -87,11 +89,13 @@ class LaporanController extends Controller
 
   public function date(Request $request)
   {
-    $date = Laporan::where('created_at', $request->date)->get();
-    $barang = array($date);;
+    $inputan = $request->date;
+    $data = Penjualan::where('tgl_Jual', $request->date)->get();
     // dd($date);
     return view('kasir.pages.laporan.laporan-detail', [
-      'laporan' => $date,
+      'title' => "per tanggal $inputan - Smega Mart",
+      'laporan' => $data,
+      'inputan' => $inputan,
       // 'profit' => $profit,
     ]);
   }

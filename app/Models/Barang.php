@@ -41,6 +41,11 @@ class Barang extends Model
     return $this->belongsTo(Kasir::class, 'barcode');
   }
 
+  public function order()
+  {
+    return $this->hasOne(Order::class, 'barcode');
+  }
+
 
   public function sluggable(): array
   {

@@ -44,16 +44,16 @@
     <div
         class="container mx-auto mt-5 grid w-full max-w-screen-xl grid-cols-1 items-center gap-6 rounded-lg md:grid-cols-3">
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
-            <img src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg" alt=""
-                class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045058/layer%20utama/a4b3866a2e75905292c8a6286cb83eefsepatu_mrisub.jpg"
+                alt="" class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
-            <img src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg" alt=""
-                class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_111516_wb2lnk.jpg"
+                alt="" class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
-            <img src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg" alt=""
-                class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_102024_tq8xwk.jpg"
+                alt="" class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
     </div>
 

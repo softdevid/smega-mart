@@ -32,9 +32,25 @@ Route::get('/login', [AuthController::class, 'indexLogin'])->middleware('guest')
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
-//route tambah ke keranjang
-Route::resource('order', OrderController::class);
+//route jumlah item keranjang
 Route::get('/cartsum', [HomeController::class, 'cartsum']);
+Route::get('/product/{slug}', [OrderController::class, 'detailProduct']);
+
+//route customer
+Route::middleware(['auth'])->group(function () {
+  //route keranjang
+  Route::resource('order', OrderController::class);
+  Route::delete('/order/{id}', [OrderController::class],);
+  Route::get('/cart', [HomeController::class, 'cart']);
+  Route::get('/checkout', [OrderController::class, 'checkout']);
+
+  //route checkout dan prosesnya
+  Route::post('/pesan/{id}', [OrderController::class, 'pesan']);
+
+  //profile
+  Route::get('/profil', [HomeController::class, 'profil']);
+  Route::get('/pesanan', [OrderController::class, 'pesanan']);
+});
 
 // Routing Admin
 Route::middleware(['auth'])->group(function () {
@@ -65,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
 
   //Route Order
   Route::get('/orders', [OrderController::class, 'index']);
+  Route::get('/detailProduct/{slug}', [OrderController::class, 'detailProduct'])->name('detailProduct');
 
   //Route kasir
   Route::resource('kasir', KasirController::class);

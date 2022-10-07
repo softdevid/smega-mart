@@ -6,8 +6,10 @@ use App\Models\Barang;
 use App\Models\Gambar;
 use App\Models\Order;
 use Carbon\Carbon;
+use App\Models\Penjualan;
 use App\Models\RinciOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -45,14 +47,10 @@ class HomeController extends Controller
 
   public function productDetail(Barang $product)
   {
-    $date = date('Y-m-d', strtotime(Carbon::now()));
-    $no = RinciOrder::count() + 1;
-    $noFaktur = "SM-" . $date . $no;
+    $date = date('Ymd', strtotime(Carbon::now()));
+    $a = 0604 + Penjualan::count();
+    $noFaktur = "SM-" . $date . Penjualan::count() . $a;
     $images = Gambar::where('barcode', $product->barcode)->get();
-
-    // if (request('kdUser')) {
-    //   $cartsum = Order::where(['kdUser' => $kdUser, 'status' => 0])->count(),
-    // }
 
     return view('pages.product.product-detail', [
       "title" => $product->namaBarang,
@@ -84,6 +82,24 @@ class HomeController extends Controller
     return view('pages.gallery', [
       "title" => "Galeri",
       "images" => $galleryImg,
+    ]);
+  }
+
+  public function cart()
+  {
+    $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 0])->orderBy('id')->get();
+    $total = $brg->sum('subtotal');
+    return view('pages.cart', [
+      'title' => 'Keranjang',
+      'brg' => $brg,
+      'total' => $total,
+    ]);
+  }
+
+  public function profil()
+  {
+    return view('pages.profile', [
+      'title' => 'Profil saya',
     ]);
   }
 }

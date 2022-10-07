@@ -12,4 +12,9 @@ class Penjualan extends Model
   protected $guarded = ['No'];
   protected $primaryKey = 'No';
   public $timestamps = false;
+
+  public function tabelrealpenjualan()
+  {
+    return $this->belongsTo(Kasir::class, 'no');
+  }
 }
