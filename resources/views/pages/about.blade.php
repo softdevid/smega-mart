@@ -3,8 +3,8 @@
     <div
         class="mx-auto h-[200px] w-full max-w-screen-xl rounded-lg bg-black/[0.5] bg-[url('/assets/img/tampak-depan.jpg')] bg-cover bg-center bg-blend-multiply">
         <div class="flex items-start md:justify-center">
-            <div class="my-[45%] xs:my-[30%] sm:my-[25%] ml-3 text-sm font-bold text-white md:my-3 md:ml-0 md:text-4xl">
-              Smega Mart
+            <div class="my-[45%] ml-3 text-sm font-bold text-white xs:my-[30%] sm:my-[25%] md:my-3 md:ml-0 md:text-4xl">
+                Smega Mart
             </div>
         </div>
     </div>
@@ -32,28 +32,31 @@
             <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Area Pelayanan</h1>
             <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
             <article class="mt-3">
-                Kami menyediakan produk sehari-hari seperti makanan ringan, minumah, alat tulis dan lainnya.
+                Kami menyediakan produk sehari-hari seperti makanan ringan, minuman, alat tulis dan lainnya.
                 Kami melayani warga SMK N 1 PURBALINGGA dan masyarakat sekitar dan juga melayani secara online
                 untuk wilayah Kabupaten Purbalingga khususnya kecamatan Kalimanah.
             </article>
         </div>
     </div>
 
-    <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Beberapa foto dari kami</h1>
+    <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Beberapa foto produk dari kami</h1>
     <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
     <div
         class="container mx-auto mt-5 grid w-full max-w-screen-xl grid-cols-1 items-center gap-6 rounded-lg md:grid-cols-3">
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
-            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045058/layer%20utama/a4b3866a2e75905292c8a6286cb83eefsepatu_mrisub.jpg"
-                alt="" class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665195570/layer%20utama/IMG_20220926_103841_hxqhgl.jpg"
+                alt=""
+                class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
             <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_111516_wb2lnk.jpg"
-                alt="" class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+                alt=""
+                class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
             <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_102024_tq8xwk.jpg"
-                alt="" class="rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+                alt=""
+                class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
         </div>
     </div>
 

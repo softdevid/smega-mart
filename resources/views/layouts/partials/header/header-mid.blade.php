@@ -5,7 +5,7 @@
                 <a href="/" class="px-2">
                     <span class="self-center whitespace-nowrap font-oswald text-3xl font-semibold">SMEGA MART</span>
                 </a>
-                <div class="px-2 md:basis-8/12">
+                {{-- <div class="px-2 md:basis-8/12">
                     <button type="button"
                         class="tex-gray-500 mr-1 rounded-lg p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 md:hidden"
                         data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false">
@@ -76,7 +76,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> --}}
                 <div id="cartsum"></div>
             </div>
         </nav>

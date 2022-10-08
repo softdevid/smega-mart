@@ -49,7 +49,14 @@ Route::middleware(['auth'])->group(function () {
 
   //profile
   Route::get('/profil', [HomeController::class, 'profil']);
-  Route::get('/pesanan', [OrderController::class, 'pesanan']);
+  //ROute pesanan customer
+  Route::get('/pesanan/diproses', [OrderController::class, 'diproses']);
+  Route::get('/pesanan/dikemas', [OrderController::class, 'dikemas']);
+  Route::get('/pesanan/dikirim', [OrderController::class, 'dikirim']);
+  Route::get('/pesanan/selesai', [OrderController::class, 'selesai']);
+
+  //route detail pesanan
+  Route::get('/detail-pesanan/{noFaktur}', [OrderController::class, 'detailPesanan']);
 });
 
 // Routing Admin

@@ -101,28 +101,56 @@ class OrderController extends Controller
     Order::where('id', $id)
       ->update(['status' => 1]);
 
-    return redirect()->to('/pesanan')->with('success', 'Pesanan sedang diproses!');
+    return redirect()->to('/pesanan/diproses')->with('success', 'Pesanan sedang diproses!');
   }
 
-  public function pesanan() //ini diproses
+  public function detailPesanan($noFaktur)
   {
-    $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 1])->orderBy('id')->get();
-    $brgKemas = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 2])->orderBy('id')->get();
-    return view('pages.pesanan', [
-      'title' => 'Pesanan',
+    $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'noFaktur' => $noFaktur])->orderBy('id')->get();
+    return view('pages.pesanan.detail-pesanan', [
+      'title' => 'Detail pesanan',
       'brg' => $brg,
-      'brgKemas' => $brgKemas,
       'total' => $brg->sum('subtotal'),
     ]);
   }
 
-  public function dikemas()
+  public function diproses() //ini diproses
+  {
+    $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 1])->orderBy('id')->get();
+    return view('pages.pesanan.diproses', [
+      'title' => 'Pesanan',
+      'brg' => $brg,
+      'total' => $brg->sum('subtotal'),
+    ]);
+  }
+
+  public function dikemas() //ini dikemas
   {
     $brgKemas = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 2])->orderBy('id')->get();
-    return view('pages.pesanan', [
+    return view('pages.pesanan.dikemas', [
       'title' => 'Pesanan',
-      'brg' => $brgKemas,
+      'brgKemas' => $brgKemas,
       'total' => $brgKemas->sum('subtotal'),
+    ]);
+  }
+
+  public function dikirim() //ini dikirim
+  {
+    $brgKirim = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 3])->orderBy('id')->get();
+    return view('pages.pesanan.dikirim', [
+      'title' => 'Pesanan',
+      'brgKirim' => $brgKirim,
+      'total' => $brgKirim->sum('subtotal'),
+    ]);
+  }
+
+  public function selesai() //ini selesai
+  {
+    $brgSelesai = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 4])->orderBy('id')->get();
+    return view('pages.pesanan.selesai', [
+      'title' => 'Pesanan',
+      'brgSelesai' => $brgSelesai,
+      'total' => $brgSelesai->sum('subtotal'),
     ]);
   }
 }

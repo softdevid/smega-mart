@@ -2,7 +2,7 @@
 @section('content')
     @if ($brg->count() == '')
         <div class="mx-auto">
-            <div class="mb-4 flex rounded-lg bg-blue-100 p-4 text-sm text-blue-700 dark:bg-blue-200 dark:text-blue-800"
+            <div class="mb-4 flex justify-center rounded-lg bg-blue-100 p-4 text-sm text-blue-700 dark:bg-blue-200 dark:text-blue-800"
                 role="alert">
                 <svg aria-hidden="true" class="mr-3 inline h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -14,7 +14,7 @@
                 <div>
                     <span class="font-medium">Belum ada barang yang ditambah ke keranjang!</span>
                     <a href="/products" class="rounded-lg bg-blue-600 p-3 text-white hover:bg-blue-800">Belanja <i
-                            class="fa fa-arrow-right"></i></a>
+                            class="fa fa-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -28,22 +28,22 @@
                                 #
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                <span class="sr-only">Image</span>
+                                <span class="sr-only">Gambar</span>
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Product
+                                Nama Produk
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Qty
+                                Jumlah
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Price
+                                Harga
                             </th>
                             <th scope="col" class="py-3 px-6">
                                 SubTotal
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Action
+                                Aksi
                             </th>
                         </tr>
                     </thead>
