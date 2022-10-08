@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -48,19 +50,22 @@ class AuthController extends Controller
   {
     $validateData = $request->validate([
       "namaUser" => 'required|max:255',
-      "email" => 'required|email',
+      "email" => 'required|email|unique:datauser,email',
       "password" => 'required|min:5|max:255',
       "noHp" => 'required|max:13',
       "kabupaten" => 'required|max:255',
-      "kecamatan" => 'required',
-      "desa" => 'required',
+      "kecamatan" => 'required|max:255',
+      "desa" => 'required|max:255',
       "alamatLengkap" => 'required|max:255'
     ]);
 
     $validateData['password'] = Hash::make($validateData['password']);
     $user = User::create($validateData);
 
-    return redirect('/login')->with('success', 'Registrasi Berhasil');
+    //return redirect('/login')->with('success', 'Registrasi Berhasil');
+    return response()->json([
+      'message' => "berhasil menambah data"
+    ]);
   }
 
   public function logout(Request $request)

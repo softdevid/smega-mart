@@ -67,7 +67,7 @@
         </div>
         <div>
           <label for="alamatLengkap" class="block ml-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Alamat Lengkap</label>
-          <textarea id="alamatLengkap" name="alamatLengkap" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Alamat Lengkap" required></textarea>
+          <textarea id="alamatLengkap" name="alamatLengkap" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Alamat Lengkap" required>{{ old('alamatLengkap') }}</textarea>
         </div>
         <button type="submit"
           class="w-full rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300">
