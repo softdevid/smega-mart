@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Gambar;
+use App\Models\Keranjang;
 use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\Penjualan;
@@ -47,7 +48,7 @@ class HomeController extends Controller
 
   public function productDetail(Barang $product)
   {
-    $date = date('Ymd', strtotime(Carbon::now()));
+    $date = date('Y-m-d', strtotime(Carbon::now()));
     $a = 0604 + Penjualan::count();
     $noFaktur = "SM-" . $date . Penjualan::count() . $a;
     $images = Gambar::where('barcode', $product->barcode)->get();
@@ -87,7 +88,7 @@ class HomeController extends Controller
 
   public function cart()
   {
-    $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 0])->orderBy('id')->get();
+    $brg = Keranjang::where(['kdUser' => auth()->user()->kdUser ?? ''])->orderBy('id')->get();
     $total = $brg->sum('subtotal');
     return view('pages.cart', [
       'title' => 'Keranjang',

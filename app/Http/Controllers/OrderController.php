@@ -6,20 +6,25 @@ use App\Models\Barang;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Penjualan;
+use App\Models\RinciOrder;
 use Carbon\Carbon;
 
 class OrderController extends Controller
 {
   public function index()
   {
+    $brg = Order::where(['status' => 1])->get();
     return view('kasir.pages.order.index', [
       'title' => 'Pesanan',
+      'brg' => $brg,
     ]);
   }
 
   public function store(Request $request)
   {
+    // dd($request->all());
     $brg = Barang::find($request->barcode);
+
 
     if ($request->stok <= 0) {
       return back()->with('error', 'Stok barang kosong tidak bisa ditambahkan');
@@ -43,15 +48,23 @@ class OrderController extends Controller
     // dd($request->all());
 
     // $validated = $request->validate($request->all());
-    Order::create([
+    $order = Order::create([
       'noFaktur' => $request->noFaktur,
       'barcode' => $request->barcode,
       'namaBarang' => $request->namaBarang,
       'hrgJual' => $request->hrgJual,
       'qty' => $request->qty,
-      'status' => $request->status,
       'kdUser' => $request->kdUser,
       'subtotal' => $request->qty * $request->hrgJual,
+    ]);
+
+    RinciOrder::create([
+      'noFaktur' => $order->noFaktur,
+      'qty' => $order->qty,
+      'status' => $request->status,
+      'status_bayar' => $request->status_bayar,
+      'kdUser' => $order->kdUser,
+      'subtotal' => $order->sum('subtotal'),
     ]);
 
     // return response()->json('succes', 200);
@@ -97,15 +110,21 @@ class OrderController extends Controller
   public function update(Request $request)
   {
     $id = $request->id;
+    $brg = Order::where('id', $id)->get();
+    foreach ($brg as $key => $b) {
+      $noFaktur = $b->noFaktur;
+    }
 
     Order::where('id', $id)
-      ->update(['status' => 1]);
+      ->update(['status' => 1, 'noFaktur' => $noFaktur]);
+
 
     return redirect()->to('/pesanan/diproses')->with('success', 'Pesanan sedang diproses!');
   }
 
   public function detailPesanan($noFaktur)
   {
+    // $noFaktur = $request->noFaktur;
     $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'noFaktur' => $noFaktur])->orderBy('id')->get();
     return view('pages.pesanan.detail-pesanan', [
       'title' => 'Detail pesanan',
@@ -117,10 +136,14 @@ class OrderController extends Controller
   public function diproses() //ini diproses
   {
     $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 1])->orderBy('id')->get();
+    foreach ($brg as $key => $b) {
+      $noFaktur = $b->noFaktur;
+    }
     return view('pages.pesanan.diproses', [
       'title' => 'Pesanan',
       'brg' => $brg,
       'total' => $brg->sum('subtotal'),
+      'noFaktur' => $noFaktur,
     ]);
   }
 

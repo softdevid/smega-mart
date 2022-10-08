@@ -79,13 +79,14 @@
                                     Rp. {{ number_format($b->qty * $b->hrgJual, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <form action="/order/{{ $b->id }}" method="post">
+                                    <form action="{{ route('keranjang.destroy', $b->id) }}" method="post">
                                         @method('delete')
                                         @csrf
                                         <button type="submit"
                                             class="rounded-lg bg-red-600 p-2 font-medium text-white dark:text-white"
                                             onclick="return confirm('Yakin barang dihapus')"><i class="fa fa-trash"></i>
-                                            Hapus</button>
+                                            Hapus
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

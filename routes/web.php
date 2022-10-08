@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\KeranjangController;
 use Illuminate\Support\Facades\Route;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -40,6 +41,7 @@ Route::get('/product/{slug}', [OrderController::class, 'detailProduct']);
 Route::middleware(['auth'])->group(function () {
   //route keranjang
   Route::resource('order', OrderController::class);
+  Route::resource('keranjang', KeranjangController::class);
   Route::delete('/order/{id}', [OrderController::class],);
   Route::get('/cart', [HomeController::class, 'cart']);
   Route::get('/checkout', [OrderController::class, 'checkout']);

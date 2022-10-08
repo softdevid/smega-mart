@@ -104,14 +104,13 @@
                     </main>
                 </div>
 
-                <form action="{{ route('order.store') }}" method="post">
+                <form action="{{ route('keranjang.store') }}" method="post">
                     @csrf
                     {{-- inputan hidden cart --}}
                     <input type="hidden" name="barcode" id="barcode" value="{{ $product->barcode }}">
                     <input type="hidden" name="namaBarang" id="namaBarang" value="{{ $product->namaBarang }}">
                     <input type="hidden" name="hrgJual" id="hrgJual" value="{{ $product->hrgJual }}">
                     <input type="hidden" name="status" id="status" value="0">
-                    <input type="hidden" name="noFaktur" id="noFaktur" value="{{ $noFaktur }}">
                     <input type="hidden" name="kdUser" id="kdUser" value="{{ auth()->user()->kdUser ?? '' }}">
                     <input type="hidden" name="subtotal" id="subtotal"
                         value="{{ request('qty') * $product->hrgJual }}">

@@ -16,6 +16,16 @@ class User extends Authenticatable
   protected $primaryKey = 'kdUser';
   public $timestamps = false;
 
+  public function barang()
+  {
+    return $this->belongsTo(Barang::class, 'barcode');
+  }
+
+  public function order()
+  {
+    return $this->belongsTo(Order::class, 'barcode');
+  }
+
 
   /**
    * The attributes that are mass assignable.

@@ -14,7 +14,7 @@ class Barang extends Model
   protected $table = 'databarang';
   protected $primaryKey = 'barcode';
   protected $guarded = [];
-  protected $with = ['kategori', 'supplier'];
+  protected $with = ['kategori', 'supplier', 'keranjang'];
 
   public function kategori()
   {
@@ -44,6 +44,11 @@ class Barang extends Model
   public function order()
   {
     return $this->hasOne(Order::class, 'barcode');
+  }
+
+  public function keranjang()
+  {
+    return $this->hasOne(Keranjang::class, 'barcode');
   }
 
 

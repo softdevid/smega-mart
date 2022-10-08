@@ -10,5 +10,4 @@ class RinciOrder extends Model
   use HasFactory;
   protected $table = 'rinci_order';
   protected $guarded = ['id'];
-  public $timestamps = false;
 }
