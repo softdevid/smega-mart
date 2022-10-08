@@ -13,5 +13,7 @@ $(document).ready(() => {
           $("#products-grid").html(response);
       },
     });
-  })
+  });
+
+
 });

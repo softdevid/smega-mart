@@ -14,6 +14,9 @@
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Poppins:wght@200;300;400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @if (request()->is('gallery') || request()->is('about'))
+    <link rel="stylesheet" href="{{ asset('assets/glightbox/dist/css/glightbox.min.css') }}">
+    @endif
 </head>
 
 <body>
@@ -38,15 +41,22 @@
         @include('layouts.partials.footer.footer-bottom')
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/flowbite.js') }}"></script>
     <script defer src="{{ asset('assets/fontawesome/js/all.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/header-mid.js') }}"></script>
 
+    @if (request()->is('gallery') || request()->is('about'))
+    <script src="{{ asset('assets/glightbox/dist/js/glightbox.min.js') }}"></script>
+    <script>
+      var lightbox = GLightbox();
+            lightbox.on('open', (target) => {
+                console.log('lightbox opened');
+            });
+    </script>
+    @endif
 </body>
 
 </html>

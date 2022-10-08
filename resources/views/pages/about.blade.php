@@ -44,41 +44,55 @@
     <div
         class="container mx-auto mt-5 grid w-full max-w-screen-xl grid-cols-1 items-center gap-6 rounded-lg md:grid-cols-3">
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
+          <a class="glightbox" href="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665195570/layer%20utama/IMG_20220926_103841_hxqhgl.jpg">
             <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665195570/layer%20utama/IMG_20220926_103841_hxqhgl.jpg"
-                alt=""
-                class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+                  alt="pd1"
+                  class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+          </a>
         </div>
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
-            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_111516_wb2lnk.jpg"
-                alt=""
-                class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+          <a class="glightbox" href="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_111516_wb2lnk.jpg">
+              <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_111516_wb2lnk.jpg"
+                  alt="pd2"
+                  class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+          </a>
         </div>
         <div class="w-ful mx-auto h-auto items-center justify-center rounded-lg bg-white shadow-lg">
-            <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_102024_tq8xwk.jpg"
-                alt=""
-                class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+          <a class="glightbox" href="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_102024_tq8xwk.jpg">
+              <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1665045845/layer%20utama/IMG_20220926_102024_tq8xwk.jpg"
+                  alt="pd3"
+                  class="h-auto w-[300px] rounded-lg border-4 border-[#bb1724] shadow-lg hover:border-gray-400">
+          </a>
         </div>
     </div>
 
-    <div class="border-b-[#bb1724] bg-gray-100 p-3">
+    <div class="border-b border-[#bb1724] bg-gray-100 mt-5 p-3">
         <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Mitra kami</h1>
         <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
-        <div class="grid grid-cols-3 justify-items-center">
-            <div class="mx-auto my-5">
+        <div class="grid grid-cols-3">
+            <div class="flex justify-center items-center mx-auto my-5">
                 <a target="_blank" href="https://alfamart.co.id/">
-                    <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380858/layer%20utama/alfamart_v1bsvp.png"
-                        alt="" class="h-auto w-20 md:h-auto md:w-40"></a>
-            </div>
-            <div class="mx-auto my-5">
-                <a target="_blank" href="https://smkn1purbalingga.sch.id/">
-                    <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380856/layer%20utama/smk_wgvroa.png"
-                        alt="" class="h-auto w-20 md:h-auto md:w-40">
+                    {{-- <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380858/layer%20utama/alfamart_v1bsvp.png"
+                        alt="" class="h-auto w-20 md:w-40"> --}}
+                    <img src="{{ asset('assets/img/alfamart.png') }}"
+                      alt="alfamart" class="h-auto w-20 md:w-40">
                 </a>
             </div>
             <div class="mx-auto my-5">
-                <a target="_blank" href="https://softdev.akriliklasercutting.com"><img
-                        src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1664866996/layer%20utama/softdev_rbrfzu.png"
-                        alt="" class="mt-3 h-auto w-20 md:h-auto md:w-40"></a>
+                <a target="_blank" href="https://smkn1purbalingga.sch.id/">
+                    {{-- <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380856/layer%20utama/smk_wgvroa.png"
+                        alt="" class="h-auto w-20 md:w-40"> --}}
+                    <img src="{{ asset('assets/img/smk.png') }}"
+                      alt="smega" class="h-auto w-20 md:w-40">
+                </a>
+            </div>
+            <div class="mx-auto my-5">
+                <a target="_blank" href="https://softdev.akriliklasercutting.com">
+                  {{-- <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1664866996/layer%20utama/softdev_rbrfzu.png"
+                      alt="" class="mt-3 h-auto w-20 md:w-40"> --}}
+                    <img src="{{ asset('assets/img/softdev.png') }}"
+                    alt="sofdevcom" class="mt-3 h-auto w-20 md:w-40">
+                </a>
             </div>
         </div>
     </div>

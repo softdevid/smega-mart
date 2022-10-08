@@ -43,12 +43,14 @@
                                 Galeri
                             </a>
                         </li>
+                        @auth
                         <li>
-                            <a href="/cart"
-                                class="{{ request()->is('cart') ? 'text-white bg-[#bb1724]' : 'text-gray-700 hover:bg-gray-100' }} block rounded py-2 pr-4 pl-3">
-                                Keranjang
-                            </a>
+                          <a href="/cart"
+                              class="{{ request()->is('cart') ? 'text-white bg-[#bb1724]' : 'text-gray-700 hover:bg-gray-100' }} block rounded py-2 pr-4 pl-3">
+                              Keranjang
+                          </a>
                         </li>
+                        @endauth
                     </ul>
                 </div>
                 <div class="absolute right-0 flex items-center">

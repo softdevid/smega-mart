@@ -1382,9 +1382,6 @@ input:checked + .toggle-bg {
 .mr-5 {
   margin-right: 1.25rem;
 }
-.-mt-3 {
-  margin-top: -0.75rem;
-}
 .block {
   display: block;
 }
@@ -1436,9 +1433,6 @@ input:checked + .toggle-bg {
 .h-52 {
   height: 13rem;
 }
-.h-44 {
-  height: 11rem;
-}
 .h-56 {
   height: 14rem;
 }
@@ -1477,9 +1471,6 @@ input:checked + .toggle-bg {
 }
 .h-9 {
   height: 2.25rem;
-}
-.h-40 {
-  height: 10rem;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -1531,6 +1522,9 @@ input:checked + .toggle-bg {
 }
 .w-1\/2 {
   width: 50%;
+}
+.w-\[300px\] {
+  width: 300px;
 }
 .max-w-6xl {
   max-width: 72rem;
@@ -1848,6 +1842,10 @@ input:checked + .toggle-bg {
   --tw-border-opacity: 1;
   border-color: rgb(26 86 219 / var(--tw-border-opacity));
 }
+.border-red-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(224 36 36 / var(--tw-border-opacity));
+}
 .border-b-\[\#bb1724\] {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(187 23 36 / var(--tw-border-opacity));
@@ -1964,9 +1962,6 @@ input:checked + .toggle-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
-.bg-black\/\[0\.2\] {
-  background-color: rgb(0 0 0 / 0.2);
-}
 .bg-opacity-5 {
   --tw-bg-opacity: 0.05;
 }
@@ -1993,9 +1988,6 @@ input:checked + .toggle-bg {
 }
 .bg-center {
   background-position: center;
-}
-.fill-current {
-  fill: currentColor;
 }
 .object-contain {
   -o-object-fit: contain;
@@ -2064,10 +2056,6 @@ input:checked + .toggle-bg {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -2075,6 +2063,10 @@ input:checked + .toggle-bg {
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .py-6 {
   padding-top: 1.5rem;
@@ -2127,6 +2119,12 @@ input:checked + .toggle-bg {
 }
 .text-right {
   text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+.align-middle {
+  vertical-align: middle;
 }
 .font-oswald {
   font-family: Oswald, sans-serif;
@@ -3071,10 +3069,6 @@ input:checked + .toggle-bg {
     padding: 0px;
   }
 
-  .sm\:p-4 {
-    padding: 1rem;
-  }
-
   .sm\:p-6 {
     padding: 1.5rem;
   }
@@ -3179,11 +3173,6 @@ input:checked + .toggle-bg {
     margin-bottom: 0.75rem;
   }
 
-  .md\:my-6 {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
   .md\:ml-0 {
     margin-left: 0px;
   }
@@ -3242,6 +3231,10 @@ input:checked + .toggle-bg {
 
   .md\:h-full {
     height: 100%;
+  }
+
+  .md\:h-52 {
+    height: 13rem;
   }
 
   .md\:w-40 {
@@ -3345,6 +3338,11 @@ input:checked + .toggle-bg {
   .md\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .md\:py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 
   .md\:pl-4 {
@@ -3557,14 +3555,14 @@ input:checked + .toggle-bg {
     padding-bottom: 2rem;
   }
 
-  .lg\:px-6 {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
   .lg\:py-3 {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+  }
+
+  .lg\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .lg\:pl-6 {
