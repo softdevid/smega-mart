@@ -57,14 +57,19 @@
                                 @foreach ($brg as $key => $b)
                                     <form action="{{ route('order.store') }}" method="post">
                                         @csrf
-                                        {{-- <input type="hidden" value="{{ $b->id }}" name="id[]" id="id[]"> --}}
+                                        <input type="hidden" value="{{ $key + 1 }}" name="no[]" id="no[]">
                                         <input type="hidden" value="{{ $noFaktur }}" id="noFaktur" name="noFaktur[]">
                                         <input type="hidden" value="{{ $b->barcode }}" id="barcode" name="barcode[]">
+                                        <input type="hidden" value="{{ $b->namaBarang }}" id="namaBarang"
+                                            name="namaBarang[]">
+                                        <input type="hidden" value="{{ $b->hrgJual }}" id="hrgJual" name="hrgJual[]">
                                         <input type="hidden" value="{{ $b->qty }}" id="qty" name="qty[]">
                                         <input type="hidden" value="0" id="status" name="status[]">
                                         <input type="hidden" value="0" id="statusBayar" name="statusBayar[]">
-                                        <input type="hidden" value="{{ auth()->user()->kdUser }}" id="KdUser"
-                                            name="KdUser">
+                                        <input type="hidden" value="{{ auth()->user()->kdUser }}" id="kdUser[]"
+                                            name="kdUser[]">
+                                        <input type="hidden" value="{{ $b->qty * $b->hrgJual }}" id="subtotal[]"
+                                            name="subtotal[]">
 
                                         <tr
                                             class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
@@ -151,7 +156,10 @@
                 var data = {
                     'noFaktur': $('#noFaktur').val(),
                     'barcode': $('#barcode').val(),
+                    'namaBarang': $('#namaBarang').val(),
+                    'hrgJual': $('#hrgJual').val(),
                     'qty': $('#qty').val(),
+                    'subtotal': $('#subtotal').val(),
                     'status': $('#status').val(),
                     'statusBayar': $('#statusBayar').val(),
                     'kdUser': $('#kdUser').val(),
@@ -173,17 +181,17 @@
                         $('#success').html('');
                         $('#success').append(
                             '<div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">\
-                                                                                                                                                                                      <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
-                                                                                                                                                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
-                                                                                                                                                                                          <path fill-rule="evenodd"\
-                                                                                                                                                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
-                                                                                                                                                                                                clip rule="evenodd"></path>\
-                                                                                                                                                                                                </svg> \
-                                                                                                                                                                                                span class = "sr-only" > Info < /span>\
-                                                                                                                                                                                                <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
-                                                                                                                                                                                                Pesanan sedang diproses, menunggu konfirmasi!\
-                                                                                                                                                                                                </div>\
-                                                                                                                                                                                                <div>'
+                                                                                                                                                                                                      <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
+                                                                                                                                                                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
+                                                                                                                                                                                                          <path fill-rule="evenodd"\
+                                                                                                                                                                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
+                                                                                                                                                                                                                clip rule="evenodd"></path>\
+                                                                                                                                                                                                                </svg> \
+                                                                                                                                                                                                                span class = "sr-only" > Info < /span>\
+                                                                                                                                                                                                                <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
+                                                                                                                                                                                                                Pesanan sedang diproses, menunggu konfirmasi!\
+                                                                                                                                                                                                                </div>\
+                                                                                                                                                                                                                <div>'
                         )
                     }
                 })

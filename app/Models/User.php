@@ -26,6 +26,11 @@ class User extends Authenticatable
     return $this->belongsTo(Order::class, 'barcode');
   }
 
+  public function rinciorder()
+  {
+    return $this->hasOne(RinciOrder::class, 'kdUser');
+  }
+
 
   /**
    * The attributes that are mass assignable.

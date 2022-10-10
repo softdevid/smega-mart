@@ -90,7 +90,8 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('user', UserController::class);
 
   //Route Order
-  Route::get('/orders', [OrderController::class, 'index']);
+  Route::get('/orders', [OrderController::class, 'adminDiproses']);
+  Route::post('/orders/{noFaktur}', [OrderController::class, 'updateDiproses']);
   Route::get('/detailProduct/{slug}', [OrderController::class, 'detailProduct'])->name('detailProduct');
 
   //Route kasir
