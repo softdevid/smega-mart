@@ -10,7 +10,7 @@ class Keranjang extends Model
   use HasFactory;
   protected $table = 'keranjang';
   protected $guarded = ['id'];
-  protected $with = ['barang'];
+  // protected $with = ['barang'];
 
   public function barang()
   {

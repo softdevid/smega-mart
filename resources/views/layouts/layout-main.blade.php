@@ -15,7 +15,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @if (request()->is('gallery') || request()->is('about'))
-    <link rel="stylesheet" href="{{ asset('assets/glightbox/dist/css/glightbox.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/glightbox/dist/css/glightbox.min.css') }}">
     @endif
 </head>
 
@@ -47,15 +47,16 @@
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/header-mid.js') }}"></script>
+    <script src="{{ asset('js/cart.js') }}"></script>
 
     @if (request()->is('gallery') || request()->is('about'))
-    <script src="{{ asset('assets/glightbox/dist/js/glightbox.min.js') }}"></script>
-    <script>
-      var lightbox = GLightbox();
+        <script src="{{ asset('assets/glightbox/dist/js/glightbox.min.js') }}"></script>
+        <script>
+            var lightbox = GLightbox();
             lightbox.on('open', (target) => {
                 console.log('lightbox opened');
             });
-    </script>
+        </script>
     @endif
 </body>
 

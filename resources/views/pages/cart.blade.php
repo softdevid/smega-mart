@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="m-5 text-center">
-            Total pembelian: Rp. {{ number_format($total, 0, ',', '.') }}
+            Total pembelian: Rp. {{ number_format($brg->sum('subtotal'), 0, ',', '.') }}
             <div class="container my-4 mx-auto items-center justify-center justify-items-end text-right">
                 <a href="/checkout" class="rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800 md:p-3">Checkout</a>
                 <a href="/products" class="rounded-lg bg-green-500 p-2 text-white hover:bg-green-700 md:p-3">Belanja lagi
@@ -105,7 +105,3 @@
         </div>
     @endif
 @endsection
-
-@push('script')
-    <script></script>
-@endpush

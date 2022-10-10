@@ -40,7 +40,7 @@ class HomeController extends Controller
 
   public function cartSum()
   {
-    $cartsum = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 0])->sum('qty');
+    $cartsum = Keranjang::where(['kdUser' => auth()->user()->kdUser ?? ''])->sum('qty');
     return response()->json([
       'cartsum' => $cartsum,
     ]);
@@ -48,16 +48,13 @@ class HomeController extends Controller
 
   public function productDetail(Barang $product)
   {
-    $date = date('Y-m-d', strtotime(Carbon::now()));
-    $a = 0604 + Penjualan::count();
-    $noFaktur = "SM-" . $date . Penjualan::count() . $a;
     $images = Gambar::where('barcode', $product->barcode)->get();
 
     return view('pages.product.product-detail', [
       "title" => $product->namaBarang,
       "product" => $product,
       "images" => $images,
-      "noFaktur" => $noFaktur,
+      // "noFaktur" => $noFaktur,
     ]);
   }
 

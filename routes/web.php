@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/checkout', [OrderController::class, 'checkout']);
 
   //route checkout dan prosesnya
-  Route::post('/pesan/{id}', [OrderController::class, 'pesan']);
+  // Route::post('/pesan/{id}', [OrderController::class, 'pesan']);
+  Route::post('/pesan', [OrderController::class, 'store'])->name('pesan');
 
   //profile
   Route::get('/profil', [HomeController::class, 'profil']);

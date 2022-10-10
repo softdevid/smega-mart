@@ -14,7 +14,7 @@ class Barang extends Model
   protected $table = 'databarang';
   protected $primaryKey = 'barcode';
   protected $guarded = [];
-  protected $with = ['kategori', 'supplier', 'keranjang'];
+  protected $with = ['kategori', 'supplier'];
 
   public function kategori()
   {
