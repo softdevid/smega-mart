@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
   //route keranjang
   Route::resource('order', OrderController::class);
   Route::resource('keranjang', KeranjangController::class);
+  Route::get('/keranjang', [KeranjangController::class, 'index']);
   Route::delete('/order/{id}', [OrderController::class],);
   Route::get('/cart', [HomeController::class, 'cart']);
   Route::get('/checkout', [OrderController::class, 'checkout']);

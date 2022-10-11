@@ -45,7 +45,7 @@
                         </li>
                         @auth
                             <li>
-                                <a href="{{ route('keranjang.index') }}"
+                                <a href="/keranjang"
                                     class="{{ request()->is('keranjang') ? 'text-white bg-[#bb1724]' : 'text-gray-700 hover:bg-gray-100' }} block rounded py-2 pr-4 pl-3">
                                     Keranjang
                                 </a>

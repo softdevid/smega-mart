@@ -3,26 +3,6 @@
     <div id="brgDetail"></div>
 
     <div class="container">
-        @if ($errors->any())
-            <div class="mb-4 flex rounded-lg bg-red-100 p-4 text-sm text-red-700 dark:bg-red-200 dark:text-red-800"
-                role="alert">
-                <svg aria-hidden="true" class="mr-3 inline h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li class="font-medium">{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
-
         @if (session()->has('success'))
             <div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">
                 <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"
@@ -61,8 +41,8 @@
                 </button>
             </div>
         @endif
-        <div id="message"></div>
-        <div id="success"></div>
+        {{-- <div id="message"></div>
+        <div id="success"></div> --}}
 
         <div class="rounded-lg border bg-white p-4 lg:p-8">
             <div class="grid grid-cols-1 items-center gap-2 md:grid-cols-12 md:gap-4 lg:grid-cols-12 lg:gap-6">
@@ -112,8 +92,7 @@
                     <input type="hidden" name="hrgJual" id="hrgJual" value="{{ $product->hrgJual }}">
                     <input type="hidden" name="status" id="status" value="0">
                     <input type="hidden" name="kdUser" id="kdUser" value="{{ auth()->user()->kdUser ?? '' }}">
-                    <input type="hidden" name="subtotal" id="subtotal"
-                        value="{{ request('qty') * $product->hrgJual }}">
+                    <input type="hidden" name="subtotal" id="subtotal" value="{{ request('qty') * $product->hrgJual }}">
 
                     {{-- stok --}}
                     <input type="hidden" name="stok" id="stok" value="{{ $product->stok }}">
@@ -158,5 +137,4 @@
             </div>
         </div>
     </div>
-
 @endsection

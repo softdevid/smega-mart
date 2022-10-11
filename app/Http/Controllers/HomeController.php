@@ -8,7 +8,7 @@ use App\Models\Keranjang;
 use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\Penjualan;
-use App\Models\RinciOrder;
+// use App\Models\RinciOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
