@@ -25,27 +25,33 @@ class OrderController extends Controller
   {
 
     $no = $request->no;
-    $noFaktur = $request->noFaktur;
-    $barcode = $request->barcode;
-    $namaBarang = $request->namaBarang;
-    $hrgJual = $request->hrgJual;
-    $qty = $request->qty;
-    $subtotal = $request->subtotal;
-    $status = $request->status;
-    $statusBayar = $request->statusBayar;
-    $kdUser = $request->kdUser;
-
+    // $noFaktur = $request->noFaktur;
+    // $barcode = $request->barcode;
+    // $namaBarang = $request->namaBarang;
+    // $hrgJual = $request->hrgJual;
+    // $qty = $request->qty;
+    // $subtotal = $request->subtotal;
+    // $status = $request->status;
+    // $statusBayar = $request->statusBayar;
+    // $kdUser = $request->kdUser;
+    // dd($request->all());
+    for ($i = 0; $i < count($no); $i++) {
+      $alamat = [
+        'alamat' => $request->alamat,
+      ];
+    }
     for ($i = 0; $i < count($no); $i++) {
       $data = [
-        'noFaktur' => $noFaktur[$i],
-        'barcode' => $barcode[$i],
-        'namaBarang' => $namaBarang[$i],
-        'hrgJual' => $hrgJual[$i],
-        'subtotal' => $subtotal[$i],
-        'qty' => $qty[$i],
-        'status' => $status[$i],
-        'statusBayar' => $statusBayar[$i],
-        'kdUser' => $kdUser[$i],
+        'noFaktur' => $request->noFaktur[$i],
+        'barcode' => $request->barcode[$i],
+        'namaBarang' => $request->namaBarang[$i],
+        'hrgJual' => $request->hrgJual[$i],
+        'subtotal' => $request->subtotal[$i],
+        'qty' => $request->qty[$i],
+        'status' => $request->status[$i],
+        'statusBayar' => $request->statusBayar[$i],
+        'kdUser' => $request->kdUser[$i],
+        'alamat' => $alamat['alamat'][$i],
       ];
 
       Order::create($data);
@@ -102,7 +108,6 @@ class OrderController extends Controller
     Order::where('id', $id)
       ->update(['status' => 1, 'noFaktur' => $noFaktur]);
 
-
     return back();
   }
 
@@ -134,30 +139,42 @@ class OrderController extends Controller
   public function dikemas() //ini dikemas
   {
     $brgKemas = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 1])->orderBy('id')->get();
+    foreach ($brgKemas as $key => $b) {
+      $noFaktur = $b->noFaktur;
+    }
     return view('pages.pesanan.dikemas', [
       'title' => 'Pesanan',
       'brgKemas' => $brgKemas,
       'total' => $brgKemas->sum('subtotal'),
+      'noFaktur' => $noFaktur ?? '',
     ]);
   }
 
   public function dikirim() //ini dikirim
   {
-    $brgKirim = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 2])->orderBy('id')->get();
+    $brgKirim = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 2])->get();
+    foreach ($brgKirim as $key => $b) {
+      $noFaktur = $b->noFaktur;
+    }
     return view('pages.pesanan.dikirim', [
       'title' => 'Pesanan',
       'brgKirim' => $brgKirim,
+      'noFaktur' => $noFaktur ?? '',
       'total' => $brgKirim->sum('subtotal'),
     ]);
   }
 
   public function selesai() //ini selesai
   {
-    $brgSelesai = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 3])->orderBy('id')->get();
+    $brgSelesai = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 3])->get();
+    foreach ($brgSelesai as $key => $b) {
+      $noFaktur = $b->noFaktur;
+    }
     return view('pages.pesanan.selesai', [
       'title' => 'Pesanan',
       'brgSelesai' => $brgSelesai,
       'total' => $brgSelesai->sum('subtotal'),
+      'noFaktur' => $noFaktur ?? '',
     ]);
   }
 
@@ -182,7 +199,7 @@ class OrderController extends Controller
 
   public function adminDikemas() //ini dikemas
   {
-    $brgKemas = Order::where('status', 1)->orderBy('id')->get();
+    $brgKemas = RinciOrder::where('status', 1)->get();
     return view('kasir.pages.order.dikemas', [
       'title' => 'Pesanan',
       'brgKemas' => $brgKemas,
@@ -192,7 +209,7 @@ class OrderController extends Controller
 
   public function adminDikirim() //ini dikirim
   {
-    $brgKirim = Order::where('status', 2)->orderBy('id')->get();
+    $brgKirim = RinciOrder::where('status', 2)->orderBy('id')->get();
     return view('kasir.pages.order.dikirim', [
       'title' => 'Pesanan',
       'brgKirim' => $brgKirim,
@@ -202,21 +219,11 @@ class OrderController extends Controller
 
   public function adminSelesai() //ini selesai
   {
-    $brgSelesai = Order::where('status', 3)->orderBy('id')->get();
+    $brgSelesai = RinciOrder::where('status', 3)->orderBy('id')->get();
     return view('kasir.pages.order.selesai', [
       'title' => 'Pesanan',
       'brgSelesai' => $brgSelesai,
       'total' => $brgSelesai->sum('subtotal'),
     ]);
-  }
-
-
-  public function updateDiproses(Request $request)
-  {
-    $noFaktur = $request->noFaktur;
-    RinciOrder::where('noFaktur', $noFaktur)
-      ->update(['status' => 1]);
-
-    return redirect()->to('/order/dikemas');
   }
 }

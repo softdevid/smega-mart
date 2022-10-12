@@ -13,6 +13,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\RinciOrderController;
 use Illuminate\Support\Facades\Route;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -29,7 +30,7 @@ Route::get('/gallery', [HomeController::class, 'gallery']);
 // Auth Route
 Route::get('/registration', [AuthController::class, 'indexRegistration'])->middleware('guest')->name('registration');
 Route::post('/registration', [AuthController::class, 'registration']);
-Route::get('/login', [AuthController::class, 'indexLogin'])->middleware('guest')->name('login');
+Route::get('/loginView', [AuthController::class, 'indexLogin'])->middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
@@ -92,8 +93,18 @@ Route::middleware(['auth'])->group(function () {
 
   //Route Order
   Route::get('/orders', [OrderController::class, 'adminDiproses']);
-  Route::post('/orders/{noFaktur}', [OrderController::class, 'updateDiproses']);
   Route::get('/detailProduct/{slug}', [OrderController::class, 'detailProduct'])->name('detailProduct');
+
+  //route order admin
+  Route::post('/orders/{id}', [RinciOrderController::class, 'updateDiproses'])->name('diproses.kasir');
+  Route::resource('rinci', RinciOrderController::class);
+
+  //ROute pesanan admin view
+  Route::get('/orders/diproses', [OrderController::class, 'adminDiproses']);
+  Route::get('/orders/dikemas', [OrderController::class, 'adminDikemas']);
+  Route::get('/orders/dikirim', [OrderController::class, 'adminDikirim']);
+  Route::get('/orders/selesai', [OrderController::class, 'adminSelesai']);
+
 
   //Route kasir
   Route::resource('kasir', KasirController::class);

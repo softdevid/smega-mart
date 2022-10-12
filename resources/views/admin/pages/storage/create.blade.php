@@ -58,16 +58,7 @@
     {{-- <script src="/js/jquery-3.6.0.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    {{-- <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script> --}}
-    {{-- <script src="/js/kasir.js"></script> --}}
-
     <script>
-        // const { js } = require("laravel-mix");
-
-        // const { data } = require("autoprefixer");
-
         function numThousand(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
@@ -140,26 +131,13 @@
                         $.each(response.pembelian, function(key, item) {
                             $('tbody').append(
                                 '<tr class= "border-b bg-white text-black hover:bg-gray-50 text-center w-full">\
-                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
-                                item
-                                .barcode +
+                                  <td class="items-center py-3 px-7 dark:text-white">' +item.barcode +'</td>\
+                                <td class="items-center py-3 px-7 dark:text-white">' +item.jmlBeli +
                                 '</td>\
-                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
-                                item
-                                .jmlBeli +
+                                <td class="items-center py-3 px-7 dark:text-white">' +item.hrgJual +
                                 '</td>\
-                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
-                                item
-                                .hrgJual +
-                                '</td>\
-                                                                                                                      <td class="items-center py-3 px-7 dark:text-white">' +
-                                item
-                                .jmlBeli *
-                                item
-                                .hrgBeli +
-                                '</td>\
-                                                                                                                                                                                                                                                                                                  </tr>'
-                            )
+                                <td class="items-center py-3 px-7 dark:text-white">' +item.jmlBeli *item.hrgBeli +'</td>\
+                                </tr>')
                         });
                     }
                 })
@@ -177,8 +155,8 @@
                         $('#total').html('');
                         $('#total').append(
                             '<input type="number" id="total" class="w-full p-2" min="0" value="' +
-                            response
-                            .total + '" disabled>');
+                            numThousand(response
+                            .total) + '" disabled>');
                     }
                 })
             }
@@ -213,7 +191,7 @@
                             <div class="my-3">\
                                 <div class="grid grid-cols-2 gap-7">\
                                     <b class="text-center">Total:</b>\
-                                    <input type="number" class="w-full p-2" id="total" name="total" value="' +response.total +'">\
+                                    <input type="number" class="w-full p-2" id="total" name="total" value="' +numThousand(response.total) +'">\
                                 </div>\
                             </div>\
                             <div class="grid grid-cols-2 gap-7">\
@@ -250,9 +228,6 @@
                     data: bayar,
                     dataType: "json",
                     success: function(response) {
-                        // console.log(response.pembelian);
-                        // console.log(response.total);
-                        // console.log(response.kembali);
                         $('#kembali').html('');
                         $('#kembali').append(
                             '<div>' +

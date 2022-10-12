@@ -1,62 +1,67 @@
 @extends('layouts.layout-main')
 @section('content')
-    <h1 class="text-center text-3xl">Checkout</h1>
-    <div class="mx-auto mt-2 h-[2px] w-[100px] bg-black"></div>
+    <form action="{{ route('order.store') }}" method="post">
+        @csrf
+        <h1 class="text-center text-3xl">Checkout</h1>
+        <div class="mx-auto mt-2 h-[2px] w-[100px] bg-black"></div>
 
-    {{-- alamat pengirim --}}
-    <div class="container rounded-lg border-t-4 bg-white py-5 shadow-lg">
-        <div class="m-3">
+        {{-- alamat pengirim --}}
+        <div class="container rounded-lg border-t-4 bg-white py-5 shadow-lg">
+            <div class="m-3">
 
-            <div class="text-red-700"><i class="fa fa-location-dot"></i> Alamat Pengiriman</div>
+                <div class="text-red-700"><i class="fa fa-location-dot"></i> Alamat Pengiriman</div>
 
-            <div class="mt-2 grid grid-cols-1 md:grid-cols-2">
-                <div>{{ auth()->user()->namaUser }} ({{ auth()->user()->no_hp }}) </div>
-                <div>{{ auth()->user()->kabupaten }}, {{ auth()->user()->kecamatan }}, {{ auth()->user()->desa }},
-                    {{ auth()->user()->alamat_lengkap }}</div>
+                <div class="mt-2 grid grid-cols-1 md:grid-cols-2">
+                    <div>{{ auth()->user()->namaUser }} ({{ auth()->user()->no_hp }}) </div>
+                    <textarea name="alamat[]" id="alamat" class="h-auto w-full">
+                  {{ auth()->user()->kabupaten }}, {{ auth()->user()->kecamatan }}, {{ auth()->user()->desa }},
+                    {{ auth()->user()->alamat_lengkap }}
+                </textarea>
+                    {{-- <div>{{ auth()->user()->kabupaten }}, {{ auth()->user()->kecamatan }}, {{ auth()->user()->desa }},
+                    {{ auth()->user()->alamat_lengkap }}</div> --}}
+                </div>
+
+
             </div>
-
-
         </div>
-    </div>
 
-    {{-- form checkout --}}
+        {{-- form checkout --}}
 
-    {{-- produk --}}
-    <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
-        <div class="m-3">
+        {{-- produk --}}
+        <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
+            <div class="m-3">
 
-            <div class="text-red-700"><i class="fa fa-box"></i> Produk dipesan</div>
+                <div class="text-red-700"><i class="fa fa-box"></i> Produk dipesan</div>
 
-            <div class="mt-2 grid grid-cols-1">
-                <div class="container">
-                    <div class="relative overflow-x-auto sm:rounded-lg">
-                        <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-                            <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="py-3 px-6">
-                                        #
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        <span class="sr-only">Image</span>
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Product
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Qty
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Price
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        SubTotal
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($brg as $key => $b)
-                                    <form action="{{ route('order.store') }}" method="post">
-                                        @csrf
+                <div class="mt-2 grid grid-cols-1">
+                    <div class="container">
+                        <div class="relative overflow-x-auto sm:rounded-lg">
+                            <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="py-3 px-6">
+                                            #
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            <span class="sr-only">Image</span>
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            Product
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            Qty
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            Price
+                                        </th>
+                                        <th scope="col" class="py-3 px-6">
+                                            SubTotal
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($brg as $key => $b)
                                         <input type="hidden" value="{{ $key + 1 }}" name="no[]" id="no[]">
                                         <input type="hidden" value="{{ $noFaktur }}" id="noFaktur" name="noFaktur[]">
                                         <input type="hidden" value="{{ $b->barcode }}" id="barcode" name="barcode[]">
@@ -103,44 +108,44 @@
                                                 Rp. {{ number_format($b->qty * $b->hrgJual, 0, ',', '.') }}
                                             </td>
                                         </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- total bayar --}}
+        {{-- total bayar --}}
 
-    <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
-        <div class="m-3">
+        <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
+            <div class="m-3">
 
-            <div class="text-center">
-                <div class="mt-4 text-sm text-red-700"><i class="fa fa-money"></i> Metode bayar Cash on delivery / bayar
-                    ditempat
-                    khusus
-                    wilayah
-                    purbalingga!</div>
+                <div class="text-center">
+                    <div class="mt-4 text-sm text-red-700"><i class="fa fa-money"></i> Metode bayar Cash on delivery / bayar
+                        ditempat
+                        khusus
+                        wilayah
+                        purbalingga!</div>
+                </div>
+
+                <div class="mt-4 text-right">
+                    <span class="mt-4">Subtotal produk: Rp. <span
+                            class="text-red-700">{{ number_format($total, 0, ',', '.') }}</span></span><br>
+
+                    <span class="mt-4">Total pembayaran: Rp. <span
+                            class="text-red-700">{{ number_format($total, 0, ',', '.') }}</span></span><br>
+
+                    <a href="/cart" class="rounded-lg bg-gray-700 p-2 text-white hover:bg-gray-800 md:p-3">Batal
+                        Checkout</a>
+                    <button type="submit" id="pesan"
+                        class="mt-3 rounded-lg bg-red-600 p-2 text-white hover:bg-red-800 md:p-3"
+                        onclick="return confirm('barang yang sudah dipesan tidak dapat dibatalkan!')">Pesan</button>
+                </div>
+
             </div>
-
-            <div class="mt-4 text-right">
-                <span class="mt-4">Subtotal produk: Rp. <span
-                        class="text-red-700">{{ number_format($total, 0, ',', '.') }}</span></span><br>
-
-                <span class="mt-4">Total pembayaran: Rp. <span
-                        class="text-red-700">{{ number_format($total, 0, ',', '.') }}</span></span><br>
-
-                <a href="/cart" class="rounded-lg bg-gray-700 p-2 text-white hover:bg-gray-800 md:p-3">Batal
-                    Checkout</a>
-                <button type="submit" id="pesan"
-                    class="mt-3 rounded-lg bg-red-600 p-2 text-white hover:bg-red-800 md:p-3"
-                    onclick="return confirm('barang yang sudah dipesan tidak dapat dibatalkan!')">Pesan</button>
-            </div>
-
         </div>
-    </div>
 
     </form>
 @endsection
@@ -181,17 +186,17 @@
                         $('#success').html('');
                         $('#success').append(
                             '<div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">\
-                                                                                                                                                                                                      <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
-                                                                                                                                                                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
-                                                                                                                                                                                                          <path fill-rule="evenodd"\
-                                                                                                                                                                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
-                                                                                                                                                                                                                clip rule="evenodd"></path>\
-                                                                                                                                                                                                                </svg> \
-                                                                                                                                                                                                                span class = "sr-only" > Info < /span>\
-                                                                                                                                                                                                                <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
-                                                                                                                                                                                                                Pesanan sedang diproses, menunggu konfirmasi!\
-                                                                                                                                                                                                                </div>\
-                                                                                                                                                                                                                <div>'
+                                                                                                                                                                                                                                      <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
+                                                                                                                                                                                                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
+                                                                                                                                                                                                                                          <path fill-rule="evenodd"\
+                                                                                                                                                                                                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
+                                                                                                                                                                                                                                                clip rule="evenodd"></path>\
+                                                                                                                                                                                                                                                </svg> \
+                                                                                                                                                                                                                                                span class = "sr-only" > Info < /span>\
+                                                                                                                                                                                                                                                <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
+                                                                                                                                                                                                                                                Pesanan sedang diproses, menunggu konfirmasi!\
+                                                                                                                                                                                                                                                </div>\
+                                                                                                                                                                                                                                                <div>'
                         )
                     }
                 })

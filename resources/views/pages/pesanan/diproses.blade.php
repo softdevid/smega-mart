@@ -28,7 +28,7 @@
             Tidak ada barang yang diproses
         </h1>
     @else
-        {{-- diproses status 1 --}}
+        {{-- diproses status 0 --}}
 
         {{-- form checkout --}}
 
@@ -75,7 +75,7 @@
                                                 <input type="hidden" value="{{ $b->id }}" name="id[]"
                                                     id="id[]">
                                                 <input type="hidden" name="noFaktur" id="noFaktur"
-                                                    value="{{ $b->noFaktur }}">
+                                                    value="{{ $noFaktur }}">
                                                 <tr
                                                     class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
                                                     {{-- <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">

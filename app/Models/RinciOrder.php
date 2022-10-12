@@ -9,7 +9,7 @@ class RinciOrder extends Model
 {
   use HasFactory;
   protected $table = 'rinci_order';
-  protected $guarded = [''];
+  protected $guarded = ['id'];
 
   public function user()
   {

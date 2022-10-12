@@ -97,8 +97,9 @@ class StorageController extends Controller
   public function getDetailData($noFakturBeli)
   {
     $now = date('Y-m-d', strtotime(Carbon::now()));
-    $no = Pembelian::count() + 1;
-    $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
+    // $no = Pembelian::count() + 1;
+    // $noFaktur = "FB" . date('d-m-Y', strtotime(Carbon::now())) . $no;
+    $noFaktur = session(['id' => 'noFakturBeli']);
     $pembelian = Storage::where('noFakturBeli', $noFaktur)->get();
     $total = $pembelian->sum('jmlBeli') * $pembelian->sum('hrgBeli');
     if (request('bayar') == "") {
@@ -111,7 +112,6 @@ class StorageController extends Controller
     return response()->json([
       'pembelian' => $pembelian,
       'total' => $total,
-      // 'bayar' => $bayar,
       'now' => $now,
       'kembali' => $kembali,
     ]);
