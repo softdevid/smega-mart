@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -14,8 +15,13 @@ class UserController extends Controller
    */
   public function index()
   {
+    // $admin = 'Admin';
+    // $kasir = 'Kasir';
+    // $users = User::where('level', [$admin, $kasir])->get();
+    // dd($users);
     return view('admin.pages.user.index', [
       'title' => 'Akun',
+      // 'users' => $users,
       'users' => User::all(),
     ]);
   }
@@ -38,7 +44,15 @@ class UserController extends Controller
    */
   public function store(Request $request)
   {
-    //
+    $validateData = $request->validate([
+      'namaUser' => 'required',
+      'email' => 'unique:datauser',
+      'password' => 'min:5',
+      'level' => 'required',
+    ]);
+    $validateData['password'] = Hash::make($validateData['password']);
+    User::create($validateData);
+    return back()->with('success', 'Akun berhasil dibuat');
   }
 
   /**
@@ -70,9 +84,23 @@ class UserController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, $kdUser)
   {
-    //
+    $user = User::find($kdUser);
+    if ($request->email != $user->email) {
+      $validateData['email'] = 'required';
+    }
+
+    $validateData = $request->validate([
+      'namaUser' => 'required',
+      'password' => 'min:5',
+      'level' => 'required',
+    ]);
+
+    $validateData['password'] = Hash::make($validateData['password']);
+    $user->where('kdUser', $kdUser)
+      ->update($validateData);
+    return back()->with('success', 'Akun berhasil dibuat');
   }
 
   /**

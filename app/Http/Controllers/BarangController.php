@@ -28,48 +28,6 @@ class BarangController extends Controller
     ]);
   }
 
-  public function list()
-  {
-    $produk = Barang::leftJoin('tabelkategori', 'tabelkategori.kdKategori', 'databarang.kdKategori')
-      ->select('databarang.*', 'namaKategori')
-      // ->orderBy('barcode', 'asc')
-      ->get();
-
-    return datatable()
-      ->of($produk)
-      ->addIndexColumn()
-      ->addColumn('select_all', function ($produk) {
-        return '
-                    <input type="checkbox" name="barcode[]" value="' . $produk->barcode . '">
-                ';
-      })
-      ->addColumn('barcode', function ($produk) {
-        return '<span class="label label-success">' . $produk->barcode . '</span>';
-      })
-      ->addColumn('hrgBeli', function ($produk) {
-        return number_format($produk->hrgBeli, 0, ',', '.');
-      })
-      ->addColumn('hrgJual', function ($produk) {
-        return number_format($produk->hrgJual, 0, ',', '.');
-      })
-      ->addColumn('stok', function ($produk) {
-        return number_format($produk->stok, 0, ',', '.');
-      })
-      ->addColumn('stok', function ($produk) {
-        return number_format($produk->stok_gudang, 0, ',', '.');
-      })
-      ->addColumn('aksi', function ($produk) {
-        return '
-                <div class="btn-group">
-                    <button type="button" onclick="editForm(`' . route('produk.update', $produk->barcode) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button type="button" onclick="deleteData(`' . route('produk.destroy', $produk->barcode) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                </div>
-                ';
-      })
-      ->rawColumns(['aksi', 'barcode', 'select_all'])
-      ->make(true);
-  }
-
   /**
    * Show the form for creating a new resource.
    *
@@ -255,28 +213,25 @@ class BarangController extends Controller
   public function destroy($barcode)
   {
     $barang = Barang::findOrFail($barcode);
+    $images = Gambar::where('barcode', $barcode)->get();
+
+
+    if ($images->count() >= 1) {
+      foreach ($images as $image) {
+        Cloudinary::destroy($image->cloud_img);
+      }
+      $images->where('barcode', $barcode)->delete();
+    }
 
     if ($barang->cloud_img == null) {
-
-      $images = Gambar::where("barcode", $barang->barcode)->get();
-      // dd($images);
-      foreach ($images as $image) {
-        Cloudinary::destroy($image->cloud_img);
-      }
-      Gambar::where("barcode", $barang->barcode)->delete();
-      $cloud_img = $barang->cloud_img;
-      Cloudinary::destroy($cloud_img);
       Barang::destroy($barcode);
     }
+
     if ($barang->cloud_img != null) {
-
-      $images = Gambar::where("barcode", $barang->barcode)->get();
-      foreach ($images as $image) {
-        Cloudinary::destroy($image->cloud_img);
-      }
-      Gambar::where("barcode", $barang->barcode)->delete();
+      Cloudinary::destroy($barang->cloud_img);
       Barang::destroy($barcode);
     }
+
     return back()->with('success', 'Berhasil dihapus!!');
   }
 

@@ -7,6 +7,7 @@ use App\Models\Storage;
 use App\Models\Pembelian;
 use App\Models\Suplier;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -97,11 +98,13 @@ class StorageController extends Controller
   public function getDetailData($noFakturBeli)
   {
     $now = date('Y-m-d', strtotime(Carbon::now()));
-    // $no = Pembelian::count() + 1;
-    // $noFaktur = "FB" . date('d-m-Y', strtotime(Carbon::now())) . $no;
-    $noFaktur = session(['id' => 'noFakturBeli']);
+    $no = Pembelian::count() + 1;
+    $noFaktur = "FB" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $pembelian = Storage::where('noFakturBeli', $noFaktur)->get();
-    $total = $pembelian->sum('jmlBeli') * $pembelian->sum('hrgBeli');
+    $total2 = DB::select("select ifnull(sum(hrgBeli*jmlBeli),0) as total from tabelrealpembelian where noFakturBeli =  '$noFaktur'");
+    foreach ($total2 as $key => $t) {
+      $total = $t->total;
+    }
     if (request('bayar') == "") {
       $kembali = 0;
     } else {
@@ -133,11 +136,19 @@ class StorageController extends Controller
 
   public function simpan(Request $request)
   {
+    // $validated = [
+    //   'noFakturBeli' => 'required',
+    //   'tglBeli' => 'required',
+    //   'kdSupplier' => 'required',
+    //   'kdUser' => 'required',
+    // ];
+    // $request->validate($validated);
+
     $b = Pembelian::create([
       'noFakturBeli' => $request->noFakturBeli,
       'tglBeli' => $request->tglBeli,
       'kdSupplier' => $request->kdSupplier,
-      'kdUser' => auth()->user()->kdUser,
+      'kdUser' => auth()->user()->kdUser ?? '',
     ]);
     // $b = Pembelian::create($request->all());
     $request->session()->forget('id');
@@ -188,10 +199,15 @@ class StorageController extends Controller
   {
     $product = Barang::findOrFail($id);
     if ($request->stock_toko) {
-      $product->update([
-        'stok' => $request->stock_toko + $product->stok,
-        'stok_gudang' => $product->stok_gudang - $request->stock_toko,
-      ]);
+      if ($product->stok_gudang <= 0) {
+        return back()->with('error', 'Stok gudang kosong maka tidak bisa ditambah ke toko');
+      } else {
+        $product->update([
+          'stok' => $request->stock_toko + $product->stok,
+          'stok_gudang' => $product->stok_gudang - $request->stock_toko,
+        ]);
+        return redirect()->to('storage')->with('success', 'Stok berhasil diupdate');
+      }
     }
 
     if ($request->stock_gudang) {

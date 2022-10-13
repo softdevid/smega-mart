@@ -67,6 +67,11 @@
                             aria-current="page">Gudang</a>
                     </li>
                     <li>
+                        <a href="/kasir"
+                            class="{{ request()->is('kasir') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            aria-current="page">Kasir</a>
+                    </li>
+                    <li>
                         <button id="dropdownDefault" data-dropdown-toggle="dropdown"
                             class="{{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             type="button">Lainnya<svg class="ml-2 inline h-4 w-4" aria-hidden="true" fill="none"
@@ -87,13 +92,17 @@
                                     <a href="{{ route('unit.index') }}"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Satuan</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('galleries.index') }}"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Galleri</a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="{{ route('user.index') }}"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Akun</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('category.index') }}"
+                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kategori</a>
                                 </li>
                             </ul>
                         </div>
@@ -201,6 +210,15 @@
                 <button class="rounded-lg bg-red-600 p-3 text-white hover:bg-red-700" type="button"
                     data-modal-toggle="tambah">
                     <i class="fa fa-plus"></i> Tambah Gambar
+                </button>
+            </div>
+        @elseif ($title == 'Kategori')
+            <div
+                class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
+                <button class="rounded-lg bg-red-600 p-3 text-white hover:bg-red-700" type="button"
+                    data-modal-toggle="tambah">
+                    <i class="fa fa-plus"></i> Tambah Kategori
                 </button>
             </div>
         @else

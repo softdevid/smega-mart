@@ -14,6 +14,8 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\RinciOrderController;
+use App\Http\Controllers\KategoriController;
+
 use Illuminate\Support\Facades\Route;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -117,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
   //route pembelian admin
   Route::post('/admin/store', [StorageController::class, 'store'])->name('pembelian.store');
   Route::get('/admin/detail/{noFakturBeli}', [StorageController::class, 'getDetailData'])->name('pembelian.detail');
-  Route::get('/admin/store/simpan', [StorageController::class, 'simpan'])->name('pembelian.simpan');
+  Route::post('/admin/store/simpan', [StorageController::class, 'simpan'])->name('pembelian.simpan');
 
   Route::get('/session/forget', [KasirController::class, 'destroy'])->name('forget');
 
@@ -128,6 +130,8 @@ Route::middleware(['auth'])->group(function () {
   //route laporan
   Route::post('/laporan/date', [LaporanController::class, 'date']);
 
+  //route kategori
+  Route::resource('category', KategoriController::class);
 
   //hapus cover gambar utama dan gambar lain
   // Route::delete('/deletecover/{barcode}', [BarangController::class, 'deletecover']);

@@ -12,6 +12,7 @@ class Kategori extends Model
   protected $table = 'tabelkategori';
   protected $primaryKey = 'kdKategori';
   protected $guarded = ['kdKategori'];
+  public $timestamps = false;
 
   public function barang()
   {

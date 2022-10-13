@@ -36,7 +36,7 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div class="grid grid-cols-1 gap-6">
         <form action="{{ route('products.update', [$barang->barcode]) }}" method="POST" class="mb-6"
             enctype="multipart/form-data">
             @csrf
@@ -174,6 +174,17 @@
                 </div>
             </label>
 
+            <div class="flex">
+                <button
+                    class="relative rounded-lg bg-blue-700 p-3 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button" data-modal-toggle="defaultModal">
+                    Gambar
+                </button>
+                <div class="rounded-lg bg-red-100 p-4 text-sm text-red-700 dark:bg-red-200 dark:text-red-800"
+                    role="alert">
+                    <span class="font-medium">Hapus gambar terlebih dahulu jika ingin menggantinya!</span>
+                </div>
+            </div>
             <div class="mt-8 mb-8">
                 <button type="submit"
                     class="w-full rounded-lg bg-blue-700 p-3 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>
@@ -181,33 +192,71 @@
                     class="w-full rounded-lg bg-gray-700 p-3 text-center text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 sm:w-auto">Batal</a>
             </div>
         </form>
-        <div class="md:col-span-4">
-            <div class="grid grid-cols-2">
-                @if ($barang->cloud_img != '')
-                    <div class="mx-auto max-w-screen-xxs justify-center rounded-lg">
-                        Gambar utama
-                        <img src="{{ $barang->img_urls }}" class="mx-auto mb-2 h-auto w-[200px]">
-                        <button type="button" data-modal-toggle="popup-modal"
-                            class="mx-auto flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
-                            Gambar</button>
-                    </div>
-                @endif
-                <div class="mx-auto grid grid-cols-1 justify-center gap-6">
-                    <b class="text-center">Gambar Lain</b>
-                    @if (count($gambar) > 0)
-                        @foreach ($gambar as $g)
-                            <div class="max-w-screen-xxs rounded-lg">
-                                <img src="{{ $g->img_urls }}" alt="" class="mx-auto h-auto w-[200px]">
-                                <button type="button" data-modal-toggle="gambar-modal{{ $barang->barcode }}"
-                                    class="mx-auto flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
-                                    Gambar</button>
+    </div>
+
+    <!-- Main modal -->
+    <div id="defaultModal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 right-0 left-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+        <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
+            <!-- Modal content -->
+            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between rounded-t border-b p-4 dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Gambar utama dan gambar lain
+                    </h3>
+                    <button type="button"
+                        class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="defaultModal">
+                        <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="space-y-6 p-6">
+                    <div class="md:col-span-4">
+                        <div class="grid grid-cols-2">
+                            @if ($barang->cloud_img != '')
+                                <div class="mx-auto max-w-screen-xxs justify-center rounded-lg">
+                                    Gambar utama
+                                    <img src="{{ $barang->img_urls }}" class="mx-auto mb-2 h-auto w-[200px]">
+                                    <button type="button" data-modal-toggle="popup-modal"
+                                        class="mx-auto flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
+                                        Gambar</button>
+                                </div>
+                            @else
+                                <b class="text-center">Tidak ada gambar utama</b>
+                            @endif
+                            <div class="mx-auto grid grid-cols-1 justify-center gap-6">
+                                <b class="text-center">Gambar Lain</b>
+                                @if (count($gambar) > 0)
+                                    @foreach ($gambar as $g)
+                                        <div class="max-w-screen-xxs rounded-lg">
+                                            <img src="{{ $g->img_urls }}" alt=""
+                                                class="mx-auto h-auto w-[200px]">
+                                            <button type="button" data-modal-toggle="gambar-modal{{ $barang->barcode }}"
+                                                class="mx-auto flex items-center rounded-lg bg-red-600 p-2 text-center text-sm text-white hover:bg-red-700">Hapus
+                                                Gambar</button>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <b class="text-center">Tidak ada gambar lain</b>
+                                @endif
                             </div>
-                        @endforeach
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600">
+                    <button data-modal-toggle="defaultModal" type="button"
+                        class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600">Decline</button>
                 </div>
             </div>
-        @else
-            <b class="text-center">tidak ada gambar</b>
-            @endif
         </div>
     </div>
 
