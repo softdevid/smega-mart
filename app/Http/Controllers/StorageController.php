@@ -7,6 +7,7 @@ use App\Models\Storage;
 use App\Models\Pembelian;
 use App\Models\Suplier;
 use Carbon\Carbon;
+use App\Models\Gambar;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -164,11 +165,12 @@ class StorageController extends Controller
   public function show($id)
   {
     // update stok toko
-
+    $images = Gambar::where('barcode', $id)->get();
     $product = Barang::findOrFail($id);
     return view('admin.pages.storage.stock_toko', [
       'title' => 'Tambah stok ke toko',
       'product' => $product,
+      'images' => $images,
     ]);
   }
 
@@ -181,7 +183,7 @@ class StorageController extends Controller
   public function edit($id)
   {
     //update stok Gudang
-
+    $images = Gambar::where('barcode', $id)->get();
     return view('admin.pages.storage.stock_gudang', [
       'title' => 'Tambah stok ke gudang',
       'product' => Barang::findOrFail($id),

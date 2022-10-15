@@ -1,31 +1,36 @@
 @extends('kasir.layouts.template')
 @section('content')
-    <div
-        class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
-        <ul class="-mb-px flex flex-wrap justify-center">
-            <li class="mr-2">
-                <a href="/orders"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300">Diproses</a>
-            </li>
-            <li class="mr-2">
-                <a href="/orders/dikemas"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300"
-                    aria-current="page">Dikemas</a>
-            </li>
-            <li class="mr-2">
-                <a href="/orders/dikirim"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300">Dikirim</a>
-            </li>
-            <li class="mr-2">
-                <a href="/orders/selesai"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300">Selesai</a>
-            </li>
-        </ul>
-    </div>
+    @if (session()->has('success'))
+        <div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">
+            <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"
+                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
+                {{ session('success') }}
+            </div>
+            <button type="button"
+                class="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-green-100 p-1.5 text-green-500 hover:bg-green-200 focus:ring-2 focus:ring-green-400 dark:bg-green-200 dark:text-green-600 dark:hover:bg-green-300"
+                data-dismiss-target="#alert-3" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+    @endif
+
+    @include('kasir.pages.order.navtab')
 
     @if ($brgKirim->count() == 0)
         <h1 class="m-5 text-center text-red-700">
-            Tidak ada barang yang dikemas
+            Tidak ada barang yang dikirim
         </h1>
     @else
         <div class="mt-2 grid grid-cols-1">
@@ -62,6 +67,16 @@
                                     <input type="hidden" value="{{ $b->id }}" name="id" id="id">
                                     <input type="hidden" value="3" name="status" id="status">
                                     <input type="hidden" value="{{ $b->noFaktur }}" name="noFaktur" id="noFaktur">
+                                    @foreach ($brgKirimb as $bk)
+                                        <input type="hidden" value="{{ $bk->barcode }}" name="barcode" id="barcode">
+                                        <input type="hidden" value="{{ $bk->namaBarang }}" name="namaBarang"
+                                            id="namaBarang">
+                                        <input type="hidden" value="{{ $bk->hrgJual }}" name="hrgJual" id="hrgJual">
+                                        <input type="hidden" value="{{ $bk->qty }}" name="jmlhJual" id="jmlhJual">
+                                        <input type="hidden" value="{{ $bk->barang->hrgBeli }}" name="hrgBeli"
+                                            id="hrgBeli">
+                                    @endforeach
+                                    {{-- <input type="hidden" value="{{ $b->barang->hrgBeli }}" name="hrgBeli" id="hrgBeli"> --}}
                                     <tr
                                         class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
                                         <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">

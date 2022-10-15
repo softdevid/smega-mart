@@ -55,7 +55,8 @@
                             <td scope="row"
                                 class="flex max-w-sm items-center whitespace-nowrap py-2 px-6 text-gray-900 dark:text-white">
                                 <div class="pl-3">
-                                    <div class="text-base font-semibold text-black">{{ $product->namaBarang }}</div>
+                                    <div class="text-base font-semibold uppercase text-black">{{ $product->namaBarang }}
+                                    </div>
                                     <div class="block font-normal text-black">{{ $product->barcode }}</div>
                                 </div>
                             </td>
@@ -72,8 +73,11 @@
                                 {{ $product->stok_gudang }}
                             </td>
                             <td class="text-center">
-                                {{ $product->kategori->namaKategori }}
-                            </td>
+                                {{ $product->kategori->namaKategori ?? '' }}
+                                </t-3 w-full rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400">
+                                Edit</a>
+                                <form action="{{ route('products.destroy', [$product->barcode]) }}" method="post">
+                                    @csrfd>
                             <td class="text-center">
                                 {{ $product->satuan->namaSatuan }}
                             </td>
@@ -81,14 +85,10 @@
                                 <a href="{{ route('products.show', [$product->barcode]) }}"
                                     class="mx-3 w-full rounded-lg bg-blue-700 p-2 text-sm font-bold text-white hover:bg-blue-800">Detail</a>
                                 <a href="{{ route('products.edit', [$product->barcode]) }}"
-                                    class="mx-3 w-full rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400">Edit</a>
-                                <form action="{{ route('products.destroy', [$product->barcode]) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button onclick="return confirm('Yakin dihapus?')"
-                                        class="mx-3 w-full rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
-                                        Hapus</button>
-                                </form>
+                                    class="mx @method('delete') <button onclick="return confirm('Yakin dihapus?')"
+                                    class="mx-3 w-full rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
+                                    Hapus</button>
+                                    </form>
                             </td>
                         </tr>
                     @endforeach

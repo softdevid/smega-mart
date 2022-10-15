@@ -53,27 +53,31 @@
                     class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-white p-4 text-black md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-[#bb1724] md:text-sm md:font-medium">
                     <li>
                         <a href="/dashboard"
-                            class="{{ request()->is('/dashboard') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('dashboard') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Dashboard</a>
                     </li>
                     <li>
                         <a href="/dashboard/products"
-                            class="{{ request()->is('/dashboard/products') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('dashboard/products') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Produk</a>
                     </li>
                     <li>
                         <a href="/storage"
-                            class="{{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Gudang</a>
                     </li>
-                    <li>
-                        <a href="/kasir"
-                            class="{{ request()->is('kasir') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
-                            aria-current="page">Kasir</a>
-                    </li>
+                    @auth
+                        @if (auth()->user()->level == 'Admin')
+                            <li>
+                                <a href="/kasir"
+                                    class="{{ request()->is('kasir') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                                    aria-current="page">Kasir</a>
+                            </li>
+                        @endif
+                    @endauth
                     <li>
                         <button id="dropdownDefault" data-dropdown-toggle="dropdown"
-                            class="{{ request()->is('admin-storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('suplier') | request()->is('unit') | request()->is('user') | request()->is('category') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             type="button">Lainnya<svg class="ml-2 inline h-4 w-4" aria-hidden="true" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,11 +90,11 @@
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
                                 <li>
                                     <a href="{{ route('suplier.index') }}"
-                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Suplier</a>
+                                        class="{{ request()->is('suplier') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Suplier</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('unit.index') }}"
-                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Satuan</a>
+                                        class="{{ request()->is('unit') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Satuan</a>
                                 </li>
                                 {{-- <li>
                                     <a href="{{ route('galleries.index') }}"
@@ -98,11 +102,11 @@
                                 </li> --}}
                                 <li>
                                     <a href="{{ route('user.index') }}"
-                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Akun</a>
+                                        class="{{ request()->is('user') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Akun</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('category.index') }}"
-                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kategori</a>
+                                        class="{{ request()->is('category') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kategori</a>
                                 </li>
                             </ul>
                         </div>

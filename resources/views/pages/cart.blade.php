@@ -1,7 +1,7 @@
 @extends('layouts.layout-main')
 @section('content')
     @if ($brg->count() == '')
-        <div class="mx-auto">
+        <div class="mx-auto mt-7">
             <div class="mb-4 flex justify-center rounded-lg bg-blue-100 p-4 text-sm text-blue-700 dark:bg-blue-200 dark:text-blue-800"
                 role="alert">
                 <svg aria-hidden="true" class="mr-3 inline h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
@@ -13,7 +13,8 @@
                 <span class="sr-only">Info</span>
                 <div>
                     <span class="font-medium">Belum ada barang yang ditambah ke keranjang!</span>
-                    <a href="/products" class="rounded-lg bg-blue-600 p-3 text-white hover:bg-blue-800">Belanja <i
+                    <a href="/products"
+                        class="hidden rounded-lg bg-blue-600 p-1 text-white hover:bg-blue-800 md:p-2">Belanja <i
                             class="fa fa-circle-right"></i></a>
                 </div>
             </div>
@@ -28,7 +29,7 @@
                                 #
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                <span class="sr-only">Gambar</span>
+                                Gambar
                             </th>
                             <th scope="col" class="py-3 px-6">
                                 Nama Produk
@@ -66,10 +67,11 @@
                                     {{ $b->namaBarang }}
                                 </td>
                                 <td class="mx-auto items-center justify-between py-4 px-6">
-                                    <div>
-                                        <input type="number" id="first_product"
+                                    <div class="text-center">
+                                        {{-- <input type="number" id="first_product"
                                             class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                            placeholder="1" required="" min="1" value="{{ $b->qty }}">
+                                            placeholder="1" required="" min="1" value="{{ $b->qty }}"> --}}
+                                        {{ $b->qty }}
                                     </div>
                                 </td>
                                 <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">

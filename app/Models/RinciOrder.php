@@ -15,4 +15,14 @@ class RinciOrder extends Model
   {
     return $this->belongsTo(User::class, 'kdUser');
   }
+
+  public function barang()
+  {
+    return $this->belongsTo(Barang::class, 'barcode');
+  }
+
+  public function order()
+  {
+    return $this->belongsTo(Order::class, 'noFaktur');
+  }
 }

@@ -1,27 +1,6 @@
 @extends('layouts.layout-main')
 @section('content')
-    <div
-        class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
-        <ul class="-mb-px flex flex-wrap justify-center">
-            <li class="mr-2">
-                <a href="/pesanan/diproses"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300">Diproses</a>
-            </li>
-            <li class="mr-2">
-                <a href="/pesanan/dikemas"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300"
-                    aria-current="page">Dikemas</a>
-            </li>
-            <li class="mr-2">
-                <a href="/pesanan/dikirim"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300">Dikirim</a>
-            </li>
-            <li class="mr-2">
-                <a href="/pesanan/selesai"
-                    class="inline-block rounded-t-lg border-b-2 border-transparent p-4 hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300">Selesai</a>
-            </li>
-        </ul>
-    </div>
+    @include('pages.pesanan.navtab')
 
     @if ($brgKemas->count() == 0)
         <h1 class="m-5 text-center text-red-700">
@@ -65,6 +44,9 @@
                                             <th scope="col" class="py-3 px-6">
                                                 SubTotal
                                             </th>
+                                            <th scope="col" class="py-3 px-6">
+                                                Status pengiriman
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -82,13 +64,13 @@
                                                         {{ $key + 1 }}
                                                     </td> --}}
                                                     <td class="w-32 p-4">
-                                                        @if ($b->barang->img_urls == null)
+                                                        {{-- @if ($b->barang->img_urls == null)
                                                             <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg"
                                                                 alt="Apple Watch" class="h-8 w-8">
-                                                        @else
-                                                            <img src="{{ $b->barang->img_urls }}" alt="Apple Watch"
-                                                                class="h-8 w-8">
-                                                        @endif
+                                                        @else --}}
+                                                        <img src="{{ $b->barang->img_urls ?? '' }}"
+                                                            alt="{{ $b->namaBarang }}" class="h-8 w-8">
+                                                        {{-- @endif --}}
                                                     </td>
                                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                         {{ $b->namaBarang }}
@@ -106,6 +88,18 @@
                                                     </td>
                                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                         Rp. {{ number_format($b->qty * $b->hrgJual, 0, ',', '.') }}
+                                                    </td>
+                                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                                        @if ($b->status == 0)
+                                                            <b>Sedang diproses</b>
+                                                        @elseif ($b->status == 1)
+                                                            <b>Sedang dikemas</b>
+                                                        @elseif ($b->status == 2)
+                                                            <b>Sedang dikirim</b>
+                                                        @elseif ($b->status == 3)
+                                                            <b>Sudah sampai</b>
+                                                        @endif
+                                                    </td>
                                                     </td>
                                                 </tr>
                                         @endforeach

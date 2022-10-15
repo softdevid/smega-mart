@@ -16,6 +16,6 @@ class Suplier extends Model
 
   public function barang()
   {
-    return $this->hasOne(Barang::class, 'barcode');
+    return $this->belongsTo(Barang::class, 'kdSatuan');
   }
 }

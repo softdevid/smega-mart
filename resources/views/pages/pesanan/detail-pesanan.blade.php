@@ -7,7 +7,7 @@
             <div class="text-red-700"><i class="fa fa-location-dot"></i> Alamat Pengiriman</div>
 
             <div class="mt-2 grid grid-cols-1 md:grid-cols-2">
-                <div>{{ auth()->user()->namaUser }} ({{ auth()->user()->no_hp }}) </div>
+                <div>{{ auth()->user()->namaUser }} ({{ auth()->user()->noHp }}) </div>
                 <div>{{ auth()->user()->kabupaten }}, {{ auth()->user()->kecamatan }}, {{ auth()->user()->desa }},
                     {{ auth()->user()->alamat_lengkap }}</div>
             </div>
@@ -34,7 +34,7 @@
                                         #
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        <span class="sr-only">Image</span>
+                                        Image
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Product
@@ -65,28 +65,34 @@
                                             <td class="w-32 p-4">
                                                 @if ($b->barang->img_urls == null)
                                                     <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg"
-                                                        alt="Apple Watch" class="h-8 w-8">
+                                                        alt="Apple Watch" class="h-10 w-10">
                                                 @else
-                                                    <img src="{{ $b->barang->img_urls }}" alt="Apple Watch"
-                                                        class="h-8 w-8">
+                                                    <img src="{{ $b->barang->img_urls ?? '' }}" alt="{{ $b->namaBarang }}"
+                                                        class="h-10 w-10">
                                                 @endif
                                             </td>
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                 {{ $b->namaBarang }}
                                             </td>
                                             <td class="mx-auto items-center justify-between py-4 px-6">
-                                                <div>
-                                                    <input type="number" id="first_product"
-                                                        class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                                        placeholder="1" required="" min="1"
-                                                        value="{{ $b->qty }}">
-                                                </div>
+                                                {{ $b->qty }}
                                             </td>
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                 Rp. {{ number_format($b->hrgJual, 0, ',', '.') }}
                                             </td>
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                 Rp. {{ number_format($b->qty * $b->hrgJual, 0, ',', '.') }}
+                                            </td>
+                                            <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                                @if ($b->status == 0)
+                                                    <b>Sedang diproses</b>
+                                                @elseif ($b->status == 1)
+                                                    <b>Sedang dikemas</b>
+                                                @elseif ($b->status == 2)
+                                                    <b>Sedang dikirim</b>
+                                                @elseif ($b->status == 3)
+                                                    <b>Sudah sampai</b>
+                                                @endif
                                             </td>
                                         </tr>
                                 @endforeach
@@ -104,7 +110,8 @@
         <div class="m-3">
 
             <div class="text-center">
-                <div class="mt-4 text-sm text-red-700"><i class="fa fa-money"></i> Metode bayar Cash on delivery /
+                <div class="mt-4 text-sm text-red-700"><i class="fa-regular fa-money-bill"></i> Metode bayar hanya Cash on
+                    delivery /
                     bayar
                     ditempat
                     khusus
@@ -118,10 +125,8 @@
             <div class="mt-4 text-right">
                 <span class="mt-4">Subtotal produk: Rp. <span
                         class="text-red-700">{{ number_format($total, 0, ',', '.') }}</span></span><br>
-
-                <span class="mt-4">Biaya aplikasi: Rp. <span class="text-red-700">1.000</span></span><br>
                 <span class="mt-4">Total pembayaran: Rp. <span
-                        class="text-red-700">{{ number_format($total + 1000, 0, ',', '.') }}</span></span><br>
+                        class="text-red-700">{{ number_format($total, 0, ',', '.') }}</span></span><br>
             </div>
 
         </div>

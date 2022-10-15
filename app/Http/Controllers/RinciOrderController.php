@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\RinciOrder;
 use App\Models\Penjualan;
 use Illuminate\Support\Carbon;
+use App\Models\Kasir;
 
 class RinciOrderController extends Controller
 {
@@ -73,13 +74,25 @@ class RinciOrderController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $data = RinciOrder::where('noFaktur', $request->noFaktur)->get();
+    $data2 = Order::where('noFaktur', $request->noFaktur)->get();
+    // dd($data2);
+    $subtotal = $data->sum('subtotal');
+
+    $poin1 = Point::sum('kelipatan');
+
+    $poin = doubleval($subtotal) / $poin1;
+    // dd($poin);
+
+
     if ($request->status == 1) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);
       Order::where('noFaktur', $request->noFaktur)
         ->update(['status' => $request->status]);
 
-      return redirect()->to('/orders/dikemas');
+      return redirect()->to('/orders/dikemas')->with('success', 'Barang segera dikemas');
+      return back()->with('success', 'Barang segera dikemas');
     } elseif ($request->status == 2) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);
@@ -87,35 +100,45 @@ class RinciOrderController extends Controller
       Order::where('noFaktur', $request->noFaktur)
         ->update(['status' => $request->status]);
 
-      return redirect()->to('/orders/dikirim');
+      // return redirect()->to('/orders/dikirim')->with('success', 'Barang segera dikirim');
+      return back()->with('success', 'Barang segera dikirim');
     } elseif ($request->status == 3) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);
 
+      RinciOrder::where('id', $id)
+        ->update(['statusBayar' => 1]);
+
       Order::where('noFaktur', $request->noFaktur)
         ->update(['status' => $request->status]);
 
-      // Penjualan::create([
-      //   'No_Faktur_Jualan' => $request->noFaktur,
-      //   'Tgl_Jual' => date('Y-m-d', strtotime(Carbon::now())),
-      //   'Kd_Pelanggan' => $request->Kd_Pelanggan,
-      //   'Total' => $request->Total,
-      //   'Bayar' => $request->Bayar,
-      //   'Kd_User' => $request->Kd_User,
-      //   'poin' => doubleval($request->Total) / Point::select('kelipatan'),
-      // ]);
+      Order::where('noFaktur', $request->noFaktur)
+        ->update(['statusBayar' => 1]);
+
+      for ($i = 0; $i < count($data); $i++) {
+        $data = [
+          'noFakturJualan' =>  $request->noFaktur,
+          'barcode' =>  $request->barcode,
+          'namaBarang' =>  $request->namaBarang,
+          'jmlhJual' =>  $request->jmlhJual,
+          'hrgJual' =>  $request->hrgJual,
+          'hrgBeli' =>  $request->hrgBeli,
+        ];
+        Kasir::create($data);
+      }
 
       Penjualan::create([
         'No_Faktur_Jual' => $request->noFaktur,
         'Tgl_Jual' => date('Y-m-d', strtotime(Carbon::now())),
         'Kd_Pelanggan' => '',
-        'Total' => 3,
-        'Bayar' => 3,
-        'Kd_User' => 3,
-        'poin' => 3 / Point::sum('kelipatan'),
+        'Total' => $subtotal,
+        'Bayar' => $subtotal,
+        'Kd_User' => auth()->user()->kdUser,
+        'poin' => $poin,
       ]);
 
-      return redirect()->to('/orders/selesai');
+      return redirect()->to('/orders/selesai')->with('success', 'Barang telah sampai');
+      return back()->with('success', 'Barang telah sampai');
     }
   }
 

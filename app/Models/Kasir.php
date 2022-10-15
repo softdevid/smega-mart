@@ -11,6 +11,7 @@ class Kasir extends Model
   protected $table = 'tabelrealpenjualan';
   protected $guarded = ['no'];
   public $timestamps = false;
+  // protected $with = ['penjualan'];
 
   public function barang()
   {
@@ -19,6 +20,6 @@ class Kasir extends Model
 
   public function penjualan()
   {
-    return $this->hasOne(Penjualan::class, 'No');
+    return $this->hasOne(Penjualan::class, 'No_Faktur_Jual');
   }
 }

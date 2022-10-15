@@ -11,10 +11,16 @@ class Penjualan extends Model
   protected $table = 'tabel_penjualan';
   protected $guarded = ['No'];
   protected $primaryKey = 'No';
+  // protected $with = ['tabelrealpenjualan', 'order'];
   public $timestamps = false;
 
-  public function tabelrealpenjualan()
+  public function realjual()
   {
-    return $this->belongsTo(Kasir::class, 'no');
+    return $this->belongsTo(Kasir::class, 'noFakturJualan');
+  }
+
+  public function order()
+  {
+    return $this->hasOne(Order::class, 'noFaktur');
   }
 }

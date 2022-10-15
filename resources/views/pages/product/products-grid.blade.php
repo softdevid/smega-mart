@@ -11,7 +11,7 @@
                 @endif
             </a>
             <div class="p-2">
-                <span class="text-xs text-slate-600">{{ $product->kategori->namaKategori }}</span>
+                <span class="text-xs text-slate-600">{{ $product->kategori->namaKategori ?? '' }}</span>
                 <a href="/products/{{ $product->slug }}">
                     <h5 class="text-sm font-medium uppercase tracking-tight hover:text-red-800">
                         {{ $product->namaBarang }}

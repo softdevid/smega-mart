@@ -21,4 +21,9 @@ class Order extends Model
   {
     return $this->belongsTo(User::class, 'kdUser');
   }
+
+  public function penjualan()
+  {
+    return $this->belongsTo(Penjualan::class, 'No_Faktur_Jual');
+  }
 }

@@ -13,7 +13,8 @@ class Barang extends Model
 
   protected $table = 'databarang';
   protected $primaryKey = 'barcode';
-  protected $guarded = [];
+  protected $keyType = 'string';
+  protected $guarded = [''];
   protected $with = ['kategori', 'supplier'];
 
   public function kategori()
@@ -44,6 +45,11 @@ class Barang extends Model
   public function order()
   {
     return $this->hasOne(Order::class, 'barcode');
+  }
+
+  public function rinciorder()
+  {
+    return $this->hasOne(RinciOrder::class, 'barcode');
   }
 
   public function keranjang()

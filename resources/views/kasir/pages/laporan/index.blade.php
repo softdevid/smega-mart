@@ -18,50 +18,40 @@
                             Harga jual
                         </th>
                         <th scope="col" class="py-2 px-6 text-center">
-                            Stok toko
-                        </th>
-                        <th scope="col" class="py-2 px-6 text-center">
                             Jumlah
                         </th>
                         <th scope="col" class="py-2 px-6 text-center">
-                            Kategori
-                        </th>
-                        <th scope="col" class="py-2 px-6 text-center">
-                            Tanggal Pelaporan
+                            Tanggal Jual
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b bg-white text-black hover:bg-gray-50">
-                        <th class="m-auto w-auto border text-center">
-                            1
-                        </th>
-                        <td scope="row"
-                            class="flex max-w-sm items-center whitespace-nowrap py-2 px-6 text-gray-900 dark:text-white">
-                            <div class="pl-3">
-                                <div class="text-base font-semibold text-black">Coca-cola</div>
-                                <div class="block font-normal text-black">05958384859593</div>
-                            </div>
-                        </td>
-                        <td class="py-2 px-6 text-center">
-                            Rp. 200.000
-                        </td>
-                        <td class="py-2 px-6 text-center">
-                            Rp. 200.000
-                        </td>
-                        <td class="py-2 px-6 text-center">
-                            10
-                        </td>
-                        <td class="py-2 px-6 text-center">
-                            3
-                        </td>
-                        <td class="py-2 px-6 text-center">
-                            Minuman
-                        </td>
-                        <td class="py-2 px-6 text-center">
-                            31 / 2 / 1945
-                        </td>
-                    </tr>
+                    @foreach ($barang as $key => $b)
+                        <tr class="border-b bg-white text-black hover:bg-gray-50">
+                            <th class="m-auto w-auto border text-center">
+                                {{ $key + 1 }}
+                            </th>
+                            <td scope="row"
+                                class="flex max-w-sm items-center whitespace-nowrap py-2 px-6 text-gray-900 dark:text-white">
+                                <div class="pl-3">
+                                    <div class="text-base font-semibold text-black">{{ $b->namaBarang }}</div>
+                                    <div class="block font-normal text-black">{{ $b->barcode }}</div>
+                                </div>
+                            </td>
+                            <td class="py-2 px-6 text-center">
+                                {{ $b->hrgBeli }}
+                            </td>
+                            <td class="py-2 px-6 text-center">
+                                {{ $b->hrgJual }}
+                            </td>
+                            <td class="py-2 px-6 text-center">
+                                {{ $b->jmlhJual }}
+                            </td>
+                            <td class="py-2 px-6 text-center">
+                                {{ date('d-m-Y', strtotime($b->tgl_jual)) }}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -95,41 +85,53 @@
                 </div>
                 <div class="w-full rounded-lg bg-white shadow-lg">
                     <div class="m-3">
-                        <label for="today" class="mb-3 font-bold">Bulan</label>
-                        <input type="month" class="w-full rounded-lg p-2">
-                        <button
-                            class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
-                            Laporan</button>
+                        <form action="/laporan/month" method="post">
+                            @csrf
+                            <label for="today" class="mb-3 font-bold">Bulan</label>
+                            <input type="month" class="w-full rounded-lg p-2" name="month">
+                            <button
+                                class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
+                                Laporan</button>
+                        </form>
                     </div>
                 </div>
                 <div class="w-full rounded-lg bg-white shadow-lg">
                     <div class="m-3">
-                        <label for="today" class="mb-3 font-bold">Tahun</label>
-                        <select name="year" id="year" class="w-full rounded-lg p-2">
-                            <option value="">Pilih Tahun</option>
-                            <?php
-                            $year = date('Y');
-                            $min = $year - 5;
-                            $max = $year;
-                            for ($i = $max; $i >= $min; $i--) {
-                                echo '<option value=' . $i . '>' . $i . '</option>';
-                            } ?>
-                        </select>
-                        <button
-                            class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
-                            Laporan</button>
+                        <form action="/laporan/year" method="post">
+                            @csrf
+                            <label for="year" class="mb-3 font-bold">Tahun</label>
+                            <select name="year" id="year" class="w-full rounded-lg p-2">
+                                <option value="">Pilih Tahun</option>
+                                <?php
+                                $year = date('Y');
+                                $min = $year - 5;
+                                $max = $year;
+                                for ($i = $max; $i >= $min; $i--) {
+                                    echo '<option name="year" value=' . $i . '>' . $i . '</option>';
+                                } ?>
+                            </select>
+                            <button
+                                class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700"
+                                type="submit">Cek
+                                Laporan</button>
+                        </form>
                     </div>
                 </div>
                 <div class="w-full rounded-lg bg-white shadow-lg">
                     <div class="m-3">
-                        <label for="name" class="mb-3 font-bold">Nama</label>
-                        <select name="name" id="name" class="w-full rounded-lg p-2">
-                            <option value="">Pilih Produk</option>
-                            <option value="">Coca-cola</option>
-                        </select>
-                        <button
-                            class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
-                            Laporan</button>
+                        <form action="/laporan/name" method="post">
+                            @csrf
+                            <label for="name" class="mb-3 font-bold">Nama</label>
+                            <select name="name" id="name" class="w-full rounded-lg p-2">
+                                <option value="">Pilih Produk</option>
+                                @foreach ($barang as $b)
+                                    <option value="{{ $b->namaBarang }}">{{ $b->namaBarang }}</option>
+                                @endforeach
+                            </select>
+                            <button
+                                class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
+                                Laporan</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -137,20 +139,23 @@
             <div class="mt-3 grid grid-cols-1 gap-6">
                 <div class="w-full rounded-lg bg-white shadow-lg">
                     <div class="m-3">
-                        <div class="grid grid-cols-2 gap-8">
-                            <div>
-                                <label for="today" class="mb-3 font-bold">Tanggal Mulai :</label>
-                                <input type="date" class="w-full rounded-lg p-2">
+                        <form action="/laporan/range" method="post">
+                            @csrf
+                            <div class="grid grid-cols-2 gap-8">
+                                <div>
+                                    <label for="today" class="mb-3 font-bold">Tanggal Mulai :</label>
+                                    <input type="date" name="first" class="w-full rounded-lg p-2">
+                                </div>
+                                <div>
+                                    <label for="today" class="mb-3 font-bold">Tanggal Akhir :</label>
+                                    <input type="date" name="last" class="w-full rounded-lg p-2">
+                                </div>
                             </div>
-                            <div>
-                                <label for="today" class="mb-3 font-bold">Tanggal Akhir :</label>
-                                <input type="date" class="w-full rounded-lg p-2">
-                            </div>
-                        </div>
 
-                        <button
-                            class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
-                            Laporan</button>
+                            <button
+                                class="mx-auto mt-2 w-full rounded-lg bg-blue-600 p-2 text-center text-white hover:bg-blue-700">Cek
+                                Laporan</button>
+                        </form>
                     </div>
                 </div>
             </div>

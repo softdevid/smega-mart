@@ -64,7 +64,7 @@
                                 {{ $product->stok_gudang }}
                             </td>
                             <td class="py-2 px-6 text-center">
-                                {{ $product->kategori->namaKategori }}
+                                {{ $product->kategori->namaKategori ?? '' }}
                             </td>
                             <td class="inline-flex text-center">
                                 {{-- <a href="{{ route('storage.edit', [$product->barcode]) }}" type="submit"

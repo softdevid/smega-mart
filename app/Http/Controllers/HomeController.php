@@ -18,7 +18,7 @@ class HomeController extends Controller
   public function index()
   {
     return view('pages.home', [
-      "title" => "Beranda",
+      "title" => "Belanja di toko & belanja online hanya disini!! Toko kebutuhan sehari-hari terlengkap di Purbalingga",
     ]);
   }
 

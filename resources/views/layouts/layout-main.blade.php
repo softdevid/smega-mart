@@ -5,9 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-site-verification" content="y7MGirzmwoGkIipP3m_rArxG3ki0hI-E6ZZObSLhcpw" />
+    <meta name="description"
+        content="Toko online kebutuhan sehari-hari di purbalingga. SmegaMart belanja ditempat online juga ada">
+    <meta name="keywords"
+        content="Online shop, smega mart, smk n 1 purbalingga, belanja di tempat, toko terlengkap, toko kebutuhan sehari-hari, toko sepatu, toko makanan">
+    <meta name="author" content="SMK N 1 Purbalingga">
+    {{-- <meta http-equiv="refresh" content="30"> --}}
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title }} | SMEGAMART</title>
+    <title>{{ $title }} | SMEGA MART</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -27,12 +35,13 @@
         @include('layouts.partials.breadcrumb')
     </header>
 
-    <div class="py-3 lg:py-8">
+    <div class="mx-3 py-3 lg:py-8">
         @yield('content')
     </div>
 
     {{-- partner --}}
-    @if ($title == 'Beranda')
+    @if ($title ==
+        'Belanja di toko & belanja online hanya disini!! Toko kebutuhan sehari-hari terlengkap di Purbalingga')
         @include('layouts.partials.footer.partner')
     @endif
 

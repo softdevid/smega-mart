@@ -129,6 +129,12 @@ Route::middleware(['auth'])->group(function () {
 
   //route laporan
   Route::post('/laporan/date', [LaporanController::class, 'date']);
+  Route::post('/laporan/month', [LaporanController::class, 'month']);
+  Route::post('/laporan/year', [LaporanController::class, 'year']);
+  Route::post('/laporan/name', [LaporanController::class, 'name']);
+  Route::post('/laporan/range', [LaporanController::class, 'range']);
+
+  Route::get('/laporan/pdf', [LaporanController::class, 'generatePdf']);
 
   //route kategori
   Route::resource('category', KategoriController::class);
