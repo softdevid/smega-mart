@@ -315,11 +315,15 @@
                     success: function(response) {
                         detail();
                         formTransaksi();
+                        window.location.href = '/selesai';
                     }
                 })
             });
 
+            // $(document).on("click", '#btnSimpan', function(e) {
+            //     e.preventDefault();
 
+            // });
 
         }); //Document stop
     </script>

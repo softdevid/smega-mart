@@ -152,7 +152,9 @@ class KasirController extends Controller
     ]);
     // dd(request('Kd_Pelanggan'));
     // $p = Penjualan::create($request->all());
-    $request->session()->forget('id');
+    // $request->session()->forget('id');
+    // return $p;
+    // return redirect()->to('/laporan')->with('success', 'Berhasil di simpan');
     return response()->json($p);
   }
 
@@ -164,9 +166,34 @@ class KasirController extends Controller
    */
   public function show()
   {
-    //
+    $penjualan = Kasir::find(session('id_penjualan'));
+    if (!$penjualan) {
+      abort(404);
+    }
+    $detail = Penjualan::with('produk')
+      ->where('noFaktur', session('noFaktur'))
+      ->get();
+
+    return view('kasir.pages.notaKecil', [
+      'detail' => $detail,
+    ]);
   }
 
+  public function selesai()
+  {
+    // $penjualan = Kasir::find(session('noFaktur'));
+    // if (!$penjualan) {
+    //   abort(404);
+    // }
+    $detail = Penjualan::where('No_Faktur_Jual', session('noFakturJualan'))
+      ->get();
+    // dd($detail);
+
+    return view('kasir.pages.selesai', [
+      'title' => 'Selesai',
+      'detail' => $detail,
+    ]);
+  }
   /**
    * Show the form for editing the specified resource.
    *

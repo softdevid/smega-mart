@@ -115,6 +115,8 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/kasir/store', [KasirController::class, 'store'])->name('transaksi.store');
   Route::get('/kasir/detail/{noFakturJualan}', [KasirController::class, 'getDetailData'])->name('transaksi.detail');
   Route::post('/kasir/store/simpan', [KasirController::class, 'simpan'])->name('transaksi.simpan');
+  Route::post('/kasir/show', [KasirController::class, 'show'])->name('print.transaksi');
+  Route::get('/selesai', [KasirController::class, 'selesai'])->name('selesai');
 
   //route pembelian admin
   Route::post('/admin/store', [StorageController::class, 'store'])->name('pembelian.store');

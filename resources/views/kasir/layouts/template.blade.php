@@ -60,9 +60,9 @@
                     @auth
                         @if (auth()->user()->level == 'Admin')
                             <li>
-                                <a href="{{ route('kasir.index') }}"
-                                    class="{{ request()->is('kasir') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
-                                    aria-current="page">Kasir</a>
+                                <a href="/dashboard"
+                                    class="{{ request()->is('dashboard') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                                    aria-current="page">Admin</a>
                             </li>
                         @endif
                     @endauth
