@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Kategori;
 use App\Models\Gambar;
 use App\Models\Keranjang;
 use App\Models\Order;
@@ -22,19 +23,28 @@ class HomeController extends Controller
     ]);
   }
 
-  public function product()
+  public function product(Request $request)
   {
-    $title = "Produk";
+    $products = Barang::withOut(['supplier']);
 
-    if (request()->ajax()) {
-      return view('pages.product.products-grid', [
-        "products" => Barang::latest()->paginate(8)->withQueryString(),
-      ])->render();
+    if ($request->input('search')) {
+      $products->search($request->search);
+    }
+
+    if ($request->input('category') !== "all") {
+      $category = $request->category;
+      $products->whereHas(
+        'kategori',
+        function ($query) use ($category) {
+          $query->where('slug', 'LIKE', "%{$category}%");
+        }
+      );
     }
 
     return view('pages.product.products', [
-      "title" => $title,
-      "products" => Barang::latest()->paginate(8)->withQueryString(),
+      "title" => "Produk",
+      "categories" => Kategori::select('namaKategori', 'slug')->orderBy('namaKategori', 'asc')->get(),
+      "products" => $products->latest()->paginate(8)->withQueryString(),
     ]);
   }
 

@@ -15,5 +15,13 @@ $(document).ready(() => {
     });
   });
 
+  // searching
+  function searchProduct(e) {
+    e.preventDefault();
+    const form = new FormData(e.target);
 
+    const search = form.get("search");
+    const category = $('#kategori').val();
+
+  }
 });

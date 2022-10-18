@@ -17,6 +17,11 @@ class Barang extends Model
   protected $guarded = [''];
   protected $with = ['kategori', 'supplier'];
 
+  public function scopeSearch($query, $name)
+  {
+    return $query->where('namaBarang', 'LIKE', "%{$name}%");
+  }
+
   public function kategori()
   {
     return $this->belongsTo(Kategori::class, 'kdKategori');

@@ -5,12 +5,23 @@
     <div class="col-span-3">
       <div class="bg-white p-7 mb-3 border border-gray-200 rounded">
         <div class="text-sm font-medium border-b border-gray-300 pb-3 mb-6">Cari Produk</div>
-        <form>
-          <div class="relative w-full">
-            <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg sm:rounded-l-none border border-gray-300 focus:ring-[#c51826] focus:border-[#c51826]" placeholder="Cari produk...">
-            <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-[#bb1724] rounded-r-lg border border-[#bb1724] hover:bg-[#ac1521] focus:ring-4 focus:outline-none focus:ring-blue-300">
-              <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-              <span class="sr-only">Cari</span>
+        <form method="GET" class="space-y-4">
+          <div>
+            <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pilih Kategori</label>
+            <input type="search" name="search" id="product" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-[#c51826] focus:border-[#c51826]" placeholder="Cari produk..." autocomplete="off">
+          </div>
+          <div>
+            <label for="kategori" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pilih Kategori</label>
+            <select id="kategori" name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5">
+              <option value="all" selected="" >Semua</option>
+              @foreach ($categories as $category)
+              <option value="{{ $category->slug }}">{{ $category->namaKategori }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div>
+            <button type="submit" class="w-full p-2.5 text-sm font-medium text-white bg-[#bb1724] rounded-lg border border-[#bb1724] hover:bg-[#ac1521] focus:ring-4 focus:outline-none focus:ring-red-300">
+              Cari
             </button>
           </div>
         </form>
