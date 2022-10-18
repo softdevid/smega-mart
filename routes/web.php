@@ -61,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/pesanan/dikemas', [OrderController::class, 'dikemas']);
   Route::get('/pesanan/dikirim', [OrderController::class, 'dikirim']);
   Route::get('/pesanan/selesai', [OrderController::class, 'selesai']);
+  Route::get('/pesanan/dibatalkan', [OrderController::class, 'dibatalkan']);
+  Route::get('/pesanan/detail/{noFaktur}', [OrderController::class, 'detail']);
 
   //route detail pesanan
   Route::get('/detail-pesanan/{noFaktur}', [OrderController::class, 'detailPesanan']);
@@ -106,6 +108,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/orders/dikemas', [OrderController::class, 'adminDikemas']);
   Route::get('/orders/dikirim', [OrderController::class, 'adminDikirim']);
   Route::get('/orders/selesai', [OrderController::class, 'adminSelesai']);
+  Route::get('/orders/dibatalkan', [OrderController::class, 'adminDibatalkan']);
 
 
   //Route kasir
@@ -115,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/kasir/store', [KasirController::class, 'store'])->name('transaksi.store');
   Route::get('/kasir/detail/{noFakturJualan}', [KasirController::class, 'getDetailData'])->name('transaksi.detail');
   Route::post('/kasir/store/simpan', [KasirController::class, 'simpan'])->name('transaksi.simpan');
-  Route::post('/kasir/show', [KasirController::class, 'show'])->name('print.transaksi');
+  Route::get('/kasir/show/{noFakturJualan}', [KasirController::class, 'show'])->name('print.transaksi');
   Route::get('/selesai', [KasirController::class, 'selesai'])->name('selesai');
 
   //route pembelian admin

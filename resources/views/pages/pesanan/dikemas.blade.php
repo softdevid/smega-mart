@@ -4,10 +4,10 @@
 
     @if ($brgKemas->count() == 0)
         <h1 class="m-5 text-center text-red-700">
-            Tidak ada barang yang diproses
+            Tidak ada barang yang dikemas
         </h1>
     @else
-        {{-- diproses status 1 --}}
+        {{-- dikemas status 1 --}}
 
         {{-- form checkout --}}
 
@@ -60,28 +60,20 @@
                                                     value="{{ $noFaktur }}">
                                                 <tr
                                                     class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-                                                    {{-- <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                                        {{ $key + 1 }}
-                                                    </td> --}}
                                                     <td class="w-32 p-4">
-                                                        {{-- @if ($b->barang->img_urls == null)
+                                                        @if ($b->barang->img_urls == null)
                                                             <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg"
                                                                 alt="Apple Watch" class="h-8 w-8">
-                                                        @else --}}
-                                                        <img src="{{ $b->barang->img_urls ?? '' }}"
-                                                            alt="{{ $b->namaBarang }}" class="h-8 w-8">
-                                                        {{-- @endif --}}
+                                                        @else
+                                                            <img src="{{ $b->barang->img_urls ?? '' }}"
+                                                                alt="{{ $b->namaBarang }}" class="h-8 w-8">
+                                                        @endif
                                                     </td>
                                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                         {{ $b->namaBarang }}
                                                     </td>
                                                     <td class="mx-auto items-center justify-between py-4 px-6">
-                                                        <div>
-                                                            <input type="number" id="first_product"
-                                                                class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                                                placeholder="1" required="" min="1"
-                                                                value="{{ $b->qty }}">
-                                                        </div>
+                                                        {{ $b->qty }}
                                                     </td>
                                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                         Rp. {{ number_format($b->hrgJual, 0, ',', '.') }}
@@ -98,6 +90,8 @@
                                                             <b>Sedang dikirim</b>
                                                         @elseif ($b->status == 3)
                                                             <b>Sudah sampai</b>
+                                                        @else
+                                                            <b>Barang dibatalkan</b>
                                                         @endif
                                                     </td>
                                                     </td>
@@ -109,9 +103,9 @@
                         </div>
                     </div>
                 </div>
+                <p class="mt-3 text-center">Total: Rp.
+                    {{ number_format($brgKemas->sum('subtotal'), 0, ',', '.') }}</p>
             </div>
-            <p class="mt-3 text-center">Total: Rp.
-                {{ number_format($brgKemas->sum('subtotal'), 0, ',', '.') }}</p>
         </a>
         {{-- @endforeach --}}
     @endif

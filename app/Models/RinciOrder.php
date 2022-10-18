@@ -10,6 +10,7 @@ class RinciOrder extends Model
   use HasFactory;
   protected $table = 'rinci_order';
   protected $guarded = ['id'];
+  protected $with = 'order';
 
   public function user()
   {
@@ -23,6 +24,6 @@ class RinciOrder extends Model
 
   public function order()
   {
-    return $this->belongsTo(Order::class, 'noFaktur');
+    return $this->hasOne(Order::class, 'noFaktur');
   }
 }

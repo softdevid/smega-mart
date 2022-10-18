@@ -54,7 +54,7 @@ class KasirController extends Controller
   public function getBarcodeData()
   {
     if (request()->barcode != null) {
-      $barang = Barang::select('barcode', 'namaBarang', 'hrgJual', 'hrgBeli')->where('barcode', request()->barcode);
+      $barang = Barang::select('barcode', 'namaBarang', 'hrgJual', 'hrgBeli', 'stok')->where('barcode', request()->barcode);
       // dd($barang);
       if ($barang->exists()) {
         $data = $barang->first();
@@ -66,6 +66,7 @@ class KasirController extends Controller
             "namaBarang" => $data->namaBarang,
             "hrgBeli" => $data->hrgBeli,
             "hrgJual" => $data->hrgJual,
+            "stok" => $data->stok,
           ],
         ]);
       } else {
@@ -133,7 +134,7 @@ class KasirController extends Controller
   public function store(Request $request)
   {
     $k = Kasir::create($request->all());
-    session(['id' => 'noFakturJualan']);
+    session(['noFakturJualan' => 'noFakturJualan']);
     return response()->json($k);
     // return back();
   }
@@ -154,8 +155,9 @@ class KasirController extends Controller
     // $p = Penjualan::create($request->all());
     // $request->session()->forget('id');
     // return $p;
-    // return redirect()->to('/laporan')->with('success', 'Berhasil di simpan');
-    return response()->json($p);
+    session(['noFakturJualan' => $request->No_Faktur_Jual]);
+    return redirect()->to('/selesai')->with('success', 'Berhasil di simpan');
+    // return response()->json($p);
   }
 
   /**
@@ -166,16 +168,21 @@ class KasirController extends Controller
    */
   public function show()
   {
-    $penjualan = Kasir::find(session('id_penjualan'));
-    if (!$penjualan) {
-      abort(404);
-    }
-    $detail = Penjualan::with('produk')
-      ->where('noFaktur', session('noFaktur'))
-      ->get();
+    // $penjualan = Kasir::find(session('noFakturJual'));
+    // if (!$penjualan) {
+    //   abort(404);
+    // }
+    $barang = Kasir::where('noFakturJualan', session('noFakturJualan'))->get();
+    $totalItem = Kasir::where('noFakturJualan', session('noFakturJualan'))->sum('jmlhJual');
+    $detail = Penjualan::where('No_Faktur_Jual', session('noFakturJualan'))->first();
+    // dd($detail->No_Faktur_Jual);
+    $time = Carbon::now();
 
     return view('kasir.pages.notaKecil', [
       'detail' => $detail,
+      'barang' => $barang,
+      'time' => $time,
+      'totalItem' => $totalItem,
     ]);
   }
 

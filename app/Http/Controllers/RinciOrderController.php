@@ -84,14 +84,19 @@ class RinciOrderController extends Controller
     $poin = doubleval($subtotal) / $poin1;
     // dd($poin);
 
-
-    if ($request->status == 1) {
+    if ($request->status == 4) {
+      RinciOrder::where('id', $id)
+        ->update(['status' => $request->status]);
+      Order::where('noFaktur', $request->noFaktur)
+        ->update(['status' => $request->status]);
+      return back()->with('success', 'Barang dibatalkan oleh penjual');
+    } elseif ($request->status == 1) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);
       Order::where('noFaktur', $request->noFaktur)
         ->update(['status' => $request->status]);
 
-      return redirect()->to('/orders/dikemas')->with('success', 'Barang segera dikemas');
+      // return redirect()->to('/orders/dikemas')->with('success', 'Barang segera dikemas');
       return back()->with('success', 'Barang segera dikemas');
     } elseif ($request->status == 2) {
       RinciOrder::where('id', $id)
@@ -137,7 +142,7 @@ class RinciOrderController extends Controller
         'poin' => $poin,
       ]);
 
-      return redirect()->to('/orders/selesai')->with('success', 'Barang telah sampai');
+      // return redirect()->to('/orders/selesai')->with('success', 'Barang telah sampai');
       return back()->with('success', 'Barang telah sampai');
     }
   }

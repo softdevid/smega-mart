@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Penjualan;
 use App\Models\RinciOrder;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -41,13 +42,23 @@ class OrderController extends Controller
         'status' => $request->status[$i],
         'statusBayar' => $request->statusBayar[$i],
         'kdUser' => $request->kdUser[$i],
-        // 'alamat' => $alamat['alamat'][$i],
-        // 'alamat' => $request->alamat,
       ];
       // dd($data);
-      Order::create($data);
+      $order = Order::create($data);
+      // dd($order);
     }
-    $rinci = RinciOrder::create($data);
+    $a = Order::where('noFaktur', $order['noFaktur'])->get();
+    // dd($order2);
+    $rinci = RinciOrder::create([
+      'noFaktur' => $order->noFaktur,
+      'qty' => $a->sum('qty'),
+      'subtotal' => $a->sum('subtotal'),
+      'kdUser' => $order->kdUser ?? '',
+      'status' => 0,
+      'statusBayar' => 0,
+    ]);
+    // dd($rinci);
+
     $rinci->update($alamat);
 
     Keranjang::where('kdUser', $request->kdUser)
@@ -95,16 +106,16 @@ class OrderController extends Controller
     //
   }
 
-  public function detailPesanan($noFaktur)
-  {
-    // $noFaktur = $request->noFaktur;
-    $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'noFaktur' => $noFaktur])->orderBy('id')->get();
-    return view('pages.pesanan.detail-pesanan', [
-      'title' => 'Detail pesanan',
-      'brg' => $brg,
-      'total' => $brg->sum('subtotal'),
-    ]);
-  }
+  // public function detailPesanan($noFaktur)
+  // {
+  //   // $noFaktur = $request->noFaktur;
+  //   $brg = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'noFaktur' => $noFaktur])->orderBy('id')->get();
+  //   return view('pages.pesanan.detail-pesanan', [
+  //     'title' => 'Detail pesanan',
+  //     'brg' => $brg,
+  //     'total' => $brg->sum('subtotal'),
+  //   ]);
+  // }
 
   public function diproses() //ini diproses
   {
@@ -164,6 +175,22 @@ class OrderController extends Controller
     ]);
   }
 
+  public function dibatalkan() //ini selesai
+  {
+    $brgBatal = Order::where(['kdUser' => auth()->user()->kdUser ?? '', 'status' => 4])->get();
+
+    foreach ($brgBatal as $key => $b) {
+      $noFaktur = $b->noFaktur;
+    }
+
+    return view('pages.pesanan.dibatalkan', [
+      'title' => 'Pesanan',
+      'brgBatal' => $brgBatal,
+      'total' => $brgBatal->sum('subtotal'),
+      'noFaktur' => $noFaktur ?? '',
+    ]);
+  }
+
 
 
 
@@ -199,7 +226,8 @@ class OrderController extends Controller
     foreach ($brgKirim as $key => $b) {
       $noFaktur = $b->noFaktur ?? '';
     }
-    $brgKirimb = Order::where(['status' => 2, 'noFaktur' => $noFaktur ?? ''])->get();
+    $brgKirimb = Order::where('noFaktur', $noFaktur ?? '')->get();
+    // dd($brgKirimb);
 
     return view('kasir.pages.order.dikirim', [
       'title' => 'Pesanan',
@@ -216,6 +244,45 @@ class OrderController extends Controller
       'title' => 'Pesanan',
       'brgSelesai' => $brgSelesai,
       'total' => $brgSelesai->sum('subtotal'),
+    ]);
+  }
+
+  public function adminDibatalkan() //ini batal
+  {
+    $brgBatal = RinciOrder::where('status', 4)->get();
+    // $brgBatalb = Order::where('noFaktur', request('noFaktur'))->get();
+    // dd($brgBatalb);
+    return view('kasir.pages.order.dibatalkan', [
+      'title' => 'Pesanan',
+      'brgBatal' => $brgBatal,
+      'total' => $brgBatal->sum('subtotal'),
+    ]);
+  }
+
+  //show admin
+  public function show(Request $request)
+  {
+    $data = RinciOrder::where('id', $request->id)->first();
+    $brg = Order::where('noFaktur', $data->noFaktur)->get();
+    // dd($brg);
+    return view('kasir.pages.order.detail-pesanan', [
+      'title' => 'Detail pesanan',
+      'data' => $data,
+      'brg' => $brg,
+    ]);
+  }
+
+  //show customer
+  public function detail($noFaktur)
+  {
+    $data = RinciOrder::where('noFaktur', $noFaktur)->first();
+    $brg = Order::where('noFaktur', $noFaktur)->get();
+    // dd($brg);
+    return view('pages.pesanan.detail-pesanan', [
+      'title' => 'Detail pesanan',
+      'data' => $data,
+      'brg' => $brg,
+      'total' => $brg->sum('subtotal'),
     ]);
   }
 }

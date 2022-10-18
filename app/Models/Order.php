@@ -10,7 +10,7 @@ class Order extends Model
   use HasFactory;
   protected $table = 'order';
   protected $guarded = ['id'];
-  protected $with = 'barang';
+  protected $with = 'rinci';
 
   public function barang()
   {
@@ -20,6 +20,11 @@ class Order extends Model
   public function user()
   {
     return $this->belongsTo(User::class, 'kdUser');
+  }
+
+  public function rinci()
+  {
+    return $this->belongsTo(RinciOrder::class, 'noFaktur');
   }
 
   public function penjualan()

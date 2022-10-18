@@ -13,7 +13,7 @@
         {{-- form checkout --}}
 
         {{-- produk --}}
-        <a href="/detail-pesanan/{{ $noFaktur }}">
+        <a href="/pesanan/detail/{{ $noFaktur }}">
 
             <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
                 <div class="m-3">
@@ -67,12 +67,7 @@
                                                     {{ $b->alamat }}
                                                 </td>
                                                 <td class="mx-auto items-center justify-between py-4 px-6">
-                                                    <div>
-                                                        <input type="number" id="first_product"
-                                                            class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                                            placeholder="1" required="" min="1"
-                                                            value="{{ $b->qty }}">
-                                                    </div>
+                                                    {{ $b->qty }}
                                                 </td>
                                                 <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                     Rp. {{ number_format($b->hrgJual, 0, ',', '.') }}
@@ -91,6 +86,8 @@
                                                         <b>Sudah sampai</b>
                                                     @endif
                                                 </td>
+                                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                                    <a href="/pesanan/detail/{{ $b->noFaktur }}">Detail</a>
                                                 </td>
                                             </tr>
                                         @endforeach
