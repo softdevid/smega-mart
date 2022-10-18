@@ -29,12 +29,6 @@
     </div>
     <div class="col-span-9">
       <div class="bg-white px-5 py-4 border border-gray-200 rounded sm:flex sm:items-center sm:justify-center">
-        <label for="sorting-product" class="inline-block text-sm font-light">Berdasarkan</label>
-        <select name="sortBy" id="sorting-product" class="inline-block bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg mx-2 focus:ring-[#c51826] focus:border-[#c51826]">
-          <option value="latest" selected>Terbaru</option>
-          <option value="expensive">Mahal - Murah</option>
-          <option value="cheap">Murah - Mahal</option>
-        </select>
         <div class="mt-3 sm:mt-0 inline-block">
           <div class="text-sm font-light">
             Menampilkan {{ $products->firstItem() }} - {{ $products->lastItem() }} produk dari total {{ $products->total() }}
