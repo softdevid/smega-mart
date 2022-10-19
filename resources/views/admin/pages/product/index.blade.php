@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $key => $product)
-                        <tr class="border-b bg-white text-black hover:bg-gray-50">
+                        <tr class="border-b-2 bg-white text-black hover:bg-gray-400">
                             <th class="m-auto w-auto border text-center">
                                 {{ $key + 1 }}
                             </th>
@@ -74,21 +74,23 @@
                             </td>
                             <td class="text-center">
                                 {{ $product->kategori->namaKategori ?? '' }}
-                                </t-3 w-full rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400">
-                                Edit</a>
-                                <form action="{{ route('products.destroy', [$product->barcode]) }}" method="post">
-                                    @csrfd>
+                            </td>
                             <td class="text-center">
                                 {{ $product->satuan->namaSatuan }}
                             </td>
-                            <td class="md:px-auto flex items-center py-2 px-1 text-center">
+                            <td class="flex items-center py-2 px-1 text-left">
                                 <a href="{{ route('products.show', [$product->barcode]) }}"
-                                    class="mx-3 w-full rounded-lg bg-blue-700 p-2 text-sm font-bold text-white hover:bg-blue-800">Detail</a>
+                                    class="mx-2 w-full rounded-lg bg-blue-700 p-2 text-sm font-bold text-white hover:bg-blue-800">Detail</a>
                                 <a href="{{ route('products.edit', [$product->barcode]) }}"
-                                    class="mx @method('delete') <button onclick="return confirm('Yakin dihapus?')"
-                                    class="mx-3 w-full rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
-                                    Hapus</button>
-                                    </form>
+                                    class="mx-2 w-full rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400">Edit</a>
+                                <form action="{{ route('products.destroy', [$product->barcode]) }}" method="post"
+                                    class="mr-3">
+                                    @csrf
+                                    @method('delete')
+                                    <button onclick="return confirm('Yakin dihapus?')"
+                                        class="mx-2 w-full rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
+                                        Hapus</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

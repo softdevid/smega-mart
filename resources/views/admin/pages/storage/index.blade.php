@@ -41,8 +41,13 @@
                                 {{ $key + 1 }}
                             </th>
                             <td class="items-center py-3 px-6 dark:text-white">
-                                <img class="h-10 w-10" src="/assets/img/HELM-FULLFACE-KYT-RC-SEVEN-14-YELLOW-FLUO.jpeg"
-                                    alt="Jese image">
+                                @if ($product->cloud_img == null or $product->cloud_img == '-')
+                                    <img class="h-10 w-10"
+                                        src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg"
+                                        alt="Produk">
+                                @else
+                                    <img class="h-10 w-10" src="{{ $product->img_urls }}" alt="Produk">
+                                @endif
                             </td>
                             <td scope="row"
                                 class="flex max-w-sm items-center whitespace-nowrap py-2 px-6 text-gray-900 dark:text-white">

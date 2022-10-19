@@ -39,12 +39,12 @@
         </div>
     </div>
     {{-- <div class="mx-auto mt-5 grid gap-4 text-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3"> --}}
-    <div class="my-5 max-h-[300px] max-w-2xl items-center rounded-md bg-gray-100 text-white shadow-lg">
+    <div class="mt-3 mb-3 h-[300px] max-w-2xl items-center rounded-md bg-gray-100 text-white shadow-lg">
         <div class="text-1xl rounded-t-md bg-purple-600 text-center text-white">
             <b class="mx-auto">Grafik Tahunan</b>
         </div>
         <div>
-            <canvas id="tahunan"></canvas>
+            <canvas id="tahunan" class="mb-3 h-[300px] max-w-2xl"></canvas>
         </div>
     </div>
     {{-- </div> --}}

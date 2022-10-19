@@ -125,7 +125,7 @@
             {{-- @endforeach --}}
     @endif
 
-    <script>
+    {{-- <script>
         // $(document).ready(function() {
         $(document).on("click", "#setuju", function(e) {
             e.preventDefault();
@@ -150,5 +150,5 @@
 
         })
         // })
-    </script>
+    </script> --}}
 @endsection
