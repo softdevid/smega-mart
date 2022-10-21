@@ -227,12 +227,13 @@
                     </div>
                     <!-- Modal body -->
                     <div class="space-y-6 p-6">
-                        <form action="/orders/batalkanProduk/{{ $b->id }}" method="POST">
+                        <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
                             @method('put')
                             @csrf
+                            <input type="hidden" name="id" id="id" value="{{ $b->id }}">
                             <input type="hidden" name="status" id="status" value="4">
                             <input type="hidden" name="noFaktur" id="noFaktur" value="{{ $b->noFaktur }}">
-                            <textarea name="alasanPembatalan" id="alasanPembatalan" class="w-full" cols="15"></textarea>
+                            <textarea name="alasanPembatalan" id="alasanPembatalan" class="w-full" cols="15" required></textarea>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600">

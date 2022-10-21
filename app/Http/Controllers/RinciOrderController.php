@@ -86,15 +86,15 @@ class RinciOrderController extends Controller
     $poin = doubleval($subtotal) / $poin1;
 
     if ($request->status == 4) {
-      $dataBatal = Order::where(['noFaktur' => $request->noFaktur, 'status' => !$status4])->get();
-      Order::where('id', $id)
-        ->update(['status' => $request->status]);
-      // $dataBatal::where(['noFaktur' => $request->noFaktur])
-      //   ->update(['subtotal' => $dataBatal->sum('subtotal')]);
-      RinciOrder::where(['noFaktur' => $request->noFaktur])
-        ->update(['subtotal' => $dataBatal->sum('subtotal'), 'status' => 4]);
+      Order::where('id', $request->id)
+        ->update(['status' => $request->status, 'alasanPembatalan' => $request->alasanPembatalan]);
+      $order = Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])->get();
+      // dd($order);
 
-      return back()->with('success', 'Barang dibatalkan oleh penjual');
+      RinciOrder::where(['noFaktur' => $request->noFaktur, 'status' => 0])
+        ->update(['subtotal' => $order->sum('subtotal')]);
+
+      return redirect()->to('/orders')->with('success', 'Barang dibatalkan oleh penjual');
     } elseif ($request->status == 1) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);

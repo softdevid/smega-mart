@@ -133,9 +133,9 @@
 
             <div class="mt-4 text-right">
                 <span class="mt-4">Subtotal produk: Rp. <span
-                        class="text-red-700">{{ number_format($brg->sum('subtotal'), 0, ',', '.') }}</span></span><br>
+                        class="text-red-700">{{ number_format($data->subtotal, 0, ',', '.') }}</span></span><br>
                 <span class="mt-4">Total pembayaran: Rp. <span
-                        class="text-red-700">{{ number_format($brg->sum('subtotal'), 0, ',', '.') }}</span></span><br>
+                        class="text-red-700">{{ number_format($data->subtotal, 0, ',', '.') }}</span></span><br>
             </div>
 
         </div>

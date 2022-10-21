@@ -292,14 +292,12 @@ class OrderController extends Controller
   //show customer
   public function detail($noFaktur)
   {
-    $status4 = 4;
     $data = RinciOrder::where('noFaktur', $noFaktur)->first();
     $brg = Order::where('noFaktur', $noFaktur)->get();
     return view('pages.pesanan.detail-pesanan', [
       'title'  => 'Detail pesanan',
       'data' => $data,
       'brg' => $brg,
-      'total' => $brg->where('status', !$status4)->sum('subtotal'),
     ]);
   }
 

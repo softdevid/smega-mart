@@ -97,6 +97,7 @@
                                                             <b>Barang dibatalkan</b>
                                                         @endif
                                                     </td>
+
                                                 </tr>
                                         @endforeach
                                     </tbody>
@@ -106,8 +107,6 @@
                     </div>
                 </div>
             </div>
-            <p class="mt-3 text-center">Total: Rp.
-                {{ number_format($brgBatal->sum('subtotal'), 0, ',', '.') }}</p>
         </a>
         {{-- @endforeach --}}
     @endif
