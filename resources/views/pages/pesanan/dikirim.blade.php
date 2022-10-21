@@ -13,7 +13,7 @@
         {{-- form checkout --}}
 
         {{-- produk --}}
-        <a href="/detail-pesanan/{{ $noFaktur }}">
+        <a href="/pesanan/detail/{{ $noFaktur }}">
 
             <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
                 <div class="m-3">
@@ -104,9 +104,9 @@
                         </div>
                     </div>
                 </div>
+                <p class="mt-3 text-center">Total: Rp.
+                    {{ number_format($brgKirim->sum('subtotal'), 0, ',', '.') }}</p>
             </div>
-            <p class="mt-3 text-center">Total: Rp.
-                {{ number_format($brgKirim->sum('subtotal'), 0, ',', '.') }}</p>
         </a>
         {{-- @endforeach --}}
     @endif

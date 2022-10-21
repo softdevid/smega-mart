@@ -61,47 +61,57 @@
                         </thead>
                         <tbody>
                             @foreach ($brgKirim as $key => $b)
-                                <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
-                                    @method('put')
-                                    @csrf
-                                    <input type="hidden" value="{{ $b->id }}" name="id" id="id">
-                                    <input type="hidden" value="3" name="status" id="status">
-                                    <input type="hidden" value="{{ $b->noFaktur }}" name="noFaktur" id="noFaktur">
-                                    @foreach ($brgKirimb as $bk)
-                                        <input type="hidden" value="{{ $bk->barcode }}" name="barcode" id="barcode">
-                                        <input type="hidden" value="{{ $bk->namaBarang }}" name="namaBarang"
-                                            id="namaBarang">
-                                        <input type="hidden" value="{{ $bk->hrgJual }}" name="hrgJual" id="hrgJual">
-                                        <input type="hidden" value="{{ $bk->qty }}" name="jmlhJual" id="jmlhJual">
-                                        <input type="hidden" value="{{ $bk->barang->hrgBeli }}" name="hrgBeli"
-                                            id="hrgBeli">
-                                    @endforeach
-                                    {{-- <input type="hidden" value="{{ $b->barang->hrgBeli }}" name="hrgBeli" id="hrgBeli"> --}}
-                                    <tr
-                                        class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-                                        <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                            {{ $key + 1 }}
-                                        </td>
-                                        <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                            {{ $b->noFaktur }}
-                                        </td>
-                                        <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                            {{ $b->user->namaUser }}
-                                        </td>
-                                        <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                            {{ $b->alamat }}
-                                        </td>
-                                        <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                            Rp. {{ number_format($b->subtotal, 0, ',', '.') }}
-                                        </td>
-                                        <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                {{-- <input type="hidden" value="{{ $b->barang->hrgBeli }}" name="hrgBeli" id="hrgBeli"> --}}
+                                <tr
+                                    class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {{ $key + 1 }}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {{ $b->noFaktur }}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {{ $b->user->namaUser }}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {{ $b->alamat }}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        Rp. {{ number_format($b->subtotal, 0, ',', '.') }}
+                                    </td>
+                                    <td class="flex py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
+                                            @method('put')
+                                            @csrf
+                                            <input type="hidden" value="{{ $b->id }}" name="id" id="id">
+                                            <input type="hidden" value="3" name="status" id="status">
+                                            <input type="hidden" value="{{ $b->noFaktur }}" name="noFaktur"
+                                                id="noFaktur">
+                                            @foreach ($brgKirimb as $bk)
+                                                <input type="hidden" value="{{ $bk->barcode }}" name="barcode"
+                                                    id="barcode">
+                                                <input type="hidden" value="{{ $bk->namaBarang }}" name="namaBarang"
+                                                    id="namaBarang">
+                                                <input type="hidden" value="{{ $bk->hrgJual }}" name="hrgJual"
+                                                    id="hrgJual">
+                                                <input type="hidden" value="{{ $bk->qty }}" name="jmlhJual"
+                                                    id="jmlhJual">
+                                                <input type="hidden" value="{{ $bk->barang->hrgBeli }}" name="hrgBeli"
+                                                    id="hrgBeli">
+                                            @endforeach
+
                                             <button type="submit"
-                                                class="rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800">Setuju</button>
-                                </form>
-                                <button class="rounded-lg bg-red-600 p-2 text-white hover:bg-red-800">Batalkan</button>
-                                <button class="rounded-lg bg-green-400 p-2 text-white hover:bg-green-700"
-                                    data-modal-toggle="defaultModal/{{ $b->noFaktur }}">Detail</button>
-                                </td>
+                                                class="mx-2 rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800">Setuju</button>
+                                        </form>
+                                        <form action="{{ route('order.show', [$b->noFaktur]) }}" method="get">
+                                            {{-- @csrf --}}
+                                            <input type="hidden" name="noFaktur" id="noFaktur"
+                                                value="{{ $b->noFaktur }}">
+                                            <input type="hidden" name="status" id="status" value="2">
+                                            <button
+                                                class="mx-2 rounded-lg bg-green-400 p-2 text-white hover:bg-green-700">Detail</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

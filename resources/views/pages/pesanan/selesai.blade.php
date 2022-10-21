@@ -64,7 +64,7 @@
                                                     {{ $b->user->namaUser }}
                                                 </td>
                                                 <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                                    {{ $b->alamat }}
+                                                    {{ $data->alamat }}
                                                 </td>
                                                 <td class="mx-auto items-center justify-between py-4 px-6">
                                                     {{ $b->qty }}
@@ -86,8 +86,9 @@
                                                         <b>Sudah sampai</b>
                                                     @endif
                                                 </td>
-                                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                                    <a href="/pesanan/detail/{{ $b->noFaktur }}">Detail</a>
+                                                <td class="py-4 px-6 font-semibold">
+                                                    <a href="/pesanan/detail/{{ $b->noFaktur }}"
+                                                        class="rounded-md bg-green-500 p-2 text-white hover:bg-green-700">Detail</a>
                                                 </td>
                                             </tr>
                                         @endforeach

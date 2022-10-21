@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/pesanan/detail/{noFaktur}', [OrderController::class, 'detail']);
 
   //route detail pesanan
-  Route::get('/detail-pesanan/{noFaktur}', [OrderController::class, 'detailPesanan']);
+  // Route::get('/detail-pesanan/{noFaktur}', [OrderController::class, 'detailPesanan']);
 });
 
 // Routing Admin
@@ -109,6 +109,8 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/orders/dikirim', [OrderController::class, 'adminDikirim']);
   Route::get('/orders/selesai', [OrderController::class, 'adminSelesai']);
   Route::get('/orders/dibatalkan', [OrderController::class, 'adminDibatalkan']);
+  Route::post('/orders/batalkanProduk/{id}', [OrderController::class, 'batalkanProduk']);
+  Route::get('/pesanan/detail/{noFaktur}', [OrderController::class, 'detail']);
 
 
   //Route kasir

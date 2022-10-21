@@ -12,7 +12,7 @@
         {{-- form checkout --}}
 
         {{-- produk --}}
-        <a href="/detail-pesanan/{{ $noFaktur }}">
+        <a href="/pesanan/detail/{{ $noFaktur }}">
 
             <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
                 <div class="m-3">

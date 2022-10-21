@@ -30,7 +30,7 @@
 
     @if ($brg->count() == 0)
         <h1 class="m-5 text-center text-red-700">
-            Tidak ada barang yang diproses
+            Tidak ada pesanan yang harus diproses
         </h1>
     @else
         {{-- diproses status 0 --}}
@@ -82,8 +82,7 @@
                                         {{ $b->user->namaUser }}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {{ $b->user->kabupaten }}, {{ $b->user->kecamatan }}, {{ $b->user->desa }},
-                                        {{ $b->user->alamat_lengkap }}
+                                        {{ $b->alamat }}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                         Rp. {{ number_format($b->subtotal, 0, ',', '.') }}
@@ -92,28 +91,24 @@
                                         <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
                                             @method('put')
                                             @csrf
-                                            <input type="hidden" value="{{ $b->id }}" name="id"
-                                                id="id">
+                                            <input type="hidden" value="{{ $b->id }}" name="id" id="id">
                                             <input type="hidden" value="1" name="status" id="status">
                                             <input type="hidden" value="{{ $b->noFaktur }}" name="noFaktur"
                                                 id="noFaktur">
                                             <button type="submit"
                                                 class="mx-2 rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800">Setuju</button>
                                         </form>
-                                        <form action="{{ route('rinci.update', [$b->id]) }}" method="post">
-                                            @method('put')
-                                            @csrf
-                                            <input type="hidden" name="status" id="status" value="4">
-                                            <input type="hidden" value="{{ $b->id }}" name="id"
-                                                id="id">
-                                            <input type="hidden" value="{{ $b->noFaktur }}" name="noFaktur"
-                                                id="noFaktur">
+                                        <form action="{{ route('order.show', [$b->noFaktur]) }}" method="get">
+                                            {{-- @csrf --}}
+                                            <input type="hidden" name="noFaktur" id="noFaktur"
+                                                value="{{ $b->noFaktur }}">
+                                            {{-- <input type="hidden" name="id" id="id"
+                                                    value="{{ $b->id }}"> --}}
                                             <button
-                                                class="mx-2 rounded-lg bg-red-600 p-2 text-white hover:bg-red-800">Batalkan</button>
+                                                class="mx-2 rounded-lg bg-green-400 p-2 text-white hover:bg-green-700">Detail</button>
                                         </form>
-                                        <button
-                                            class="mx-2 rounded-lg bg-green-400 p-2 text-white hover:bg-green-700">Detail</button>
                                     </td>
+
 
                                 </tr>
                             @endforeach

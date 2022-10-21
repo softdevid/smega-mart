@@ -93,8 +93,8 @@
                                             @csrf
                                             <input type="hidden" name="noFaktur" id="noFaktur"
                                                 value="{{ $b->noFaktur }}">
-                                            <input type="hidden" name="id" id="id"
-                                                value="{{ $b->id }}">
+                                            {{-- <input type="hidden" name="id" id="id"
+                                                value="{{ $b->id }}"> --}}
                                             <button
                                                 class="mx-2 rounded-lg bg-green-400 p-2 text-white hover:bg-green-700">Detail</button>
                                         </form>
