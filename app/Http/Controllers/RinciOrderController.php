@@ -86,15 +86,28 @@ class RinciOrderController extends Controller
     $poin = doubleval($subtotal) / $poin1;
 
     if ($request->status == 4) {
-      Order::where('id', $request->id)
-        ->update(['status' => $request->status, 'alasanPembatalan' => $request->alasanPembatalan]);
-      $order = Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])->get();
-      // dd($order);
+      if (Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])->count() <= 1) {
+        Order::where('id', $request->id)
+          ->update(['status' => $request->status, 'alasanPembatalan' => $request->alasanPembatalan]);
 
-      RinciOrder::where(['noFaktur' => $request->noFaktur, 'status' => 0])
-        ->update(['subtotal' => $order->sum('subtotal')]);
+        $order = Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])->get();
+        // dd($order);
 
-      return redirect()->to('/orders')->with('success', 'Barang dibatalkan oleh penjual');
+        RinciOrder::where(['noFaktur' => $request->noFaktur])
+          ->update(['status' => 4]);
+
+        return redirect()->to('/orders')->with('success', 'Barang dibatalkan oleh penjual');
+      } else {
+        Order::where('id', $request->id)
+          ->update(['status' => $request->status, 'alasanPembatalan' => $request->alasanPembatalan]);
+        $order = Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])->get();
+        // dd($order);
+
+        RinciOrder::where(['noFaktur' => $request->noFaktur, 'status' => 0])
+          ->update(['subtotal' => $order->sum('subtotal')]);
+
+        return redirect()->to('/orders')->with('success', 'Barang dibatalkan oleh penjual');
+      }
     } elseif ($request->status == 1) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);
@@ -113,16 +126,17 @@ class RinciOrderController extends Controller
       return redirect()->to('/orders/dikemas')->with('success', 'Barang segera dikirim');
       // return back()->with('success', 'Barang segera dikirim');
     } elseif ($request->status == 3) {
-      RinciOrder::where('id', $id)
+      // dd($request->all());
+      RinciOrder::where(['noFaktur' => $request->noFaktur, 'status' => 0])
         ->update(['status' => $request->status]);
 
-      RinciOrder::where('id', $id)
+      RinciOrder::where(['noFaktur' => $request->noFaktur, 'status' => 0])
         ->update(['statusBayar' => 1]);
 
-      Order::where('noFaktur', $request->noFaktur)
+      Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])
         ->update(['status' => $request->status]);
 
-      Order::where('noFaktur', $request->noFaktur)
+      Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])
         ->update(['statusBayar' => 1]);
 
       for ($i = 0; $i < count($data); $i++) {
@@ -147,7 +161,7 @@ class RinciOrderController extends Controller
         'poin' => $poin,
       ]);
 
-      return redirect()->to('/orders/dikirim')->with('success', 'Barang telah sampai');
+      return redirect()->to('/orders')->with('success', 'Barang sudah disetujui');
       // return back()->with('success', 'Barang telah sampai');
     }
   }

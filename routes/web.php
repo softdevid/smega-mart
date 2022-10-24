@@ -81,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
 
 
   Route::resource('storage', StorageController::class);
+  Route::get('/print/{noFaktur}', [OrderController::class, 'print']);
+  Route::get('/showPrint/{noFaktur}', [OrderController::class, 'showPrint']);
 
   // //Route Gudang
   // Route::get('/stock-store/{id}', [StorageController::class, 'store']);
@@ -97,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
 
   //Route Order
   Route::get('/orders', [OrderController::class, 'adminDiproses']);
+  Route::get('/orders/data', [OrderController::class, 'dataProses']);
   Route::get('/detailProduct/{slug}', [OrderController::class, 'detailProduct'])->name('detailProduct');
 
   //route order admin
@@ -104,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('rinci', RinciOrderController::class);
 
   //ROute pesanan admin view
-  Route::get('/orders/diproses', [OrderController::class, 'adminDiproses']);
+  // Route::get('/orders/diproses', [OrderController::class, 'adminDiproses']);
   Route::get('/orders/dikemas', [OrderController::class, 'adminDikemas']);
   Route::get('/orders/dikirim', [OrderController::class, 'adminDikirim']);
   Route::get('/orders/selesai', [OrderController::class, 'adminSelesai']);

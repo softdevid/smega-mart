@@ -74,6 +74,8 @@
                                         <input type="hidden" value="{{ $b->qty * $b->hrgJual }}" id="subtotal[]"
                                             name="subtotal[]">
 
+                                        <input type="hidden" name="tgl_Jual[]" id="tgl_Jual" value="{{ $Tgl_Jual }}">
+
                                         <tr
                                             class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
@@ -186,22 +188,26 @@
                         $('#success').html('');
                         $('#success').append(
                             '<div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">\
-                                                                                                                                                                                                                                                                                                  <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
-                                                                                                                                                                                                                                                                                                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
-                                                                                                                                                                                                                                                                                                      <path fill-rule="evenodd"\
-                                                                                                                                                                                                                                                                                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
-                                                                                                                                                                                                                                                                                                            clip rule="evenodd"></path>\
-                                                                                                                                                                                                                                                                                                            </svg> \
-                                                                                                                                                                                                                                                                                                            span class = "sr-only" > Info < /span>\
-                                                                                                                                                                                                                                                                                                            <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
-                                                                                                                                                                                                                                                                                                            Pesanan sedang diproses, menunggu konfirmasi!\
-                                                                                                                                                                                                                                                                                                            </div>\
-                                                                                                                                                                                                                                                                                                            <div>'
+                                                                                                                                                                                                                                                                                                                                  <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
+                                                                                                                                                                                                                                                                                                                                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
+                                                                                                                                                                                                                                                                                                                                      <path fill-rule="evenodd"\
+                                                                                                                                                                                                                                                                                                                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
+                                                                                                                                                                                                                                                                                                                                            clip rule="evenodd"></path>\
+                                                                                                                                                                                                                                                                                                                                            </svg> \
+                                                                                                                                                                                                                                                                                                                                            span class = "sr-only" > Info < /span>\
+                                                                                                                                                                                                                                                                                                                                            <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
+                                                                                                                                                                                                                                                                                                                                            Pesanan sedang diproses, menunggu konfirmasi!\
+                                                                                                                                                                                                                                                                                                                                            </div>\
+                                                                                                                                                                                                                                                                                                                                            <div>'
                         )
                     }
                 })
             });
 
+            $(document).on('click', '#pesan', function(e) {
+                window.location = '{{ route('adminDiproses') }}';
+                window.location.reload();
+            })
 
         }); //end document ready
     </script>

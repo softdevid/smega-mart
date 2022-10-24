@@ -97,7 +97,10 @@
                                                 @elseif ($b->status == 2)
                                                     <b>Barang sedang dikirim</b>
                                                 @elseif ($b->status == 3)
-                                                    <b>Barang sudah sampai</b>
+                                                    {{-- <b>Barang sudah sampai</b> --}}
+                                                    <b>Pesanan disetujui</b>
+                                                @elseif ($b->status == 4)
+                                                    Barang sudah dibatalkan
                                                 @endif
                                             </td>
                                         </tr>
@@ -132,12 +135,29 @@
                         {{-- button setuju pemesanan --}}
 
                         @if ($data->status == 0)
-                            <form action="{{ route('rinci.update', [$data->id]) }}" method="POST">
+                            {{-- <form action="{{ route('rinci.update', [$data->id]) }}" method="POST">
                                 @method('put')
                                 @csrf
                                 <input type="hidden" value="{{ $data->id }}" name="id" id="id">
                                 <input type="hidden" value="1" name="status" id="status">
                                 <input type="hidden" value="{{ $data->noFaktur }}" name="noFaktur" id="noFaktur">
+                                <button type="submit"
+                                    class="mx-2 rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800">Setuju</button>
+                            </form> --}}
+                            <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
+                                @method('put')
+                                @csrf
+                                <input type="hidden" value="{{ $b->id }}" name="id" id="id">
+                                <input type="hidden" value="3" name="status" id="status">
+                                <input type="hidden" value="{{ $b->noFaktur }}" name="noFaktur" id="noFaktur">
+                                @foreach ($brgKirimb as $bk)
+                                    <input type="hidden" value="{{ $bk->barcode }}" name="barcode" id="barcode">
+                                    <input type="hidden" value="{{ $bk->namaBarang }}" name="namaBarang" id="namaBarang">
+                                    <input type="hidden" value="{{ $bk->hrgJual }}" name="hrgJual" id="hrgJual">
+                                    <input type="hidden" value="{{ $bk->qty }}" name="jmlhJual" id="jmlhJual">
+                                    <input type="hidden" value="{{ $bk->barang->hrgBeli }}" name="hrgBeli" id="hrgBeli">
+                                @endforeach
+
                                 <button type="submit"
                                     class="mx-2 rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800">Setuju</button>
                             </form>
@@ -183,6 +203,10 @@
                             <a href="/orders/dikirim"
                                 class="rounded-lg bg-gray-700 p-2 text-white hover:bg-gray-800">Kembali</a>
                         @elseif ($data->status == 3)
+                            <a href="/showPrint/{{ $data->noFaktur }}"
+                                class="rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-800"><i
+                                    class="fa fa-print"></i>
+                                Print</a>
                             <a href="/orders/selesai"
                                 class="rounded-lg bg-gray-700 p-2 text-white hover:bg-gray-800">Kembali</a>
                         @elseif ($data->status == 4)

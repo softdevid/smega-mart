@@ -88,7 +88,7 @@
                                         Rp. {{ number_format($b->subtotal, 0, ',', '.') }}
                                     </td>
                                     <td class="flex py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
+                                        {{-- <form action="{{ route('rinci.update', [$b->id]) }}" method="POST">
                                             @method('put')
                                             @csrf
                                             <input type="hidden" value="{{ $b->id }}" name="id" id="id">
@@ -97,7 +97,7 @@
                                                 id="noFaktur">
                                             <button type="submit"
                                                 class="mx-2 rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800">Setuju</button>
-                                        </form>
+                                        </form> --}}
                                         <form action="{{ route('order.show', [$b->noFaktur]) }}" method="get">
                                             {{-- @csrf --}}
                                             <input type="hidden" name="noFaktur" id="noFaktur"
