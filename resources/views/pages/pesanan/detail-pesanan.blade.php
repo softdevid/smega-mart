@@ -114,12 +114,12 @@
     </div>
 
     {{-- total bayar --}}
-
     <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
         <div class="m-3">
 
             <div class="text-center">
-                <div class="mt-4 text-sm text-red-700"><i class="fa-regular fa-money-bill"></i> Metode bayar hanya Cash on
+                <div class="mt-4 text-sm text-red-700"><i class="fa-regular fa-money-bill"></i> Metode bayar hanya Cash
+                    on
                     delivery /
                     bayar
                     ditempat

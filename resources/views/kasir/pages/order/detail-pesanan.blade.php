@@ -204,7 +204,7 @@
                                 class="rounded-lg bg-gray-700 p-2 text-white hover:bg-gray-800">Kembali</a>
                         @elseif ($data->status == 3)
                             <a href="/showPrint/{{ $data->noFaktur }}"
-                                class="rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-800"><i
+                                class="mr-2 rounded-lg bg-green-500 p-2 text-white hover:bg-green-800"><i
                                     class="fa fa-print"></i>
                                 Print</a>
                             <a href="/orders/selesai"

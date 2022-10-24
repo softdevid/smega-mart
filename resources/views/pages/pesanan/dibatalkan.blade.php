@@ -45,7 +45,7 @@
                                                 SubTotal
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                Status pengiriman
+                                                Status pemesanan
                                             </th>
                                         </tr>
                                     </thead>
@@ -97,7 +97,10 @@
                                                             <b>Barang dibatalkan</b>
                                                         @endif
                                                     </td>
-
+                                                    <td class="py-4 px-6 font-semibold">
+                                                        <a href="/pesanan/detail/{{ $b->noFaktur }}"
+                                                            class="rounded-md bg-green-500 p-2 text-white hover:bg-green-700">Detail</a>
+                                                    </td>
                                                 </tr>
                                         @endforeach
                                     </tbody>

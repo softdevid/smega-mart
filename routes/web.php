@@ -115,6 +115,9 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/orders/batalkanProduk/{id}', [OrderController::class, 'batalkanProduk']);
   Route::get('/pesanan/detail/{noFaktur}', [OrderController::class, 'detail']);
 
+  Route::get('/updateQty/{id}', [OrderController::class, 'updateQty']);
+  Route::get('/dataCart/{id}', [KeranjangController::class, 'dataCart']);
+
 
   //Route kasir
   Route::resource('kasir', KasirController::class);

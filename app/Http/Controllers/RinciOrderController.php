@@ -106,7 +106,8 @@ class RinciOrderController extends Controller
         RinciOrder::where(['noFaktur' => $request->noFaktur, 'status' => 0])
           ->update(['subtotal' => $order->sum('subtotal')]);
 
-        return redirect()->to('/orders')->with('success', 'Barang dibatalkan oleh penjual');
+        // return redirect()->to('/orders')->with('success', 'Barang dibatalkan oleh penjual');
+        return back()->with('success', 'Barang dibatalkan oleh Smega Mart');
       }
     } elseif ($request->status == 1) {
       RinciOrder::where('id', $id)
@@ -115,7 +116,6 @@ class RinciOrderController extends Controller
         ->update(['status' => $request->status]);
 
       return redirect()->to('/orders')->with('success', 'Barang segera dikemas');
-      // return back()->with('success', 'Barang segera dikemas');
     } elseif ($request->status == 2) {
       RinciOrder::where('id', $id)
         ->update(['status' => $request->status]);
@@ -161,8 +161,8 @@ class RinciOrderController extends Controller
         'poin' => $poin,
       ]);
 
-      return redirect()->to('/orders')->with('success', 'Barang sudah disetujui');
-      // return back()->with('success', 'Barang telah sampai');
+      // return redirect()->to('/orders')->with('success', 'Barang sudah disetujui');
+      return back()->with('success', 'Barang telah disetujui');
     }
   }
 

@@ -31,7 +31,7 @@
                                     class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="py-3 px-6">
-                                            Nama Penerima
+                                            Nama Pemesan
                                         </th>
                                         <th scope="col" class="py-3 px-6">
                                             Alamat
@@ -40,13 +40,10 @@
                                             Jumlah dipesan
                                         </th>
                                         <th scope="col" class="py-3 px-6">
-                                            Harga
-                                        </th>
-                                        <th scope="col" class="py-3 px-6">
                                             SubTotal
                                         </th>
                                         <th scope="col" class="py-3 px-6">
-                                            Status pengiriman
+                                            Status pesanan
                                         </th>
                                     </tr>
                                 </thead>
