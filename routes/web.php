@@ -42,6 +42,8 @@ Route::get('/product/{slug}', [OrderController::class, 'detailProduct']);
 
 //route customer
 Route::middleware(['auth'])->group(function () {
+  Route::resource('auth', AuthController::class);
+
   //route keranjang
   Route::resource('order', OrderController::class);
   Route::resource('keranjang', KeranjangController::class);
@@ -56,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
 
   //profile
   Route::get('/profil', [HomeController::class, 'profil']);
+  Route::post('/userUpdate', [AuthController::class, 'update'])->name('updateProfil');
+
   //ROute pesanan customer
   Route::get('/pesanan/diproses', [OrderController::class, 'diproses']);
   Route::get('/pesanan/dikemas', [OrderController::class, 'dikemas']);
