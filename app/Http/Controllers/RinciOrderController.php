@@ -10,6 +10,8 @@ use App\Models\Penjualan;
 use Illuminate\Support\Carbon;
 use App\Models\Kasir;
 
+use Illuminate\Support\Facades\DB;
+
 class RinciOrderController extends Controller
 {
   /**
@@ -78,6 +80,7 @@ class RinciOrderController extends Controller
 
     $data = RinciOrder::where('noFaktur', $request->noFaktur)->get();
     $data2 = Order::where(['noFaktur' => $request->noFaktur, 'status' => !$status4])->get();
+    $data3 = Order::where(['noFaktur' => $request->noFaktur])->get();
     // dd($data2);
     $subtotal = $data->sum('subtotal');
 
@@ -139,17 +142,20 @@ class RinciOrderController extends Controller
       Order::where(['noFaktur' => $request->noFaktur, 'status' => 0])
         ->update(['statusBayar' => 1]);
 
-      for ($i = 0; $i < count($data); $i++) {
-        $data = [
-          'noFakturJualan' =>  $request->noFaktur,
-          'barcode' =>  $request->barcode,
-          'namaBarang' =>  $request->namaBarang,
-          'jmlhJual' =>  $request->jmlhJual,
-          'hrgJual' =>  $request->hrgJual,
+      $dataSet = [];
+      foreach ($data3 as $d) {
+        $dataSet[] = [
+          'noFakturJualan' =>  $d->noFaktur,
+          'barcode' =>  $d->barcode,
+          'namaBarang' =>  $d->namaBarang,
+          'jmlhJual' =>  $d->qty,
+          'hrgJual' =>  $d->hrgJual,
           'hrgBeli' =>  $request->hrgBeli,
         ];
-        Kasir::create($data);
       }
+      // dd($dataSet);
+      // Kasir::create($dataSet);
+      DB::table('tabelrealpenjualan')->insert($dataSet);
 
       Penjualan::create([
         'No_Faktur_Jual' => $request->noFaktur,

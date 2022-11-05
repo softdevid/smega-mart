@@ -85,6 +85,13 @@ class KasirController extends Controller
 
   public function getDetailData($noFakturJualan)
   {
+    $noKasir = request('no');
+    // dd($noKasir);
+    if ($noKasir) {
+      Kasir::where('no', request('no'))
+        ->update(['jmlhJual' => request('jmlhQty')]);
+    }
+
     $now = date('Y-m-d', strtotime(Carbon::now()));
     $no = Penjualan::count() + 1;
     $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
@@ -115,6 +122,19 @@ class KasirController extends Controller
     ]);
   }
 
+  public function updateQty(Request $request)
+  {
+    // dd($request->all());
+    Kasir::where('no', $request->no)
+      ->update(['jmlhJual' => request('jmlhJual')]);
+    return back();
+  }
+
+  public function hapusPesanan(Request $request)
+  {
+    Kasir::where('no', $request->no)->delete();
+    return back();
+  }
   /**
    * Show the form for creating a new resource.
    *
@@ -142,6 +162,13 @@ class KasirController extends Controller
   public function simpan(Request $request)
   {
     $poin = Point::sum('kelipatan');
+    $request->validate([
+      'No_Faktur_Jual' => 'required',
+      'Tgl_Jual' => 'required',
+      'Total' => 'required',
+      'Bayar' => 'required',
+      'Kd_User' => 'required',
+    ]);
     $p = Penjualan::create([
       'No_Faktur_Jual' => $request->No_Faktur_Jual,
       'Tgl_Jual' => $request->Tgl_Jual,
@@ -151,12 +178,9 @@ class KasirController extends Controller
       'Kd_User' => $request->Kd_User,
       'poin' => doubleval($request->Total) / $poin,
     ]);
-    // dd(request('Kd_Pelanggan'));
-    // $p = Penjualan::create($request->all());
-    // $request->session()->forget('id');
-    // return $p;
+
     session(['noFakturJualan' => $request->No_Faktur_Jual]);
-    return redirect()->to('/selesai')->with('success', 'Berhasil di simpan');
+    return redirect()->to('kasir/show')->with('success', 'Berhasil di simpan');
     // return response()->json($p);
   }
 
@@ -172,17 +196,19 @@ class KasirController extends Controller
     // if (!$penjualan) {
     //   abort(404);
     // }
-    $barang = Kasir::where('noFakturJualan', session('noFakturJualan'))->get();
+    $product = Kasir::where('noFakturJualan', session('noFakturJualan'))->get();
     $totalItem = Kasir::where('noFakturJualan', session('noFakturJualan'))->sum('jmlhJual');
     $detail = Penjualan::where('No_Faktur_Jual', session('noFakturJualan'))->first();
-    // dd($detail->No_Faktur_Jual);
     $time = Carbon::now();
+    $pelanggan = Pelanggan::select('namaPelanggan')->where('kdPelanggan', $detail->Kd_Pelanggan)->first();
+    // dd($pelanggan);
 
     return view('kasir.pages.notaKecil', [
       'detail' => $detail,
-      'barang' => $barang,
+      'product' => $product,
       'time' => $time,
       'totalItem' => $totalItem,
+      'pelanggan' => $pelanggan,
     ]);
   }
 
@@ -219,9 +245,12 @@ class KasirController extends Controller
    * @param  \App\Models\Kasir  $kasir
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Kasir $kasir)
+  public function update(Request $request, Kasir $kasir, $no)
   {
-    //
+    // dd($request->all());
+    Kasir::where('no', $request->no)
+      ->update(['jmlhJual' => request('jmlhJual')]);
+    return back();
   }
 
   /**
@@ -232,8 +261,14 @@ class KasirController extends Controller
    */
   public function destroy(Kasir $kasir, Request $request)
   {
+    $p = Kasir::where('no', request('no'))
+      ->delete();
+    return response()->json($p);
+  }
+
+  public function forgetSession(Request $request)
+  {
     $request->session()->forget('noFakturJualan');
-    // Kasir::destroy($d->no);
-    // return back();
+    return redirect()->to('kasir');
   }
 }

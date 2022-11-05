@@ -23,4 +23,9 @@ class Penjualan extends Model
   {
     return $this->hasOne(Order::class, 'noFaktur');
   }
+
+  public function user()
+  {
+    return $this->belongsTo(User::class, 'kdPelanggan');
+  }
 }

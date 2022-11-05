@@ -128,13 +128,17 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/kasir/store/simpan', [KasirController::class, 'simpan'])->name('transaksi.simpan');
   Route::get('/kasir/show/{noFakturJualan}', [KasirController::class, 'show'])->name('print.transaksi');
   Route::get('/selesai', [KasirController::class, 'selesai'])->name('selesai');
+  Route::get('/print', [KasirController::class, 'print'])->name('print');
+  Route::delete('/hapusPesanan', [KasirController::class, 'hapusPesanan'])->name('hapusPesanan');
+
+  Route::post('/updateJumlah', [KasirController::class, 'updateQty'])->name('updateQty');
 
   //route pembelian admin
   Route::post('/admin/store', [StorageController::class, 'store'])->name('pembelian.store');
   Route::get('/admin/detail/{noFakturBeli}', [StorageController::class, 'getDetailData'])->name('pembelian.detail');
   Route::post('/admin/store/simpan', [StorageController::class, 'simpan'])->name('pembelian.simpan');
 
-  Route::get('/session/forget', [KasirController::class, 'destroy'])->name('forget');
+  Route::get('/forgetSession', [KasirController::class, 'forgetSession'])->name('forget');
 
   Route::resource('laporan', LaporanController::class);
 
