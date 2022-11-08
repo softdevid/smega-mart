@@ -31,6 +31,11 @@ class User extends Authenticatable
     return $this->hasOne(RinciOrder::class, 'kdUser');
   }
 
+  public function penjualan()
+  {
+    return $this->belongsTo(Penjualan::class, 'Kd_Pelanggan');
+  }
+
 
   /**
    * The attributes that are mass assignable.

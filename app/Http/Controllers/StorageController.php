@@ -148,7 +148,7 @@ class StorageController extends Controller
     $b = Pembelian::create([
       'noFakturBeli' => $request->noFakturBeli,
       'tglBeli' => $request->tglBeli,
-      'kdSupplier' => $request->kdSupplier,
+      'kdSupplier' => $request->kdSupplier ?? '',
       'kdUser' => auth()->user()->kdUser ?? '',
     ]);
     // $b = Pembelian::create($request->all());

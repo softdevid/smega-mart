@@ -12,7 +12,7 @@
         {{-- form checkout --}}
 
         {{-- produk --}}
-        <a href="/detail-pesanan/{{ $noFaktur }}">
+        <a href="/pesanan/detail/{{ $noFaktur }}">
 
             <div class="container mt-3 rounded-lg border-t-4 bg-white py-5 shadow-lg">
                 <div class="m-3">
@@ -45,7 +45,7 @@
                                                 SubTotal
                                             </th>
                                             <th scope="col" class="py-3 px-6">
-                                                Status pengiriman
+                                                Status pemesanan
                                             </th>
                                         </tr>
                                     </thead>
@@ -97,6 +97,10 @@
                                                             <b>Barang dibatalkan</b>
                                                         @endif
                                                     </td>
+                                                    <td class="py-4 px-6 font-semibold">
+                                                        <a href="/pesanan/detail/{{ $b->noFaktur }}"
+                                                            class="rounded-md bg-green-500 p-2 text-white hover:bg-green-700">Detail</a>
+                                                    </td>
                                                 </tr>
                                         @endforeach
                                     </tbody>
@@ -106,8 +110,6 @@
                     </div>
                 </div>
             </div>
-            <p class="mt-3 text-center">Total: Rp.
-                {{ number_format($brgBatal->sum('subtotal'), 0, ',', '.') }}</p>
         </a>
         {{-- @endforeach --}}
     @endif

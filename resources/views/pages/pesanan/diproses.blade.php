@@ -102,9 +102,9 @@
                         </div>
                     </div>
                 </div>
+                <p class="mt-3 text-center">Total: Rp.
+                    {{ number_format($brg->sum('subtotal'), 0, ',', '.') }}</p>
             </div>
-            <p class="mt-3 text-center">Total: Rp.
-                {{ number_format($brg->sum('subtotal'), 0, ',', '.') }}</p>
         </a>
         {{-- @endforeach --}}
     @endif

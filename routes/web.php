@@ -42,6 +42,8 @@ Route::get('/product/{slug}', [OrderController::class, 'detailProduct']);
 
 //route customer
 Route::middleware(['auth'])->group(function () {
+  Route::resource('auth', AuthController::class);
+
   //route keranjang
   Route::resource('order', OrderController::class);
   Route::resource('keranjang', KeranjangController::class);
@@ -56,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
 
   //profile
   Route::get('/profil', [HomeController::class, 'profil']);
+  Route::post('/userUpdate', [AuthController::class, 'update'])->name('updateProfil');
+
   //ROute pesanan customer
   Route::get('/pesanan/diproses', [OrderController::class, 'diproses']);
   Route::get('/pesanan/dikemas', [OrderController::class, 'dikemas']);
@@ -65,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/pesanan/detail/{noFaktur}', [OrderController::class, 'detail']);
 
   //route detail pesanan
-  Route::get('/detail-pesanan/{noFaktur}', [OrderController::class, 'detailPesanan']);
+  // Route::get('/detail-pesanan/{noFaktur}', [OrderController::class, 'detailPesanan']);
 });
 
 // Routing Admin
@@ -81,6 +85,8 @@ Route::middleware(['auth'])->group(function () {
 
 
   Route::resource('storage', StorageController::class);
+  Route::get('/print/{noFaktur}', [OrderController::class, 'print']);
+  Route::get('/showPrint/{noFaktur}', [OrderController::class, 'showPrint']);
 
   // //Route Gudang
   // Route::get('/stock-store/{id}', [StorageController::class, 'store']);
@@ -97,6 +103,7 @@ Route::middleware(['auth'])->group(function () {
 
   //Route Order
   Route::get('/orders', [OrderController::class, 'adminDiproses']);
+  Route::get('/orders/data', [OrderController::class, 'dataProses']);
   Route::get('/detailProduct/{slug}', [OrderController::class, 'detailProduct'])->name('detailProduct');
 
   //route order admin
@@ -104,29 +111,41 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('rinci', RinciOrderController::class);
 
   //ROute pesanan admin view
-  Route::get('/orders/diproses', [OrderController::class, 'adminDiproses']);
+  // Route::get('/orders/diproses', [OrderController::class, 'adminDiproses']);
   Route::get('/orders/dikemas', [OrderController::class, 'adminDikemas']);
   Route::get('/orders/dikirim', [OrderController::class, 'adminDikirim']);
   Route::get('/orders/selesai', [OrderController::class, 'adminSelesai']);
   Route::get('/orders/dibatalkan', [OrderController::class, 'adminDibatalkan']);
+  Route::post('/orders/batalkanProduk/{id}', [OrderController::class, 'batalkanProduk']);
+  Route::get('/pesanan/detail/{noFaktur}', [OrderController::class, 'detail']);
+
+  Route::get('/updateQty/{id}', [OrderController::class, 'updateQty']);
+  Route::get('/dataCart/{id}', [KeranjangController::class, 'dataCart']);
 
 
   //Route kasir
   Route::resource('kasir', KasirController::class);
 
   //route penjualan kasir
+  // Route::get('/kasir/databrg', [KasirController::class, 'getBarang'])->name('getBarang');
+  Route::get('/brg', [KasirController::class, 'brgKasir'])->name('brgKasir');
+
   Route::post('/kasir/store', [KasirController::class, 'store'])->name('transaksi.store');
   Route::get('/kasir/detail/{noFakturJualan}', [KasirController::class, 'getDetailData'])->name('transaksi.detail');
   Route::post('/kasir/store/simpan', [KasirController::class, 'simpan'])->name('transaksi.simpan');
   Route::get('/kasir/show/{noFakturJualan}', [KasirController::class, 'show'])->name('print.transaksi');
   Route::get('/selesai', [KasirController::class, 'selesai'])->name('selesai');
+  Route::get('/print', [KasirController::class, 'print'])->name('print');
+  Route::delete('/hapusPesanan', [KasirController::class, 'hapusPesanan'])->name('hapusPesanan');
+
+  Route::post('/updateJumlah', [KasirController::class, 'updateQty'])->name('updateQty');
 
   //route pembelian admin
   Route::post('/admin/store', [StorageController::class, 'store'])->name('pembelian.store');
   Route::get('/admin/detail/{noFakturBeli}', [StorageController::class, 'getDetailData'])->name('pembelian.detail');
   Route::post('/admin/store/simpan', [StorageController::class, 'simpan'])->name('pembelian.simpan');
 
-  Route::get('/session/forget', [KasirController::class, 'destroy'])->name('forget');
+  Route::get('/forgetSession', [KasirController::class, 'forgetSession'])->name('forget');
 
   Route::resource('laporan', LaporanController::class);
 

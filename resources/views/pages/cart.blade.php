@@ -66,19 +66,31 @@
                                 <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                     {{ $b->namaBarang }}
                                 </td>
-                                <td class="mx-auto items-center justify-between py-4 px-6">
-                                    <div class="text-center">
-                                        {{-- <input type="number" id="first_product"
-                                            class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                            placeholder="1" required="" min="1" value="{{ $b->qty }}"> --}}
-                                        {{ $b->qty }}
-                                    </div>
-                                </td>
-                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                    Rp. {{ number_format($b->hrgJual, 0, ',', '.') }}
-                                </td>
-                                <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                    Rp. {{ number_format($b->qty * $b->hrgJual, 0, ',', '.') }}
+                                <form action="/dataCart/{{ $b->id }}" method="GET">
+                                    <td class="mx-auto items-center justify-between py-4 px-6">
+                                        <div class="text-center">
+                                            <input type="number" id="qty"
+                                                class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                                                placeholder="1" required="" min="1" value="{{ $b->qty }}"
+                                                name="qty">
+                                            {{-- {{ $b->qty }} --}}
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        Rp. {{ number_format($b->hrgJual, 0, ',', '.') }}
+                                    </td>
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        Rp. {{ number_format($b->qty * $b->hrgJual, 0, ',', '.') }}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        @method('put')
+                                        @csrf
+                                        <input type="hidden" value="{{ $b->id }}" name="id" id="id">
+                                        <button type="submit"
+                                            class="rounded-lg bg-yellow-300 p-2 font-medium text-black dark:text-black">Update
+                                            Cart
+                                        </button>
+                                </form>
                                 </td>
                                 <td class="py-4 px-6">
                                     <form action="{{ route('keranjang.destroy', $b->id) }}" method="post">
@@ -98,7 +110,7 @@
             </div>
         </div>
         <div class="m-5 text-center">
-            Total pembelian: Rp. {{ number_format($brg->sum('subtotal'), 0, ',', '.') }}
+            {{-- Total pembelian: Rp. {{ number_format($brg->sum('subtotal'), 0, ',', '.') }} --}}
             <div class="container my-4 mx-auto items-center justify-center justify-items-end text-right">
                 <a href="/checkout" class="rounded-lg bg-blue-600 p-2 text-white hover:bg-blue-800 md:p-3">Checkout</a>
                 <a href="/products" class="rounded-lg bg-green-500 p-2 text-white hover:bg-green-700 md:p-3">Belanja lagi
@@ -106,4 +118,27 @@
             </div>
         </div>
     @endif
+
+    <script>
+        $(document).ready(function() {
+
+            $(document).on("input", '#qty', function(e) {
+                e.preventDefault();
+                var qty = {
+                    'qty': $('#qty').val(),
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "/dataCart/{id}",
+                    data: qty,
+                    dataType: "json",
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                })
+            })
+
+
+        }) //end document ready
+    </script>
 @endsection

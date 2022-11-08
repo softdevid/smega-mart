@@ -21,6 +21,18 @@ class KeranjangController extends Controller
     ]);
   }
 
+  public function dataCart(Request $request, $id)
+  {
+    $brg = Keranjang::find($id);
+    // dd($brg->hrgJual);
+    $qty = $brg->update(['qty' => $request->qty ?? '', 'subtotal' => $request->qty * $brg->hrgJual]);
+    // return response()->json([
+    //   'brg' => $brg,
+    //   'qty' => $qty,
+    // ]);
+    return back();
+  }
+
   /**
    * Show the form for creating a new resource.
    *
@@ -39,9 +51,9 @@ class KeranjangController extends Controller
    */
   public function store(Request $request)
   {
-    if ($request->stok <= 0) {
-      return back()->with('error', 'Stok barang kosong tidak bisa ditambahkan');
-    }
+    // if ($request->stok <= 0) {
+    //   return back()->with('error', 'Stok barang kosong tidak bisa ditambahkan');
+    // }
 
     $request->validate(
       [

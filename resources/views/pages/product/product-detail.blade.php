@@ -64,9 +64,9 @@
                             </p>
                             <h3 class="mb-3 text-xl font-semibold text-red-800">
                                 Rp.{{ number_format($product->hrgJual, 0, ',', '.') }}</h3>
-                            <p class="mb-3 text-sm text-slate-600">
+                            {{-- <p class="mb-3 text-sm text-slate-600">
                                 Stok : <span>{{ $product->stok }}</span>
-                            </p>
+                            </p> --}}
                             <div class="mb-3 grid grid-cols-4 gap-2 text-sm text-slate-600">
                                 <div class="flex">
                                     <input type="number" min="1" value="1" name="qty" id="qty"

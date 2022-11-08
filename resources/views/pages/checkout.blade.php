@@ -13,10 +13,13 @@
 
                 <div class="mt-2 grid grid-cols-1 md:grid-cols-2">
                     <div>{{ auth()->user()->namaUser }} ({{ auth()->user()->noHp }}) </div>
-                    <textarea name="alamat" id="alamat" class="h-auto w-full" type="text">
-                  {{ auth()->user()->kabupaten }}, {{ auth()->user()->kecamatan }}, {{ auth()->user()->desa }},
+                    <div>
+                        <textarea name="alamat" id="alamat" class="h-auto w-full" type="text">
+                        {{ auth()->user()->kabupaten }}, {{ auth()->user()->kecamatan }}, {{ auth()->user()->desa }},
                     {{ auth()->user()->alamat_lengkap }}
-                </textarea>
+                  </textarea>
+                        <span class="text-red-600">Edit alamat di atas jika perlu</span>
+                    </div>
                 </div>
 
 
@@ -74,6 +77,8 @@
                                         <input type="hidden" value="{{ $b->qty * $b->hrgJual }}" id="subtotal[]"
                                             name="subtotal[]">
 
+                                        <input type="hidden" name="tgl_Jual[]" id="tgl_Jual" value="{{ $Tgl_Jual }}">
+
                                         <tr
                                             class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
@@ -91,13 +96,7 @@
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                 {{ $b->namaBarang }}
                                             </td>
-                                            <td class="mx-auto items-center justify-between py-4 px-6">
-                                                {{-- <div>
-                                                    <input type="number" id="first_product"
-                                                        class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                                                        placeholder="1" required="" min="1"
-                                                        value="{{ $b->qty }}">
-                                                </div> --}}
+                                            <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                                 {{ $b->qty }}
                                             </td>
                                             <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
@@ -186,22 +185,21 @@
                         $('#success').html('');
                         $('#success').append(
                             '<div id="alert-3" class="mb-4 flex rounded-lg bg-green-100 p-4 dark:bg-green-200" role="alert">\
-                                                                                                                                                                                                                                                                                                  <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
-                                                                                                                                                                                                                                                                                                      viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
-                                                                                                                                                                                                                                                                                                      <path fill-rule="evenodd"\
-                                                                                                                                                                                                                                                                                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
-                                                                                                                                                                                                                                                                                                            clip rule="evenodd"></path>\
-                                                                                                                                                                                                                                                                                                            </svg> \
-                                                                                                                                                                                                                                                                                                            span class = "sr-only" > Info < /span>\
-                                                                                                                                                                                                                                                                                                            <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
-                                                                                                                                                                                                                                                                                                            Pesanan sedang diproses, menunggu konfirmasi!\
-                                                                                                                                                                                                                                                                                                            </div>\
-                                                                                                                                                                                                                                                                                                            <div>'
+                                                                                                                                                                                                                                                                                                                                                                      <svg aria-hidden="true" class="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800" fill="currentColor"\
+                                                                                                                                                                                                                                                                                                                                                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">\
+                                                                                                                                                                                                                                                                                                                                                                          <path fill-rule="evenodd"\
+                                                                                                                                                                                                                                                                                                                                                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"\
+                                                                                                                                                                                                                                                                                                                                                                                clip rule="evenodd"></path>\
+                                                                                                                                                                                                                                                                                                                                                                                </svg> \
+                                                                                                                                                                                                                                                                                                                                                                                span class = "sr-only" > Info < /span>\
+                                                                                                                                                                                                                                                                                                                                                                                <div class ="ml-3 text-sm font-medium text-green-700 dark:text-green-800" >\
+                                                                                                                                                                                                                                                                                                                                                                                Pesanan sedang diproses, menunggu konfirmasi!\
+                                                                                                                                                                                                                                                                                                                                                                                </div>\
+                                                                                                                                                                                                                                                                                                                                                                                <div>'
                         )
                     }
                 })
             });
-
 
         }); //end document ready
     </script>

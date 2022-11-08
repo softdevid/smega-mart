@@ -6,10 +6,8 @@ use App\Models\Barang;
 use App\Models\Kategori;
 use App\Models\Gambar;
 use App\Models\Keranjang;
+use App\Models\User;
 use App\Models\Order;
-use Carbon\Carbon;
-use App\Models\Penjualan;
-// use App\Models\RinciOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -106,8 +104,10 @@ class HomeController extends Controller
 
   public function profil()
   {
+    $user = User::where('kdUser', auth()->user()->kdUser ?? '')->first();
     return view('pages.profile', [
       'title' => 'Profil saya',
+      'user' => $user,
     ]);
   }
 }

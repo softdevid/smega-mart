@@ -79,16 +79,18 @@
                                         {{ $b->noFaktur }}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {{ $b->user->namaUser }}
+                                        {{ $b->namaBarang }}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
-                                        {{ $b->user->kabupaten }}, {{ $b->user->kecamatan }}, {{ $b->user->desa }},
-                                        {{ $b->user->alamat_lengkap }}
+                                        {{ $b->qty }}
                                     </td>
                                     <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                         Rp. {{ number_format($b->subtotal, 0, ',', '.') }}
                                     </td>
-                                    <td class="flex py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                    <td class="py-4 px-6 font-semibold text-gray-900 dark:text-white">
+                                        {{ $b->created_at }}
+                                    </td>
+                                    {{-- <td class="flex py-4 px-6 font-semibold text-gray-900 dark:text-white">
                                         <form action="{{ route('order.show', [$b->id]) }}" method="get">
                                             @csrf
                                             <input type="hidden" name="noFaktur" id="noFaktur"
@@ -98,7 +100,7 @@
                                             <button
                                                 class="mx-2 rounded-lg bg-green-400 p-2 text-white hover:bg-green-700">Detail</button>
                                         </form>
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
                             @endforeach
