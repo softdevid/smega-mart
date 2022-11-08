@@ -127,6 +127,9 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('kasir', KasirController::class);
 
   //route penjualan kasir
+  // Route::get('/kasir/databrg', [KasirController::class, 'getBarang'])->name('getBarang');
+  Route::get('/brg', [KasirController::class, 'brgKasir'])->name('brgKasir');
+
   Route::post('/kasir/store', [KasirController::class, 'store'])->name('transaksi.store');
   Route::get('/kasir/detail/{noFakturJualan}', [KasirController::class, 'getDetailData'])->name('transaksi.detail');
   Route::post('/kasir/store/simpan', [KasirController::class, 'simpan'])->name('transaksi.simpan');

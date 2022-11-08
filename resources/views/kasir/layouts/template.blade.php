@@ -19,6 +19,8 @@
     </style>
 
     <link href="/css/app.css" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"> --}}
 </head>
 
 <body class="antialiased">
@@ -108,6 +110,103 @@
                     </button>
                 </div>
             </div>
+        @elseif ($title == 'Kasir')
+            <div
+                class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
+
+                <!-- drawer init and toggle -->
+                <div class="text-right">
+                    {{-- <button
+                        class="mr-2 mb-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe"
+                        data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]"
+                        aria-controls="drawer-swipe">
+                        Cari Barang
+                    </button> --}}
+                    <a href="/brg"
+                        class="mr-2 mb-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe"
+                        data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]"
+                        aria-controls="drawer-swipe">
+                        Cari Barang
+                    </a>
+                </div>
+            </div>
+        @elseif ($title == 'Barang Kasir')
+            <div
+                class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
+
+                <div class="px-2 md:basis-8/12">
+                    <button type="button"
+                        class="tex-gray-500 mr-1 rounded-lg p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 md:hidden"
+                        data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false">
+                        <svg class="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Cari</span>
+                    </button>
+                    <div class="relative hidden items-center md:block">
+                        <div class="relative mt-3 md:mt-0">
+                            <form method="get">
+                                <div class="flex">
+                                    <div class="relative w-full">
+                                        <input type="search" id="search-dropdown"
+                                            class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#c51826] focus:ring-[#c51826] sm:rounded-l-none"
+                                            placeholder="Cari nama produk..." name="search"
+                                            value="{{ request('search') }}"">
+                                        <button type="submit"
+                                            class="absolute top-0 right-0 rounded-r-lg border border-[#bb1724] bg-[#bb1724] p-2.5 text-sm font-medium text-white hover:bg-[#ac1521] focus:outline-none focus:ring-4 focus:ring-red-300">
+                                            <svg aria-hidden="true" class="h-5 w-5" fill="none"
+                                                stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                            </svg>
+                                            <span class="sr-only">Cari</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="navbar-search"
+                    class="absolute top-9 left-0 z-10 hidden w-full items-center justify-between md:hidden">
+                    <div class="relative mt-3">
+                        <form method="get">
+                            <div class="flex">
+                                <div class="relative mt-20 w-full">
+                                    <input type="search" id="search-dropdown"
+                                        class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg focus:border-[#c51826] focus:ring-[#c51826] sm:rounded-l-none"
+                                        placeholder="Cari nama produk..." name="search"
+                                        value="{{ request('search') }}">
+                                    <button type="submit"
+                                        class="absolute top-0 right-0 rounded-r-lg border border-[#bb1724] bg-[#bb1724] p-2.5 text-sm font-medium text-white hover:bg-[#ac1521] focus:outline-none focus:ring-4 focus:ring-red-300">
+                                        <svg aria-hidden="true" class="h-5 w-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                        <span class="sr-only">Cari</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- drawer init and toggle -->
+                <div class="text-right">
+                    {{-- <a href="{{ route('kasir.index') }}">Kembali</a> --}}
+                    <button id="kasirBack"
+                        class="rounded-md bg-gray-500 p-2 text-white hover:bg-gray-700">Kembali</button>
+                </div>
+            </div>
         @else
             <div
                 class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
@@ -139,9 +238,34 @@
 
     {{-- <script src="/js/kasir.js"></script> --}}
 
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script> --}}
+    {{-- <script src="{{ asset('js/buttons.html5.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table-datatables').DataTable({
+                // dom: 'Bfrtip',
+                // buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+        });
+    </script> --}}
+    <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/flowbite.js') }}"></script>
     <script defer src="{{ asset('assets/fontawesome/js/all.min.js') }}"></script>
+
+    <script>
+        $(document).on("click", "#kasirBack", function(e) {
+            e.preventDefault();
+            setTimeout(function() {
+                window.location.href = "{{ route('kasir.index') }}";
+                // location.reload(true);
+            }, 10);
+        })
+    </script>
 </body>
 
 </html>

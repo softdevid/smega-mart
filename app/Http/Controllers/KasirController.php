@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Pelanggan;
 use App\Models\Point;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class KasirController extends Controller
 {
@@ -20,11 +21,16 @@ class KasirController extends Controller
    */
   public function index()
   {
+    // dd(date('Y-m-d H:i:s.U'));
     $no = Penjualan::count() + 1;
+    // $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $penjualan = Kasir::where('noFakturJualan', $noFaktur)->get();
 
     $subtotal = $penjualan->sum('hrgJual') * $penjualan->sum('jmlhJual');
+    // $product = Barang::withOut(['suplier']);
+    // $brg = $product->select('barcode', 'namaBarang', 'hrgJual')->get();
+    // response()->json($brg);
 
     $Tgl_Jual = date('Y-m-d', strtotime(Carbon::now()));
 
@@ -38,6 +44,7 @@ class KasirController extends Controller
         'subtotal' => $subtotal,
         'Tgl_Jual' => $Tgl_Jual,
         'pelanggan' => $pelanggan,
+        // 'brg' => $brg,
       ]);
     } else {
       return view('kasir.pages.index', [
@@ -47,9 +54,33 @@ class KasirController extends Controller
         'subtotal' => $subtotal,
         'pelanggan' => $pelanggan,
         'Tgl_Jual' => $Tgl_Jual,
+        // 'brg' => $brg,
       ]);
     }
   }
+
+  public function brgKasir(Request $request)
+  {
+    $brg = Barang::withOut(['supplier']);
+
+    if ($request->input('search')) {
+      $brg->search($request->search);
+    }
+
+    return view('kasir.pages.brgKasir', [
+      'title' => 'Barang Kasir',
+      'brg' => $brg->select('barcode', 'namaBarang', 'hrgJual')->paginate(8)->withQueryString(),
+    ]);
+  }
+
+  // public function getBarang()
+  // {
+  //   $product = Barang::withOut(['suplier']);
+  //   $brg = $product->select('barcode', 'namaBarang', 'hrgJual')->get();
+  //   return response()->json([
+  //     'brg' => $brg,
+  //   ]);
+  // }
 
   public function getBarcodeData()
   {

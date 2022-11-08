@@ -1,9 +1,5 @@
 @extends('kasir.layouts.template')
 @section('content')
-    {{-- <form action="{{ route('transaksi.store') }}" method="post">
-        @csrf --}}
-
-    <div id="error"></div>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-4">
         <div>
             <input type="hidden" id="noFakturJualan" name="noFakturJualan" value="{{ $noFaktur }}">
@@ -32,16 +28,9 @@
     <button type="submit" class="mx-auto mt-3 rounded-lg bg-green-400 p-2 text-sm text-white hover:bg-green-600"
         id="btnTambah"><i class="fa fa-plus"></i>
         Tambah</button>
-    {{-- <button type="button" class="btnTambah mx-auto mt-3 rounded-lg bg-green-400 p-2 text-sm text-white hover:bg-green-600"
-        id="btnTambah"><i class="fa fa-plus"></i>
-        Tambah</button> --}}
-    {{-- </form> --}}
 
     <div class="mx-auto mt-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
         <div class="relative overflow-x-auto sm:rounded-sm mt-5 w-full">
-          {{-- <form action="{{ route('kasir.update', 23) }}" method="post">
-            @csrf
-            @method('put') --}}
             <table class="shadow-md">
               <thead class="rounded-lg bg-[#bb1724] text-white">
                     <tr>
@@ -56,23 +45,22 @@
                 </thead>
                 <tbody id="tbody">
                   @foreach ($penjualan as $key => $p)
-                  <tr class="uppercase border-b bg-white text-black hover:bg-gray-50 text-center w-full">
+                  <tr class="uppercase border-b bg-white text-black hover:bg-gray-50 text-center w-full text-sm">
                           <form action="{{ route('updateQty') }}" method="POST">
                             @csrf
                           {{-- <td class="items-center py-3 px-7 dark:text-white">{{ $key + 1 }}</td> --}}
                           <input type="hidden" name="no" id="no" value="{{ $p->no }}">
                         <td class="items-center py-3 px-7 dark:text-white">{{ $p->barcode }}</td>
-                        <td class="items-center py-3 px-12 dark:text-white">{{ $p->namaBarang}}</td>
+                        <td class="items-center py-3 mx-auto dark:text-white">{{ $p->namaBarang}}</td>
                         <td class="items-center py-3 px-7 dark:text-white">
                           <input type="number"
                           class="block w-14 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                           placeholder="1" required="" min="1" value="{{ $p->jmlhJual}}"
                           name="jmlhJual" id="jmlhJual">
                         </td>
-                        <td class="items-center py-3 px-7 dark:text-white">{{ $p->hrgJual }}</td>
-                        {{-- <td class="items-center py-3 px-7 dark:text-white">{{ $p->jmlhJual * $p->hrgJual }}</td> --}}
+                        <td class="items-center py-3 px-7 dark:text-white">{{ number_format($p->hrgJual,0,',','.') }}</td>
                         <td>
-                            <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white p-1 rounded-md">Update</button>
+                            <button type="submit" id="update" class="bg-yellow-500 hover:bg-yellow-700 text-white p-1 rounded-md">Update</button>
                           </form>
                         </td>
                         <td>
@@ -87,8 +75,6 @@
                   @endforeach
                 </tbody>
               </table>
-            {{-- </form> --}}
-
         </div>
         <div class="items-center justify-center w-full">
             <div id="formTransaksi"></div>
@@ -127,10 +113,6 @@
         let kode = document.querySelector("#kode");
         let save = document.querySelector("#save");
 
-        // let tabelKasir = document
-        //     .querySelector("#tabelKasir")
-        //     .getElementsByTagName("tbody")[0];
-
         barcode.addEventListener("input", function() {
             fetch(`/kasir-barcode-data?barcode=${barcode.value}`)
                 .then((response) => response.json())
@@ -153,7 +135,7 @@
                         namaBarangHidden.value = "";
 
                         hrgBeli.value = "";
-                        hrgJual.value = "";
+                        hrgJualHidden.value = "";
                     }
                 })
         });
@@ -162,8 +144,7 @@
             detail();
             total();
             formTransaksi();
-            // dataSimpan();
-            // simpan();
+
             function detail() {
                 $.ajax({
                     type: "GET",
@@ -301,28 +282,18 @@
                 })
             })
 
+            // $(document).on("click", '#update', function(e) {
+            //   e.preventDefault();
+            //   setTimeout(function(){// wait for 5 secs(2)
+            //       location.reload(true); // then reload the page.(3)
+            //   }, 100);
+            // })
+
             $(document).on("click", '#hapus', function(e) {
               e.preventDefault();
-              var no = $(this).val();
-              console.log(no);
-
-              $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-              $.ajax({
-                    type: "GET",
-                    url: "/hapusPesanan/{no}",
-                    data: no,
-                    dataType: "json",
-                    success: function(response) {
-                      detail();
-                      formTransaksi();                      ;
-                      total();
-                    }
-                })
+              setTimeout(function(){// wait for 5 secs(2)
+                  location.reload(true); // then reload the page.(3)
+              }, 0);
             })
 
             $(document).on("click", '#btnTambah', function(e) {
@@ -364,11 +335,9 @@
                         // total();
                         formTransaksi();
                         $('#barcode').focus();
-
-
-                            setTimeout(function(){// wait for 5 secs(2)
-                                location.reload(true); // then reload the page.(3)
-                            }, 100);
+                        setTimeout(function(){// wait for 5 secs(2)
+                            location.reload(true); // then reload the page.(3)
+                        }, 0);
                         }
                 })
             });

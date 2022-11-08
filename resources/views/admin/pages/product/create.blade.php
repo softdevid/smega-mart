@@ -41,7 +41,7 @@
                 <label for="barcode" class="mb-2 block text-sm font-medium">Barcode</label>
                 <input type="text" id="barcode"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="No. Barcode" name="barcode">
+                    placeholder="No. Barcode" name="barcode" value="{{ old('barcode') }}">
                 <span>
                     @error('barcode')
                         <b class="text-red">{{ $message }}</b>
@@ -52,20 +52,20 @@
                 <label for="name" class="mb-2 block text-sm font-medium">Nama Barang</label>
                 <input type="text" id="namaBarang"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Nama Produk" name="namaBarang">
-                <input type="hidden" name="slug" id="slug">
+                    placeholder="Nama Produk" name="namaBarang" value="{{ old('namaBarang') }}">
+                <input type="hidden" name="slug" id="slug" value="{{ old('slug') }}">
             </div>
             <div>
                 <label for="purchase_price" class="mb-2 block text-sm font-medium">Harga Beli</label>
                 <input type="number" id="purchase_price"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Harga Beli" name="hrgBeli">
+                    placeholder="Harga Beli" name="hrgBeli" value="{{ old('hrgBeli') }}">
             </div>
             <div>
                 <label for="price" class="mb-2 block text-sm font-medium">Harga Jual</label>
                 <input type="number" id="price"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="Harga Jual" name="hrgJual">
+                    placeholder="Harga Jual" name="hrgJual" value="{{ old('hrgJual') }}">
             </div>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
@@ -94,13 +94,13 @@
                     <label for="stock_storage" class="mb-2 block text-sm font-medium">Stok Gudang</label>
                     <input type="number" id="stock_storage"
                         class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                        placeholder="Stok Gudang" name="stok_gudang">
+                        placeholder="Stok Gudang" name="stok_gudang" value="{{ old('stok_gudang') }}">
                 </div>
                 <div>
                     <label for="stock_store" class="mb-2 block text-sm font-medium">Stok Toko</label>
                     <input type="number" id="stock_store"
                         class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                        placeholder="Stok Toko" name="stok">
+                        placeholder="Stok Toko" name="stok" value="{{ old('stok') }}">
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
             <label for="image_main" class="mb-2 block text-sm font-medium">Deskripsi</label>
             <textarea name="deskripsi" id=""
                 class="block h-28 w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="Deskripsi Produk"></textarea>
+                placeholder="Deskripsi Produk">{{ old('deskripsi') }}</textarea>
         </div>
 
         <div class="w-full">
@@ -142,7 +142,7 @@
 
         </div>
         <div class="mb-6">
-            <button type="submit"
+            <button type="submit" id="tambah"
                 class="mt-3 w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>
             <a href="/dashboard/products" type="button"
                 class="mt-3 w-full rounded-lg bg-gray-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 sm:w-auto">Batal</a>
@@ -164,5 +164,12 @@
                 }
             );
         });
+
+        $(document).on("click", '#tambah', function(e) {
+            e.preventDefault();
+            setTimeout(function() { // wait for 5 secs(2)
+                location.reload(true); // then reload the page.(3)
+            }, 0);
+        })
     </script>
 @endsection
