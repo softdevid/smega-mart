@@ -16,6 +16,11 @@ class Suplier extends Model
 
   public function barang()
   {
-    return $this->belongsTo(Barang::class, 'kdSatuan');
+    return $this->belongsTo(Barang::class, 'kdSupplier');
+  }
+
+  public function storagepembelian()
+  {
+    return $this->hasOne(Storagepembelian::class, 'kdSuplier');
   }
 }

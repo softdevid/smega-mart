@@ -27,6 +27,11 @@ class Barang extends Model
     return $this->belongsTo(Kategori::class, 'kdKategori');
   }
 
+  public function storage()
+  {
+    return $this->hasOne(Storage::class, 'barcode');
+  }
+
   public function satuan()
   {
     return $this->belongsTo(Satuan::class, 'kdSatuan');

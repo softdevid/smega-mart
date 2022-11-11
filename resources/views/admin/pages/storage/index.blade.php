@@ -26,9 +26,9 @@
                         <th scope="col" class="py-2 px-6 text-center">
                             Stok gudang
                         </th>
-                        <th scope="col" class="py-2 px-6 text-center">
+                        {{-- <th scope="col" class="py-2 px-6 text-center">
                             Kategori
-                        </th>
+                        </th> --}}
                         <th scope="col" class="py-2 px-7 text-center">
                             Aksi
                         </th>
@@ -41,7 +41,7 @@
                                 {{ $key + 1 }}
                             </th>
                             <td class="items-center py-3 px-6 dark:text-white">
-                                @if ($product->cloud_img == null or $product->cloud_img == '-')
+                                @if ($product->img_urls == null or $product->img_urls == '-')
                                     <img class="h-10 w-10"
                                         src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg"
                                         alt="Produk">
@@ -52,15 +52,16 @@
                             <td scope="row"
                                 class="flex max-w-sm items-center whitespace-nowrap py-2 px-6 text-gray-900 dark:text-white">
                                 <div class="pl-3">
-                                    <div class="text-base font-semibold text-black">{{ $product->namaBarang }}</div>
+                                    <div class="text-base font-semibold text-black">{{ ucfirst($product->namaBarang) }}
+                                    </div>
                                     <div class="block font-normal text-black">{{ $product->barcode }}</div>
                                 </div>
                             </td>
                             <td class="py-2 px-6 text-center">
-                                {{ $product->hrgBeli }}
+                                {{ number_format($product->hrgBeli, 0, ',', '.') }}
                             </td>
                             <td class="py-2 px-6 text-center">
-                                {{ $product->hrgJual }}
+                                {{ number_format($product->hrgJual, 0, ',', '.') }}
                             </td>
                             <td class="py-2 px-6 text-center">
                                 {{ $product->stok }}
@@ -68,13 +69,14 @@
                             <td class="py-2 px-6 text-center">
                                 {{ $product->stok_gudang }}
                             </td>
-                            <td class="py-2 px-6 text-center">
+                            {{-- <td class="py-2 px-6 text-center">
                                 {{ $product->kategori->namaKategori ?? '' }}
-                            </td>
+                            </td> --}}
+
                             <td class="inline-flex text-center">
-                                {{-- <a href="{{ route('storage.edit', [$product->barcode]) }}" type="submit"
-                                    class="p-1 mr-1 bg-white text-blue-600 hover:bg-blue-600 border hover:text-white border-blue-600 text-sm rounded-lg">Tambah
-                                    Stok Gudang</a> --}}
+                                <a href="{{ route('storage.edit', [$product->barcode]) }}" type="submit"
+                                    class="mr-1 rounded-lg border border-blue-600 bg-white p-1 text-sm text-blue-600 hover:bg-blue-600 hover:text-white">Tambah
+                                    Stok Gudang</a>
                                 <a href="{{ route('storage.show', [$product->barcode]) }}" type="submit"
                                     class="ml-1 rounded-lg border border-blue-600 bg-white p-1 text-sm text-blue-600 hover:bg-blue-600 hover:text-white">Tambah
                                     Stok Toko</a>

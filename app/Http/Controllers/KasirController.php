@@ -23,8 +23,8 @@ class KasirController extends Controller
   {
     // dd(date('Y-m-d H:i:s.U'));
     $no = Penjualan::count() + 1;
+    $noFaktur = "FJ-" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     // $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
-    $noFaktur = "FJ" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $penjualan = Kasir::where('noFakturJualan', $noFaktur)->get();
 
     $subtotal = $penjualan->sum('hrgJual') * $penjualan->sum('jmlhJual');
@@ -62,6 +62,8 @@ class KasirController extends Controller
   public function brgKasir(Request $request)
   {
     $brg = Barang::withOut(['supplier']);
+    $no = Penjualan::count() + 1;
+    $noFaktur = "FJ-" . date('d-m-Y', strtotime(Carbon::now())) . $no;
 
     if ($request->input('search')) {
       $brg->search($request->search);
@@ -69,7 +71,8 @@ class KasirController extends Controller
 
     return view('kasir.pages.brgKasir', [
       'title' => 'Barang Kasir',
-      'brg' => $brg->select('barcode', 'namaBarang', 'hrgJual')->paginate(8)->withQueryString(),
+      'brg' => $brg->paginate(8)->withQueryString(),
+      'noFaktur' => $noFaktur,
     ]);
   }
 

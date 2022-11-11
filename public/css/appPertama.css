@@ -1269,10 +1269,6 @@ input:checked + .toggle-bg {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
-.my-auto {
-  margin-top: auto;
-  margin-bottom: auto;
-}
 .mx-1\.5 {
   margin-left: 0.375rem;
   margin-right: 0.375rem;
@@ -1371,12 +1367,9 @@ input:checked + .toggle-bg {
 .mr-1 {
   margin-right: 0.25rem;
 }
-<<<<<<< HEAD
-=======
 .mb-5 {
   margin-bottom: 1.25rem;
 }
->>>>>>> af75dde (banyaklah pokoknya)
 .-ml-px {
   margin-left: -1px;
 }
@@ -1526,9 +1519,6 @@ input:checked + .toggle-bg {
 }
 .w-\[200px\] {
   width: 200px;
-}
-.w-11 {
-  width: 2.75rem;
 }
 .w-\[150px\] {
   width: 150px;
@@ -1951,22 +1941,14 @@ input:checked + .toggle-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(63 131 248 / var(--tw-bg-opacity));
 }
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(49 196 141 / var(--tw-bg-opacity));
+}
 .bg-yellow-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(194 120 3 / var(--tw-bg-opacity));
 }
-<<<<<<< HEAD
-.bg-green-400 {
-=======
-.bg-transparent {
-  background-color: transparent;
-}
-.bg-gray-300 {
->>>>>>> af75dde (banyaklah pokoknya)
-  --tw-bg-opacity: 1;
-  background-color: rgb(49 196 141 / var(--tw-bg-opacity));
-}
-<<<<<<< HEAD
 .bg-transparent {
   background-color: transparent;
 }
@@ -1974,8 +1956,6 @@ input:checked + .toggle-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
-=======
->>>>>>> af75dde (banyaklah pokoknya)
 .bg-gray-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
@@ -1994,10 +1974,6 @@ input:checked + .toggle-bg {
 .bg-gray-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
-}
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 82 82 / var(--tw-bg-opacity));
 }
 .bg-opacity-5 {
   --tw-bg-opacity: 0.05;
@@ -2491,8 +2467,6 @@ input:checked + .toggle-bg {
 }
 
 .hover\:bg-\[\#ac1521\]:hover {
-<<<<<<< HEAD
-=======
   --tw-bg-opacity: 1;
   background-color: rgb(172 21 33 / var(--tw-bg-opacity));
 }
@@ -2500,27 +2474,16 @@ input:checked + .toggle-bg {
 .hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-green-600:hover {
->>>>>>> af75dde (banyaklah pokoknya)
-  --tw-bg-opacity: 1;
-  background-color: rgb(172 21 33 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-yellow-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(142 75 16 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-green-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(5 122 85 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-yellow-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(142 75 16 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-green-800:hover {
@@ -3320,8 +3283,20 @@ input:checked + .toggle-bg {
     width: 10rem;
   }
 
+  .md\:w-44 {
+    width: 11rem;
+  }
+
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:w-48 {
+    width: 12rem;
+  }
+
+  .md\:w-\[192px\] {
+    width: 192px;
   }
 
   .md\:basis-8\/12 {

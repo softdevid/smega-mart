@@ -17,7 +17,7 @@
                         <th scope="col" class="py-2 px-6">
                             Level
                         </th>
-                        <th scope="col" class="py-2 px-6 text-center">
+                        <th scope="col" class="py-2 px-6">
                             Aksi
                         </th>
                     </tr>
@@ -44,21 +44,30 @@
                                 @endif
                             </td>
                             <td class="md:px-auto flex items-center py-2 px-1 text-center">
-                                <button
-                                    class="mx-auto rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400"
-                                    type="button" data-modal-toggle="edit{{ $user->kdUser }}">
-                                    Edit
-                                </button>
-                                {{-- <a href="{{ route('unit.edit', [$user->kdUser]) }}"
-                            class="bg-yellow-300 text-black font-bold hover:bg-yellow-400 p-2 rounded-lg text-sm w-full">Edit</a> --}}
-                                <form action="{{ route('user.destroy', [$user->kdUser]) }}" method="post"
-                                    class="mx-auto justify-center">
-                                    @csrf
-                                    @method('delete')
-                                    <button onclick="return confirm('Yakin dihapus?')"
-                                        class="rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
-                                        Hapus</button>
-                                </form>
+                                @if ($user->level == 'Customer')
+                                    <form action="{{ route('user.destroy', [$user->kdUser]) }}" method="post"
+                                        class="mx-auto text-right">
+                                        @csrf
+                                        @method('delete')
+                                        <button onclick="return confirm('Yakin dihapus?')"
+                                            class="rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
+                                            Hapus</button>
+                                    </form>
+                                @else
+                                    <button
+                                        class="mx-auto rounded-lg bg-yellow-300 p-2 text-sm font-bold text-black hover:bg-yellow-400"
+                                        type="button" data-modal-toggle="edit{{ $user->kdUser }}">
+                                        Edit
+                                    </button>
+                                    <form action="{{ route('user.destroy', [$user->kdUser]) }}" method="post"
+                                        class="mx-auto justify-center">
+                                        @csrf
+                                        @method('delete')
+                                        <button onclick="return confirm('Yakin dihapus?')"
+                                            class="rounded-lg bg-red-600 p-2 text-sm text-white hover:bg-red-700">
+                                            Hapus</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

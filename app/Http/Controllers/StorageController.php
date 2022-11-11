@@ -6,9 +6,11 @@ use App\Models\Barang;
 use App\Models\Storage;
 use App\Models\Pembelian;
 use App\Models\Suplier;
+use App\Models\Storagepembelian;
 use Carbon\Carbon;
 use App\Models\Gambar;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 use Illuminate\Http\Request;
 
@@ -21,9 +23,10 @@ class StorageController extends Controller
    */
   public function index()
   {
+    $barang = Barang::withOut(['supplier']);
     return view('admin.pages.storage.index', [
       'title' => 'Gudang',
-      'products' => Barang::all(),
+      'products' => $barang->select('barcode', 'namaBarang', 'hrgBeli', 'hrgJual', 'stok', 'stok_gudang', 'img_urls')->get(),
     ]);
   }
 
@@ -38,18 +41,18 @@ class StorageController extends Controller
     $noFakturBeli = "FB" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $pembelian = Storage::where('noFakturBeli', $noFakturBeli)->get();
 
-    $subtotal = $pembelian->sum('hrgBeli') * $pembelian->sum('jmlBeli');
+    // $subtotal = $pembelian->sum('hrgBeli') * $pembelian->sum('jmlBeli');
 
     $tglBeli = date('Y-m-d', strtotime(Carbon::now()));
 
-    $supplier = Suplier::all();
+    $supplier = Suplier::withOut(['supplier'])->get();
 
     if (session(['id' => 'noFakturBeli'])) {
       return view('admin.pages.storage.create', [
         'title' => 'Tambah Barang',
         'pembelian' => $pembelian,
         'noFakturBeli' => $noFakturBeli,
-        'subtotal' => $subtotal,
+        // 'subtotal' => $subtotal,
         'tglBeli' => $tglBeli,
         'supplier' => $supplier,
       ]);
@@ -58,7 +61,7 @@ class StorageController extends Controller
         'title' => 'Tambah Barang',
         'pembelian' => $pembelian,
         'noFakturBeli' => $noFakturBeli,
-        'subtotal' => $subtotal,
+        // 'subtotal' => $subtotal,
         'tglBeli' => $tglBeli,
         'supplier' => $supplier,
       ]);
@@ -102,9 +105,14 @@ class StorageController extends Controller
     $no = Pembelian::count() + 1;
     $noFaktur = "FB" . date('d-m-Y', strtotime(Carbon::now())) . $no;
     $pembelian = Storage::where('noFakturBeli', $noFaktur)->get();
-    $total2 = DB::select("select ifnull(sum(hrgBeli*jmlBeli),0) as total from tabelrealpembelian where noFakturBeli =  '$noFaktur'");
-    foreach ($total2 as $key => $t) {
-      $total = $t->total;
+    // $total2 = DB::select("select ifnull(sum(hrgBeli*jmlBeli),0) as total from tabelrealpembelian where noFakturBeli =  '$noFaktur'");
+    // foreach ($total2 as $key => $t) {
+    //   $total = $t->total;
+    // }
+
+    $total = 0;
+    foreach ($pembelian as $p) {
+      $total += ($p['jmlBeli'] + $p['jmlStokGudang']) * $p['hrgBeli'];
     }
     if (request('bayar') == "") {
       $kembali = 0;
@@ -130,6 +138,7 @@ class StorageController extends Controller
    */
   public function store(Request $request)
   {
+    // dd($request->all());
     $b = Storage::create($request->all());
     session(['id' => 'noFakturBeli']);
     return response()->json($b);
@@ -145,15 +154,51 @@ class StorageController extends Controller
     // ];
     // $request->validate($validated);
 
+    // dd($request->all());
     $b = Pembelian::create([
       'noFakturBeli' => $request->noFakturBeli,
       'tglBeli' => $request->tglBeli,
       'kdSupplier' => $request->kdSupplier ?? '',
       'kdUser' => auth()->user()->kdUser ?? '',
+      'bayar' => $request->bayar,
     ]);
     // $b = Pembelian::create($request->all());
-    $request->session()->forget('id');
-    return response()->json($b);
+    // $request->session()->forget('id');
+    // return response()->json($b);
+    session(['noFakturBeli' => $request->noFakturBeli]);
+    return redirect()->to('/printPembelian');
+  }
+
+  public function print()
+  {
+    $noFaktur = session('noFakturBeli');
+    $product = Storage::where('noFakturBeli', session('noFakturBeli'))->get();
+    $totalItem = Storage::where('noFakturBeli', session('noFakturBeli'))->sum('jmlBeli');
+    $detail = Storagepembelian::where('noFakturBeli', session('noFakturBeli'))->first();
+    $total2 = 0;
+    foreach ($product as $key => $value) {
+      $total2 += $value['hrgBeli'] * ($value['jmlBeli'] + $value['jmlStokGudang']);
+    }
+    // dd($noFaktur, $product, $detail);
+    // dd($detail, $product);
+    $time = Carbon::now();
+    $pelanggan = Suplier::select('namaSupplier')->where('kdSupplier', $detail->kdSupplier)->first();
+    // dd($pelanggan);
+
+    return view('admin.pages.storage.notaPembelian', [
+      'detail' => $detail,
+      'product' => $product,
+      'time' => $time,
+      'totalItem' => $totalItem,
+      'total' => $total2,
+      'pelanggan' => $pelanggan,
+    ]);
+  }
+
+  public function forgetSessionStorage(Request $request)
+  {
+    $request->session()->forget('noFakturBeli');
+    return redirect()->to('storage/create');
   }
 
   /**
@@ -187,6 +232,7 @@ class StorageController extends Controller
     return view('admin.pages.storage.stock_gudang', [
       'title' => 'Tambah stok ke gudang',
       'product' => Barang::findOrFail($id),
+      'images' => $images,
     ]);
   }
 
@@ -222,6 +268,13 @@ class StorageController extends Controller
     // return redirect()->to('storage')->with('success', 'Stok berhasil diupdate');
   }
 
+  public function updateJml(Request $request, $id)
+  {
+    $data = Storage::find($id);
+    $data->update(['jmlBeli' => $request->jmlBeli, 'jmlStokGudang' => $request->jmlStokGudang]);
+    return back();
+  }
+
   /**
    * Remove the specified resource from storage.
    *
@@ -230,6 +283,74 @@ class StorageController extends Controller
    */
   public function destroy($id)
   {
-    //
+    // dd($id);
+    Storage::find($id)->delete();
+    return back()->with('success', 'Berhasil dihapus');
+  }
+
+  public function exportPdf()
+  {
+    $noFaktur = session('noFakturBeli');
+    $product = Storage::where('noFakturBeli', session('noFakturBeli'))->get();
+    $totalItem = Storage::where('noFakturBeli', session('noFakturBeli'))->sum('jmlBeli');
+    $detail = Storagepembelian::where('noFakturBeli', session('noFakturBeli'))->first();
+    $total = DB::select("select ifnull(sum(hrgBeli*jmlBeli),0) as total from tabelrealpembelian where noFakturBeli =  '$noFaktur'");
+    foreach ($total as $key => $value) {
+      $total2 = $value->total;
+    }
+    // dd($noFaktur, $product, $detail);
+    // dd($detail, $product);
+    $time = Carbon::now();
+    $pelanggan = Suplier::select('namaSupplier')->where('kdSupplier', $detail->kdSupplier)->first();
+
+    $pdf  = PDF::loadView('admin.pages.storage.pdf', [
+      'product' => $product,
+      'totalItem' => $totalItem,
+      'detail' => $detail,
+      'total' => $total2,
+      'title'  => "$detail->noFakturBeli"
+    ]);
+
+    // // $pdf->setPaper('a4', 'potrait');
+    $pdf->setPaper('potrait');
+
+    // return $pdf->download('noFaktur.pdf');
+    return $pdf->download("Laporan-$detail->noFakturBeli" . date('Y-m-d-his') . '.pdf');
+  }
+
+  public function historiPembelian()
+  {
+    $data = Storagepembelian::orderBy('tglBeli')->paginate(10)->withQueryString();
+    return view('admin.pages.storage.historiPembelian', [
+      'title' => 'Histori Pembelian',
+      'data' => $data,
+    ]);
+  }
+
+  public function exportPdfHistori(Request $request)
+  {
+    $noFakturBeli = $request->noFakturBeli;
+    $product = Storage::where('noFakturBeli', $request->noFakturBeli)->get();
+    $totalItem = Storage::where('noFakturBeli', $noFakturBeli)->sum('jmlBeli');
+    $detail = Storagepembelian::where('noFakturBeli', $noFakturBeli)->first();
+    $total2 = 0;
+    foreach ($product as $key => $value) {
+      $total2 += $value['hrgBeli'] * ($value['jmlBeli'] + $value['jmlStokGudang']);
+    }
+    // dd($noFakturBeli, $product, $detail);
+    // dd($detail, $product);
+
+    $pdf  = PDF::loadView('admin.pages.storage.pdf', [
+      'product' => $product,
+      'totalItem' => $totalItem,
+      'detail' => $detail,
+      'total' => $total2,
+    ]);
+
+    // // $pdf->setPaper('a4', 'potrait');
+    $pdf->setPaper('potrait');
+
+    // return $pdf->download('noFaktur.pdf');
+    return $pdf->download("Laporan-$detail->noFakturBeli" . date('Y-m-d-his') . '.pdf');
   }
 }

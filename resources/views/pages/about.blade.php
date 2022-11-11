@@ -146,7 +146,7 @@
     <div class="mt-5 border-b border-[#bb1724] bg-gray-100 p-3">
         <h1 class="m-5 mt-10 text-center text-2xl text-[#bb1724]">Mitra kami</h1>
         <div class="mx-auto -mt-4 h-[2px] w-[100px] bg-black"></div>
-        <div class="grid grid-cols-3">
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div class="mx-auto my-5 flex items-center justify-center">
                 <a target="_blank" href="https://alfamart.co.id/">
                     {{-- <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663380858/layer%20utama/alfamart_v1bsvp.png"
@@ -166,6 +166,13 @@
                     {{-- <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1664866996/layer%20utama/softdev_rbrfzu.png"
                       alt="" class="mt-3 h-auto w-20 md:w-40"> --}}
                     <img src="{{ asset('assets/img/softdev.png') }}" alt="sofdevcom" class="mt-3 h-auto w-20 md:w-40">
+                </a>
+            </div>
+            <div class="mx-auto my-5">
+                <a target="_blank" href="https://akriliklasercutting.com">
+                    {{-- <img src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1667960987/layer%20utama/akrilik_nlbwcy.png"
+                        alt="" class="mt-3 h-auto w-20 md:w-40"> --}}
+                    <img src="{{ asset('assets/img/akrilik.png') }}" alt="akrilk" class="mt-3 h-auto w-20 md:w-40">
                 </a>
             </div>
         </div>

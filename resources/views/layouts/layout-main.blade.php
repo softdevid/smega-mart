@@ -21,8 +21,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Poppins:wght@200;300;400;500;600;700;900&display=swap"
         rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('css/final.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @if (request()->is('gallery') || request()->is('about'))
         <link rel="stylesheet" href="{{ asset('assets/glightbox/dist/css/glightbox.min.css') }}">
     @endif

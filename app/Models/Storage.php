@@ -12,4 +12,9 @@ class Storage extends Model
   protected $guarded = ['id'];
   protected $primaryKey = 'id';
   public $timestamps = false;
+
+  public function barang()
+  {
+    return $this->belongsTo(Barang::class, 'barcode');
+  }
 }

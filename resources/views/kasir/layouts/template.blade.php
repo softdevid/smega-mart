@@ -54,7 +54,7 @@
                     class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-white p-4 text-black md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-[#bb1724] md:text-sm md:font-medium">
                     <li>
                         <a href="{{ route('kasir.index') }}"
-                            class="{{ request()->is('kasir') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('kasir*') || request()->is('brg*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Kasir</a>
                     </li>
 
@@ -70,12 +70,12 @@
 
                     <li>
                         <a href="{{ route('laporan.index') }}"
-                            class="{{ request()->is('laporan') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('laporan*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Laporan</a>
                     </li>
                     <li>
                         <a href="/orders"
-                            class="{{ request()->is('orders') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('orders*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Pesanan</a>
                     </li>
                 </ul>
@@ -156,9 +156,9 @@
                                 <div class="flex">
                                     <div class="relative w-full">
                                         <input type="search" id="search-dropdown"
-                                            class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#c51826] focus:ring-[#c51826] sm:rounded-l-none"
+                                            class="autocomplete z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#c51826] focus:ring-[#c51826] sm:rounded-l-none"
                                             placeholder="Cari nama produk..." name="search"
-                                            value="{{ request('search') }}"">
+                                            value="{{ request('search') }}" id="search">
                                         <button type="submit"
                                             class="absolute top-0 right-0 rounded-r-lg border border-[#bb1724] bg-[#bb1724] p-2.5 text-sm font-medium text-white hover:bg-[#ac1521] focus:outline-none focus:ring-4 focus:ring-red-300">
                                             <svg aria-hidden="true" class="h-5 w-5" fill="none"
@@ -182,9 +182,9 @@
                             <div class="flex">
                                 <div class="relative mt-20 w-full">
                                     <input type="search" id="search-dropdown"
-                                        class="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg focus:border-[#c51826] focus:ring-[#c51826] sm:rounded-l-none"
+                                        class="autocomplete z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg focus:border-[#c51826] focus:ring-[#c51826] sm:rounded-l-none"
                                         placeholder="Cari nama produk..." name="search"
-                                        value="{{ request('search') }}">
+                                        value="{{ request('search') }}" id="search">
                                     <button type="submit"
                                         class="absolute top-0 right-0 rounded-r-lg border border-[#bb1724] bg-[#bb1724] p-2.5 text-sm font-medium text-white hover:bg-[#ac1521] focus:outline-none focus:ring-4 focus:ring-red-300">
                                         <svg aria-hidden="true" class="h-5 w-5" fill="none" stroke="currentColor"
@@ -236,22 +236,6 @@
         </div>
     </div> --}}
 
-    {{-- <script src="/js/kasir.js"></script> --}}
-
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> --}}
-    {{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
-    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script> --}}
-    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script> --}}
-    {{-- <script src="{{ asset('js/buttons.html5.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#table-datatables').DataTable({
-                // dom: 'Bfrtip',
-                // buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-            });
-        });
-    </script> --}}
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/flowbite.js') }}"></script>

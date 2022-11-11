@@ -25,29 +25,30 @@
     <div class="grid grid-cols-2 gap-6 md:grid-cols-3">
         <div>
             <input type="hidden" id="noFakturBeli" name="noFakturBeli" value="{{ $noFakturBeli }}">
-            <input type="text" class="w-full rounded-lg border p-2" placeholder="Barcode" id="barcode" name="barcode"
+            <input type="text" class="w-full rounded-lg border p-2 autocomplete" placeholder="Barcode" id="barcode" name="barcode"
                 autofocus>
             <input type="hidden" id="barcodeHidden" name="barcodeHidden">
-            <input type="hidden" id="namaBarang" name="namaBarang">
+            <input type="hidden" id="namaBarangHidden" name="namaBarangHidden">
         </div>
         <div>
             <input type="number" class="w-full rounded-lg border p-2" placeholder="Jumlah stok Toko" min="1"
-                id="jmlBeli" name="jmlBeli">
+                id="jmlBeli" name="jmlBeli" value="1">
             <input type="hidden" id="jmlBeli" name="jmlBeli">
             <input type="hidden" id="hrgJual" name="hrgJual">
-            <input type="hidden" id="hrgBeli" name="hrgBeli">
-        </div>
-        <div>
+            <input type="hidden" id="hrgBeliHidden" name="hrgBeliHidden">
+          </div>
+          <div>
             <input type="number" class="w-full rounded-lg border p-2" placeholder="Jumlah Stok Gudang" min="0"
-                id="jmlStokGudang" name="jmlStokGudang">
+            id="jmlStokGudang" name="jmlStokGudang" value="0">
+            <input type="hidden" id="jmlStokGudangHidden">
         </div>
         <div>
             <input type="text" class="w-full rounded-lg border bg-gray-100 p-2" placeholder="Nama Barang" disabled
-                id="namaBarangHidden">
+                id="namaBarang" name="namaBarang">
         </div>
         <div>
-            <input type="number" class="w-full rounded-lg border bg-gray-100 p-2" placeholder="Harga Jual" disabled
-                id="hrgJualHidden">
+            <input type="number" class="w-full rounded-lg border bg-gray-100 p-2" placeholder="Harga Beli" disabled
+                id="hrgBeli">
         </div>
     </div>
     <button type="submit" class="mx-auto mt-3 rounded-lg bg-green-400 p-2 text-sm text-white hover:bg-green-600"
@@ -57,18 +58,49 @@
     <div class="mx-auto mt-5 grid grid-cols-1 md:grid-cols-2">
         <div>
             <table class="w-full shadow-lg" id="tabelKasir">
-                {{-- <input type="number" name="id_user" value="{{ user()->auth()->id }}"> --}}
-                <thead class="rounded-lg bg-[#bb1724] text-white">
+                <thead class="rounded-lg bg-[#bb1724] text-white text-center">
                     <tr>
                         {{-- <th>#</th> --}}
                         <th>Barcode</th>
-                        <th>Jumlah</th>
-                        <th>harga jual</th>
-                        <th>Sub Total</th>
-                        {{-- <th>Aksi</th> --}}
+                        <th>Nama Barang</th>
+                        <th>Stok Toko</th>
+                        <th>Stok Gudang</th>
+                        <th>harga Beli</th>
+                        {{-- <th>Sub Total</th> --}}
+                        <th>Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="tbody">
+                <tbody>
+                  @foreach ($pembelian as $p)
+                  <tr class= "border-b bg-white text-black hover:bg-gray-50 text-center w-full text-sm">
+                    <td class="items-center py-3 px-7 dark:text-white">{{ $p->barcode }}</td>
+                    <form action="{{ route('updateJml', [$p->id])}}" method="POST">
+                      {{-- @method('put') --}}
+                      @csrf
+                      <td class="text-left py-3 px-8 dark:text-white">{{ ucfirst($p->namaBarang) }}</td>
+                    <td class="items-center py-3 px-7 dark:text-white">
+                      <input type="number" class="block w-11 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"\
+                        placeholder="1" required="" min="0" value="{{ $p->jmlBeli }}"
+                        name="jmlBeli" id="jmlBeli"></td>
+                    </td>
+                    <td class="items-center py-3 px-7 dark:text-white">
+                      <input type="number" class="block w-11 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"\
+                        placeholder="1" required="" min="0" value="{{ $p->jmlStokGudang }}"
+                        name="jmlStokGudang" id="jmlStokGudang"></td>
+                    </td>
+                    <td class="items-center py-3 px-7 dark:text-white">{{ number_format($p->hrgBeli,0,',','.') }}</td>
+                    <td class="items-center flex py-3 px-7 dark:text-white mt-2">
+                      <button class="bg-yellow-400 hover:bg-yellow-500 text-white p-1 rounded-md mx-2 my-auto">Update</button>
+                    </form>
+                      <form action="{{ route('storage.destroy', [$p->id]) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <input type="hidden" value="{{ $p->id }}" name="id" id="id">
+                        <button class="bg-red-600 hover:bg-red-700 text-white p-1 rounded-md">Hapus</button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
                 </tbody>
             </table>
 
@@ -77,9 +109,9 @@
             <div id="formPembelian"></div>
             <input type="hidden" id="kdUser" name="kdUser" value="{{ auth()->user()->kdUser }}">
 
-    {{-- <script src="/js/jquery-3.6.0.min.js"></script> --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
     <script>
         function numThousand(x) {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -88,6 +120,7 @@
         let barcode = document.querySelector("#barcode");
         let barcodelHidden = document.querySelector("#barcodeHidden");
         let jmlStokGudang = document.querySelector("#jmlStokGudang");
+        let jmlStokGudangHidden = document.querySelector("#jmlStokGudangHidden");
         let jmlBeli = document.querySelector("#jmlBeli");
 
         let namaBarang = document.querySelector("#namaBarang");
@@ -95,6 +128,7 @@
         let hrgBeli = document.querySelector("#hrgBeli");
         let hrgJual = document.querySelector("#hrgJual");
         let hrgJualHidden = document.querySelector("#hrgJualHidden");
+        let hrgBeliHidden = document.querySelector("#hrgBeliHidden");
 
         let btnTambah = document.querySelector("#btnTambah");
         let btnSimpan = document.querySelector("#btnSimpan");
@@ -113,20 +147,18 @@
                     if (data.barang !== null) {
                         barcodelHidden.value = data.barang.barcode;
                         namaBarang.value = data.barang.namaBarang;
+                        namaBarangHidden.value = data.barang.namaBarangHidden;
                         hrgBeli.value = data.barang.hrgBeli;
+                        hrgBeliHidden.value = data.barang.hrgBeliHidden;
                         hrgJual.value = data.barang.hrgJual;
-
-                        // barcodelHidden.value = data.barang.barcode;
-                        namaBarangHidden.value = data.barang.namaBarang;
-                        hrgJualHidden.value = data.barang.hrgJual;
-                        console.log(barcode.value, namaBarang.value, hrgBeli.value, hrgJual.value,
-                            namaBarangHidden.value, hrgJualHidden.value);
+                        console.log(data)
                     } else {
                         // barcode.value = "";
                         barcodelHidden.value = "";
                         namaBarang.value = "";
                         namaBarangHidden.value = "";
-
+                        jmlStokGudangHidden = "";
+                        jmlStokGudang = "";
                         hrgBeli.value = "";
                         hrgJual.value = "";
                     }
@@ -149,18 +181,22 @@
                         console.log(response.pembelian);
                         // console.log(response.total);
 
-                        $('tbody').html('');
-                        $.each(response.pembelian, function(key, item) {
-                            $('tbody').append(
-                                '<tr class= "border-b bg-white text-black hover:bg-gray-50 text-center w-full">\
-                                  <td class="items-center py-3 px-7 dark:text-white">' +item.barcode +'</td>\
-                                <td class="items-center py-3 px-7 dark:text-white">' +item.jmlBeli +
-                                '</td>\
-                                <td class="items-center py-3 px-7 dark:text-white">' +item.hrgJual +
-                                '</td>\
-                                <td class="items-center py-3 px-7 dark:text-white">' +item.jmlBeli *item.hrgBeli +'</td>\
-                                </tr>')
-                        });
+                        // $('tbody').html('');
+                        // $.each(response.pembelian, function(key, item) {
+                        //     $('tbody').append(
+                        //         '<tr class= "border-b bg-white text-black hover:bg-gray-50 text-center w-full">\
+                        //           <td class="items-center py-3 px-7 dark:text-white">' +item.barcode +'</td>\
+                        //         <td class="items-center py-3 px-7 dark:text-white">' + item.namaBarang +
+                        //         '</td>\
+                        //         <td class="items-center py-3 px-7 dark:text-white">' +item.jmlBeli +
+                        //         '</td>\
+                        //         <td class="items-center py-3 px-7 dark:text-white">' +item.jmlStokGudang +
+                        //         '</td>\
+                        //         <td class="items-center py-3 px-7 dark:text-white">' + numThousand(item.hrgBeli) +
+                        //         '</td>\
+                        //         <td class="items-center py-3 px-7 dark:text-white">' + numThousand(item.hrgBeli * (item.jmlBeli + item.jmlStokGudang)) +'</td>\
+                        //         </tr>')
+                        // });
                     }
                 })
             }
@@ -189,7 +225,9 @@
                     dataType: "json",
                     success: function(response) {
                         $('#formPembelian').html('');
-                        $('#formPembelian').append('<div class="m-3">\
+                        $('#formPembelian').append('<form action="{{ route('pembelian.simpan') }}" method="post">\
+                        @csrf\
+                        <div class="m-3">\
                             <div class="grid w-full grid-cols-1">\
                                 <div class="my-3">\
                                 <div class="grid grid-cols-2 gap-7">\
@@ -221,6 +259,7 @@
                                 </div>\
                                 </div>\
                                 <input type="hidden" id="kdUser" name="kdUser" value="{{ auth()->user()->kdUser }}">\
+                                <input type="hidden" id="noFakturBeli" name="noFakturBeli" value="{{ $noFakturBeli }}">\
                                 <div class="grid grid-cols-3 max-w-xs mb-4">\
                                     <input type="hidden" class="w-full p-2" id="tglBeli" min="0" name="tglBeli" value="{{ $tglBeli }}">\
                                 <div></div>\
@@ -229,7 +268,8 @@
                             </div>\
                             </div>\
                         </div>\
-                    </div>')
+                    </div>\
+                    </form>')
                     }
                 })
 
@@ -266,6 +306,7 @@
                 var data = {
                     'noFakturBeli': $('#noFakturBeli').val(),
                     'barcode': $('#barcode').val(),
+                    'namaBarang': $('#namaBarang').val(),
                     'jmlBeli': $('#jmlBeli').val(),
                     'hrgJual': $('#hrgJual').val(),
                     'hrgBeli': $('#hrgBeli').val(),
@@ -285,56 +326,48 @@
                     data: data,
                     dataType: "json",
                     success: function(response) {
-                        barcode.value = "";
-                        barcodeHidden.value = "";
-                        namaBarangHidden.value = "";
-                        namaBarang.value = "";
-                        hrgJual.value = "";
-                        hrgJualHidden.value = "";
-                        jmlBeli.value = "";
-                        jmlStokGudang.value = "";
-                        detail();
-                        // total();
-                        formPembelian();
-                        $('#barcode').attr('autofocus' , 'true');
+                      setTimeout(function(){// wait for 5 secs(2)
+                        location.reload(true); // then reload the page.(3)
+                      }, 100);
+                      $('#barcode').attr('autofocus' , 'true');
                     },
                 })
             });
 
-            $(document).on("click", '#btnSimpan', function(e) {
-                e.preventDefault();
+            // $(document).on("click", '#btnSimpan', function(e) {
+            //     e.preventDefault();
 
-                var data = {
-                    'noFakturBeli': $('#noFakturBeli').val(),
-                    'tglBeli': $('#tglBeli').val(),
-                    'kdSupplier': $('#kdSupplier').val(),
-                    'kdUser	': $('#kdUser').val()
-                }
-                console.log(data);
-                if (data.kdSupplier == '') {
-                  $('#error').html('');
-                  $('#error').append('<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">\
-                    <span class="font-medium">Danger alert!</span> Change a few things up and try submitting again.\
-                    </div>')
-                }
+            //     var data = {
+            //         'noFakturBeli': $('#noFakturBeli').val(),
+            //         'tglBeli': $('#tglBeli').val(),
+            //         'kdSupplier': $('#kdSupplier').val(),
+            //         'kdUser	': $('#kdUser').val(),
+            //     }
+            //     console.log(data);
+            //     if (data.kdSupplier == '') {
+            //       $('#error').html('');
+            //       $('#error').append('<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">\
+            //         <span class="font-medium">Danger alert!</span> Change a few things up and try submitting again.\
+            //         </div>')
+            //     }
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
 
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('pembelian.simpan') }}",
-                    data: data,
-                    dataType: "json",
-                    success: function(response) {
-                        detail();
-                        formPembelian();
-                    }
-                })
-            });
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "{{ route('pembelian.simpan') }}",
+            //         data: data,
+            //         dataType: "json",
+            //         success: function(response) {
+            //             detail();
+            //             formPembelian();
+            //         }
+            //     })
+            // });
 
 
 

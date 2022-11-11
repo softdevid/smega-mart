@@ -22,9 +22,10 @@ class BarangController extends Controller
    */
   public function index()
   {
+    $barang = Barang::withOut(['supplier']);
     return view('admin.pages.product.index', [
       'title' => 'Produk',
-      'products' => Barang::all(),
+      'products' => $barang->select('barcode', 'namaBarang', 'hrgBeli', 'hrgJual', 'stok', 'stok_gudang', 'img_urls')->get(),
     ]);
   }
 
@@ -37,8 +38,8 @@ class BarangController extends Controller
   {
     return view('admin.pages.product.create', [
       'title' => 'Tambah Produk',
-      'satuan' => Satuan::all(),
-      'kategori' => Kategori::all(),
+      'satuan' => Satuan::withOut(['supplier'])->select('kdSatuan', 'namaSatuan')->get(),
+      'kategori' => Kategori::withOut(['supplier'])->select('kdKategori', 'namaKategori')->get(),
     ]);
   }
 
@@ -50,6 +51,7 @@ class BarangController extends Controller
    */
   public function store(Request $request)
   {
+    //dd($request->all());
     $rules = [
       'namaBarang' => 'required|max:255',
       'slug' => 'required|max:255',
@@ -67,14 +69,15 @@ class BarangController extends Controller
 
     $validatedData = $request->validate($rules);
     $barang = Barang::create($validatedData);
+    $brg = Barang::where('barcode', $request->barcode)->first();
 
     if ($request->hasFile("cloud_img")) {
       $file = $request->file('cloud_img');
       $image = Cloudinary::upload($file->getRealPath(), ['folder' => 'products']);
       $public_id = $image->getPublicId();
       $url = $image->getSecurePath();
-      // dd($url, $public_id);
-      $barang->update([
+      //dd($url, $public_id);
+      $brg->update([
         'cloud_img' => $public_id,
         'img_urls' => $url,
       ]);
@@ -93,14 +96,7 @@ class BarangController extends Controller
         ]);
       }
     }
-
-    // Barang::create([
-    //   'barcode' => $request->barcode,
-    //   'namaBarang' => $request->namaBarang,
-    //   'slug' => Str::slug($request->namaBarang),
-    // ]);
     return back()->with('success', 'Berhasil ditambah');
-    // return response()->json('Berhasil', 200);
   }
 
   /**

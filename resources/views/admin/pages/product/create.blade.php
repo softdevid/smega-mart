@@ -57,20 +57,20 @@
             </div>
             <div>
                 <label for="purchase_price" class="mb-2 block text-sm font-medium">Harga Beli</label>
-                <input type="number" id="purchase_price"
+                <input type="number" id="hrgBeli"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Harga Beli" name="hrgBeli" value="{{ old('hrgBeli') }}">
             </div>
             <div>
                 <label for="price" class="mb-2 block text-sm font-medium">Harga Jual</label>
-                <input type="number" id="price"
+                <input type="number" id="hrgJual"
                     class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder="Harga Jual" name="hrgJual" value="{{ old('hrgJual') }}">
             </div>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                     <label for="stock_store" class="mb-2 block text-sm font-medium">Satuan</label>
-                    <select name="kdSatuan" id=""
+                    <select name="kdSatuan" id="kdSatuan"
                         class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                         <option value="" class="hover:bg-blue-600 hover:text-white">Pilih Satuan</option>
                         @foreach ($satuan as $s)
@@ -80,7 +80,7 @@
                 </div>
                 <div>
                     <label for="stock_store" class="mb-2 block text-sm font-medium">Kategori</label>
-                    <select name="kdKategori" id=""
+                    <select name="kdKategori" id="kdKategori"
                         class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                         <option value="">Pilih Kategori</option>
                         @foreach ($kategori as $k)
@@ -92,13 +92,13 @@
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div>
                     <label for="stock_storage" class="mb-2 block text-sm font-medium">Stok Gudang</label>
-                    <input type="number" id="stock_storage"
+                    <input type="number" id="stokGudang"
                         class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         placeholder="Stok Gudang" name="stok_gudang" value="{{ old('stok_gudang') }}">
                 </div>
                 <div>
                     <label for="stock_store" class="mb-2 block text-sm font-medium">Stok Toko</label>
-                    <input type="number" id="stock_store"
+                    <input type="number" id="stokToko"
                         class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         placeholder="Stok Toko" name="stok" value="{{ old('stok') }}">
                 </div>
@@ -107,7 +107,7 @@
 
         <div>
             <label for="image_main" class="mb-2 block text-sm font-medium">Deskripsi</label>
-            <textarea name="deskripsi" id=""
+            <textarea name="deskripsi" id="deskripsi"
                 class="block h-28 w-full rounded-lg border border-gray-300 p-2.5 text-sm shadow-md focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 placeholder="Deskripsi Produk">{{ old('deskripsi') }}</textarea>
         </div>
@@ -142,7 +142,7 @@
 
         </div>
         <div class="mb-6">
-            <button type="submit" id="tambah"
+            <button type="submit" id="btnTambah"
                 class="mt-3 w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto">Simpan</button>
             <a href="/dashboard/products" type="button"
                 class="mt-3 w-full rounded-lg bg-gray-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 sm:w-auto">Batal</a>
@@ -151,6 +151,7 @@
 
 
     {{-- jQuery Script --}}
+    {{-- <script src="/js/jquery-3.6.0.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
@@ -165,11 +166,54 @@
             );
         });
 
-        $(document).on("click", '#tambah', function(e) {
-            e.preventDefault();
-            setTimeout(function() { // wait for 5 secs(2)
-                location.reload(true); // then reload the page.(3)
-            }, 0);
-        })
+        // $(document).on("click", "#btnTambah", function(e) {
+        //     e.preventDefault();
+        //     setTimeout(function() { // wait for 5 secs(2)
+        //         location.reload(true); // then reload the page.(3)
+        //     }, 1000);
+        // })
+
+        // $(document).ready(function() {
+
+        //     $(document).on("click", '#btnTambah', function(e) {
+        //         e.preventDefault();
+
+        //         var data = {
+        //             'barcode': $('#barcode').val(),
+        //             'namaBarang': $('#namaBarang').val(),
+        //             'slug': $('#slug').val(),
+        //             'hrgJual': $('#hrgJual').val(),
+        //             'hrgBeli': $('#hrgBeli').val(),
+        //             'kdSatuan': $('#kdSatuan').val(),
+        //             'kdKategori': $('#kdKategori').val(),
+        //             'stok': $('#stokToko').val(),
+        //             'stok_gudang': $('#stokGudang').val(),
+        //             'cloud_img': $('#image_main').val(),
+        //             'images[]': $('#images').val(),
+
+        //         }
+        //         console.log(data);
+
+        //         $.ajaxSetup({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             }
+        //         });
+
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "{{ route('products.store') }}",
+        //             data: data,
+        //             dataType: "json",
+        //             success: function(response) {
+        //                 $('#barcode').focus();
+        //                 // setTimeout(function() { // wait for 5 secs(2)
+        //                 //     location.reload(true); // then reload the page.(3)
+        //                 // }, 0);
+        //             }
+        //         })
+        //     });
+
+        // }); //end document ready
     </script>
 @endsection

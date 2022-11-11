@@ -18,8 +18,10 @@
     </style>
 
     <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"> --}}
+    <link rel="stylesheet" href="{{ asset('css/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
 </head>
 
 <body class="antialiased">
@@ -58,26 +60,26 @@
                     </li>
                     <li>
                         <a href="/dashboard/products"
-                            class="{{ request()->is('dashboard/products') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('dashboard/products*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Produk</a>
                     </li>
                     <li>
                         <a href="/storage"
-                            class="{{ request()->is('storage') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('storage*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             aria-current="page">Gudang</a>
                     </li>
                     @auth
                         @if (auth()->user()->level == 'Admin')
                             <li>
                                 <a href="/kasir"
-                                    class="{{ request()->is('kasir') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                                    class="{{ request()->is('kasir*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                                     aria-current="page">Kasir</a>
                             </li>
                         @endif
                     @endauth
                     <li>
                         <button id="dropdownDefault" data-dropdown-toggle="dropdown"
-                            class="{{ request()->is('suplier') | request()->is('unit') | request()->is('user') | request()->is('category') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
+                            class="{{ request()->is('suplier*') | request()->is('unit*') | request()->is('user*') | request()->is('category*') ? 'text-black bg-white md:bg-white md:text-black p-3' : 'md:text-white' }} block rounded py-2 pr-4 pl-3 text-black hover:text-black md:p-2 md:hover:bg-transparent md:hover:bg-blue-800 md:hover:text-white"
                             type="button">Lainnya<svg class="ml-2 inline h-4 w-4" aria-hidden="true" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -90,11 +92,11 @@
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
                                 <li>
                                     <a href="{{ route('suplier.index') }}"
-                                        class="{{ request()->is('suplier') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Suplier</a>
+                                        class="{{ request()->is('suplier*') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Suplier</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('unit.index') }}"
-                                        class="{{ request()->is('unit') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Satuan</a>
+                                        class="{{ request()->is('unit*') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Satuan</a>
                                 </li>
                                 {{-- <li>
                                     <a href="{{ route('galleries.index') }}"
@@ -102,11 +104,11 @@
                                 </li> --}}
                                 <li>
                                     <a href="{{ route('user.index') }}"
-                                        class="{{ request()->is('user') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Akun</a>
+                                        class="{{ request()->is('user*') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Akun</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('category.index') }}"
-                                        class="{{ request()->is('category') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kategori</a>
+                                        class="{{ request()->is('category*') ? 'text-white bg-black md:bg-black md:text-white p-3' : 'md:text-red-600' }} block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Kategori</a>
                                 </li>
                             </ul>
                         </div>
@@ -154,15 +156,21 @@
             <div
                 class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
                 <h1 class="flex text-3xl font-bold tracking-tight text-gray-900">{{ $title }}</h1>
-                <a href="{{ route('storage.create') }}" class="rounded-lg bg-red-600 p-3 text-white hover:bg-red-700">
-                    <i class="fa fa-plus"></i> Barang Baru
-                </a>
+                <div class="text-right">
+                    <a href="/historiPembelian"
+                        class="rounded-lg bg-gray-500 p-1 text-white hover:bg-gray-600 md:p-2"><i
+                            class="fa fa-book"></i> Histori</a>
+                    <a href="{{ route('storage.create') }}"
+                        class="rounded-lg bg-red-600 p-1 text-white hover:bg-red-700 md:p-2">
+                        <i class="fa fa-plus"></i> Barang Baru
+                    </a>
+                </div>
             </div>
         @elseif ($title == 'Tambah stok ke toko')
             <div
                 class="container mx-auto flex max-w-7xl flex-wrap items-center justify-between py-6 px-4 sm:px-6 lg:px-8">
                 <h1 class="flex text-2xl font-bold tracking-tight text-gray-900 md:text-3xl">{{ $title }}</h1>
-                <a href="/storage" class="rounded-lg bg-gray-500 p-3 text-white hover:bg-gray-600"><i
+                <a href="/storage" class="rounded-lg bg-gray-500 p-2 text-white hover:bg-gray-600"><i
                         class="fa fa-circle-left"></i> Kembali</a>
             </div>
         @elseif ($title == 'Tambah stok ke gudang')
@@ -260,17 +268,25 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     {{-- export pdf dll --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script> --}}
+    {{-- <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script> --}}
     {{-- <script src="/js/jquery.dataTables.js"></script>
-    <script src="/js/jquery.dataTables.js"></script> --}}
+    {{-- <script src="/js/jquery.dataTables.js"></script> --}}
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/flowbite.js') }}"></script>
+    <script defer src="{{ asset('assets/fontawesome/js/all.min.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -280,11 +296,6 @@
             });
         });
     </script>
-
-
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/flowbite.js') }}"></script>
-    <script defer src="{{ asset('assets/fontawesome/js/all.min.js') }}"></script>
 </body>
 
 </html>

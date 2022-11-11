@@ -26,12 +26,12 @@
                         <th scope="col" class="py-2 px-6 text-center">
                             Stok gudang
                         </th>
-                        <th scope="col" class="py-2 px-6 text-center">
+                        {{-- <th scope="col" class="py-2 px-6 text-center">
                             Kategori
                         </th>
                         <th scope="col" class="py-2 px-6 text-center">
                             Satuan
-                        </th>
+                        </th> --}}
                         <th scope="col" class="py-2 px-6 text-center">
                             Aksi
                         </th>
@@ -39,12 +39,12 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $key => $product)
-                        <tr class="border-b-2 bg-white text-black hover:bg-gray-400">
+                        <tr class="md:boder-b border-b bg-white text-black hover:bg-gray-100">
                             <th class="m-auto w-auto border text-center">
                                 {{ $key + 1 }}
                             </th>
                             <td class="items-center py-3 px-6 dark:text-white">
-                                @if ($product->cloud_img == null or $product->cloud_img == '-')
+                                @if ($product->img_urls == null or $product->img_urls == '-')
                                     <img class="h-10 w-10"
                                         src="https://res.cloudinary.com/smegamart-softdev/image/upload/v1663833101/products/produk_fwzfro.jpg"
                                         alt="Produk">
@@ -55,7 +55,8 @@
                             <td scope="row"
                                 class="flex max-w-sm items-center whitespace-nowrap py-2 px-6 text-gray-900 dark:text-white">
                                 <div class="pl-3">
-                                    <div class="text-base font-semibold uppercase text-black">{{ $product->namaBarang }}
+                                    <div class="text-base font-semibold text-black">
+                                        {{ ucfirst($product->namaBarang) }}
                                     </div>
                                     <div class="block font-normal text-black">{{ $product->barcode }}</div>
                                 </div>
@@ -72,12 +73,12 @@
                             <td class="text-center">
                                 {{ $product->stok_gudang }}
                             </td>
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 {{ $product->kategori->namaKategori ?? '' }}
                             </td>
                             <td class="text-center">
                                 {{ $product->satuan->namaSatuan }}
-                            </td>
+                            </td> --}}
                             <td class="flex items-center py-2 px-1 text-left">
                                 <a href="{{ route('products.show', [$product->barcode]) }}"
                                     class="mx-2 w-full rounded-lg bg-blue-700 p-2 text-sm font-bold text-white hover:bg-blue-800">Detail</a>

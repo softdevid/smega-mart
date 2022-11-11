@@ -137,13 +137,22 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/selesai', [KasirController::class, 'selesai'])->name('selesai');
   Route::get('/print', [KasirController::class, 'print'])->name('print');
   Route::delete('/hapusPesanan', [KasirController::class, 'hapusPesanan'])->name('hapusPesanan');
-
   Route::post('/updateJumlah', [KasirController::class, 'updateQty'])->name('updateQty');
+
+  //route gudang tambah stok
+  Route::get('/printPembelian', [StorageController::class, 'print'])->name('printPembelian');
+  Route::get('/forgetSessionStorage', [StorageController::class, 'forgetSessionStorage'])->name('forgetSessionStorage');
+  Route::get('/exportPdf', [StorageController::class, 'exportPdf'])->name('exportPdf');
+  Route::get('/exportPdfHistori', [StorageController::class, 'exportPdfHistori'])->name('exportPdfHistori');
+  Route::post('/updateJml/{id}', [StorageController::class, 'updateJml'])->name('updateJml');
+
 
   //route pembelian admin
   Route::post('/admin/store', [StorageController::class, 'store'])->name('pembelian.store');
   Route::get('/admin/detail/{noFakturBeli}', [StorageController::class, 'getDetailData'])->name('pembelian.detail');
   Route::post('/admin/store/simpan', [StorageController::class, 'simpan'])->name('pembelian.simpan');
+  Route::get('/historiPembelian', [StorageController::class, 'historiPembelian'])->name('historiPembelian');
+
 
   Route::get('/forgetSession', [KasirController::class, 'forgetSession'])->name('forget');
 
@@ -159,6 +168,7 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/laporan/range', [LaporanController::class, 'range']);
 
   Route::get('/laporan/pdf', [LaporanController::class, 'generatePdf']);
+
 
   //route kategori
   Route::resource('category', KategoriController::class);
